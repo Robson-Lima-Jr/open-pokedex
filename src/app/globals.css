@@ -34,6 +34,49 @@
   --accent: #e11d48;
   --accent-hover: #9f1239;
   --accent-soft: rgba(225, 29, 72, .1);
+
+  /* ------ textos ------ */
+  /* fontes titulos */
+  --fs-h1: 3.6rem;
+  --fs-h2: 2.4rem;
+  --fs-h3: 2.0rem;
+
+  /* fontes texto */
+  --fs-grande: 1.8rem;
+  --fs-normal: 1.6rem;
+  --fs-pequeno: 1.4rem;
+  --fs-mini: 1.2rem;
+
+  /* line-heights */
+  --lh-texto: 1.5;
+  --lh-titulo: 1.25;
+
+  /*------- bordas -------*/
+  --radius-p: 0.6rem;
+  --radius-m: 1.0rem;
+  --radius-g: 1.6rem;
+
+  /*------- espaçamentos -------*/
+  --esp-secao: 4.8rem;
+  --esp-grande: 3.2rem;
+  --esp-medio: 2.4rem;
+  --esp-padrao: 1.6rem;
+  --esp-pequeno: 1.2rem;
+  --esp-micro: 0.6rem;
+
+  /* Gap */
+  --gap: 1.6rem;
+  --gap-grande: 3.2rem;
+
+ /* -------- Layout -------- */
+  --container: 120rem;
+  --container-texto: 70rem;
+  --container-aside: 15rem;
+  --altura-topo: 6.4rem;
+
+  /* -------- Transições -------- */
+  --tr-rapida: .15s ease;
+  --tr-media: .25s ease;
 }
 
 
@@ -103,5 +146,5 @@ main {
 .theme_yellow {
   --accent: #eab308;
   --accent-hover: #ca8a04;
-  --accent-soft: rgba(234,179,8,.14);
+  --accent-soft: rgba(234, 179, 8, .14);
 }
