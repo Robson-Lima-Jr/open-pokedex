@@ -10,6 +10,7 @@
 }
 
 .container_base {
+    position: relative;
     height: 100%;
     max-width: var(--container);
     margin: 0px auto;
@@ -21,25 +22,63 @@
     gap: var(--gap);
 }
 
+/* botao menu */
+.menu_botao {
+    padding: 3px var(--esp-pequeno);
+    cursor: pointer;
+    font-size: var(--fs-grande);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-p);
+}
+
+/* nav padrao no mobile */
 .nav {
-    display: flex;
+    display: none;
+    align-items: center;
     gap: var(--gap);
+    background: var(--surface);
+}
+
+/* nav quando for clicado pra abrir o menu no mobile */
+.nav_aberto {
+    min-height: 48px;
+    display: flex;
+    position: absolute;
+    justify-content: center;
+    gap: var(--gap);
+    top: var(--altura-topo);
+    left: 0;
+    right: 0;
+
+    padding: var(--esp-pequeno) var(--esp-padrao);
+    background: var(--accent);
+    color: var(--accent-text);
 }
 
 .link_nav {
-    color: var(--text-secundary);
-    font-size: var(--fs-normal);
+    padding: var(--esp-micro) var(--esp-pequeno);
+    color: var(--accent-color);
+    font-size: var(--fs-grande);
+    font-weight: 600;
     text-decoration: none;
-    transition: color var(--tr-rapida);
+    border-radius: var(--radius-p);
 }
 
 .link_nav:hover {
-    color: var(--accent);
+    color: var(--accent-color);
+    background-color: var(--accent-hover);
+    transition: var(--tr-media);
 }
 
 .container_tema {
     display: flex;
     align-items: center;
+    gap: var(--gap);
+}
+
+.mudar_fundo {
+    display: flex;
     gap: var(--gap);
 }
 
@@ -51,4 +90,35 @@
     border: 1px solid var(--border);
     border-radius: var(--radius-p);
     font-size: var(--fs-pequeno);
+}
+
+/* >>>>>>>> Media Query - Desktop <<<<<<<<*/
+@media screen and (min-width: 768px) {
+    .menu_botao {
+        display: none;
+    }
+
+    .nav {
+        position: static;
+        display: flex;
+        flex-direction: row;
+        gap: var(--gap);
+        background: var(--surface);
+        color: var(--text-secondary);
+    }
+
+    .nav_aberto {
+        color: var(--text-secondary);
+    }
+
+    .link_nav {
+        padding: 0px;
+        color: var(--text-secondary);
+        font-weight: 500;
+    }
+
+    .link_nav:hover {
+        color: var(--accent);
+        background-color: var(--surface);
+    }
 }

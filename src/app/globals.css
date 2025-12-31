@@ -34,6 +34,7 @@
   --accent: #e11d48;
   --accent-hover: #9f1239;
   --accent-soft: rgba(225, 29, 72, .1);
+  --accent-text: rgb(255, 255, 255);
 
   /* ------ textos ------ */
   /* fontes titulos */
@@ -68,7 +69,7 @@
   --gap: 1.6rem;
   --gap-grande: 3.2rem;
 
- /* -------- Layout -------- */
+  /* -------- Layout -------- */
   --container: 120rem;
   --container-texto: 70rem;
   --container-aside: 15rem;
@@ -92,6 +93,7 @@
 /* Fonte padronizada, pra deixar 1rem = 10px */
 html {
   font-size: 62.5%;
+  scroll-behavior: smooth;
 }
 
 body {
@@ -133,6 +135,7 @@ main {
   --accent: #e11d48;
   --accent-hover: #9f1239;
   --accent-soft: rgba(225, 29, 72, .12);
+  --accent-text: rgb(255, 255, 255);
 }
 
 /* tema pokémon blue */
@@ -140,6 +143,7 @@ main {
   --accent: #2563eb;
   --accent-hover: #1d4ed8;
   --accent-soft: rgba(37, 99, 235, .12);
+  --accent-text: rgb(255, 255, 255);
 }
 
 /* tema pokémon yellow */
@@ -147,4 +151,5 @@ main {
   --accent: #eab308;
   --accent-hover: #ca8a04;
   --accent-soft: rgba(234, 179, 8, .14);
+  --accent-text: var(--text-1);
 }
