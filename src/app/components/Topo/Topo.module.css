@@ -71,14 +71,10 @@
     transition: var(--tr-media);
 }
 
-.container_tema {
+/* select de versao do jogo */
+.container_paleta {
     display: flex;
     align-items: center;
-    gap: var(--gap);
-}
-
-.mudar_fundo {
-    display: flex;
     gap: var(--gap);
 }
 
@@ -90,6 +86,29 @@
     border: 1px solid var(--border);
     border-radius: var(--radius-p);
     font-size: var(--fs-pequeno);
+}
+
+/* botao do dark mode */
+.mudar_fundo {
+    display: flex;
+    gap: var(--gap);
+}
+
+.mode_btn {
+    border-radius: 100%;
+    border: 1px solid var(--border);
+    width: 50px;
+    height: 50px;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform .15s ease, box-shadow .15s ease;
+}
+
+.mode_btn:active {
+    transform: scale(.92);
 }
 
 /* >>>>>>>> Media Query - Desktop <<<<<<<<*/

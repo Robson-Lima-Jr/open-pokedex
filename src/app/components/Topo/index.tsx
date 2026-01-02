@@ -6,7 +6,8 @@ import Image from "next/image";
 
 export default function Topo() {
     const [menuOpen, setMenuOpen] = useState(false);
-    
+    const [darkMode, setDarkMode] = useState(false);
+
     function toggleMenu() {
         setMenuOpen(prev => !prev);
     }
@@ -18,7 +19,7 @@ export default function Topo() {
     return (
         <header className={styles.fundo_topo}>
             <div className={styles.container_base}>
-                
+
                 {/* logo do site */}
                 <div className={styles.logo}>
                     <Image src="/pokeball-logo.png" alt="logo" width={50} height={50} className={styles.topo} />
@@ -36,8 +37,8 @@ export default function Topo() {
                 </nav>
 
                 {/* mudar tema seguindo jogos pokemon classicos */}
-                <div className={styles.container_tema}>
-                    <select aria-label="Tema" className={styles.select_btn}>
+                <div className={styles.container_paleta}>
+                    <select aria-label="Paleta" className={styles.select_btn}>
                         <option value="red">Red</option>
                         <option value="blue">Blue</option>
                         <option value="yellow">Yellow</option>
@@ -45,9 +46,23 @@ export default function Topo() {
                 </div>
 
                 {/* tema de fundo. dark e light modes */}
-                <div className={styles.mudar_fundo}>
-                    <button aria-label="Mudar modo" className={styles.select_btn}>
-                        🌗
+                <div className={styles.mudar_tema}>
+                    <button aria-label="Mudar Tema" className={styles.mode_btn}>
+                        {darkMode ? (
+                            <Image
+                                src="/icon-modes/lunatone-2.webp"
+                                alt="Dark Mode"
+                                width={40}
+                                height={40}
+                            />
+                        ) : (
+                            <Image
+                                src="/icon-modes/solrock-2.webp"
+                                alt="Light Mode"
+                                width={40}
+                                height={40}
+                            />
+                        )}
                     </button>
                 </div>
             </div>
