@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Topo from "./components/Topo";
+import {ThemeProvider} from "./context/ThemeContext"
 import "./globals.css";
 
 
@@ -16,9 +17,11 @@ export default function RootLayout({
   return (
     <html lang="pt-br">
       <body>
-        <Topo />
-        
-        {children}
+        <ThemeProvider>
+          <Topo />
+          
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );
