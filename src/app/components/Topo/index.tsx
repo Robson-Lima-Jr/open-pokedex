@@ -3,17 +3,14 @@ import { useState } from "react";
 import styles from "./Topo.module.css";
 import Link from "next/link";
 import Image from "next/image";
+import { useTheme } from "@/app/context/ThemeContext";
 
 export default function Topo() {
     const [menuOpen, setMenuOpen] = useState(false);
-    const [darkMode, setDarkMode] = useState(false);
+    const {theme, toggleTheme} = useTheme();
 
     function toggleMenu() {
         setMenuOpen(prev => !prev);
-    }
-
-    function toggleMode() {
-        document.body.classList.toggle("dark_mode");
     }
 
     return (
@@ -47,8 +44,8 @@ export default function Topo() {
 
                 {/* tema de fundo. dark e light modes */}
                 <div className={styles.mudar_tema}>
-                    <button aria-label="Mudar Tema" className={styles.mode_btn}>
-                        {darkMode ? (
+                    <button aria-label="Mudar Tema" className={styles.mode_btn} onClick={toggleTheme}>
+                        {theme === "dark" ? (
                             <Image
                                 src="/icon-modes/lunatone-2.webp"
                                 alt="Dark Mode"
