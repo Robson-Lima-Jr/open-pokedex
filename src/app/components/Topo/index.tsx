@@ -4,10 +4,18 @@ import styles from "./Topo.module.css";
 import Link from "next/link";
 import Image from "next/image";
 import { useTheme } from "@/app/context/ThemeContext";
+import { usePallete } from "@/app/context/PalleteContext";
 
 export default function Topo() {
+    // muda estado do menu no mobile
     const [menuOpen, setMenuOpen] = useState(false);
+    // muda a cor do pallete para os temas de pokemon
+    const {pallete, changePallete} = usePallete(); 
+    // muda o fundo de light/dark
     const {theme, toggleTheme} = useTheme();
+
+    // tipo 
+    type Pallete = "red" | "blue" | "yellow";
 
     function toggleMenu() {
         setMenuOpen(prev => !prev);
@@ -19,7 +27,9 @@ export default function Topo() {
 
                 {/* logo do site */}
                 <div className={styles.logo}>
-                    <Image src="/pokeball-logo.png" alt="logo" width={50} height={50} className={styles.topo} />
+                    <Link href="/">
+                        <Image src="/pokeball-logo.png" alt="logo" width={48} height={48} className={styles.topo} />
+                    </Link>
                 </div>
 
                 <button className={styles.menu_botao} onClick={toggleMenu} aria-label="Abrir menu">
@@ -35,7 +45,11 @@ export default function Topo() {
 
                 {/* mudar tema seguindo jogos pokemon classicos */}
                 <div className={styles.container_paleta}>
-                    <select aria-label="Paleta" className={styles.select_btn}>
+                    <select aria-label="Paleta" 
+                        className={styles.select_btn}
+                        value={pallete}
+                        onChange={(e) => changePallete(e.target.value as Pallete)}
+                        >
                         <option value="red">Red</option>
                         <option value="blue">Blue</option>
                         <option value="yellow">Yellow</option>
@@ -47,17 +61,19 @@ export default function Topo() {
                     <button aria-label="Mudar Tema" className={styles.mode_btn} onClick={toggleTheme}>
                         {theme === "dark" ? (
                             <Image
-                                src="/icon-modes/lunatone-2.webp"
+                                src="/icon-modes/solrock-2.webp"
                                 alt="Dark Mode"
                                 width={40}
                                 height={40}
+                                title="Mudar para Light Mode"
                             />
                         ) : (
                             <Image
-                                src="/icon-modes/solrock-2.webp"
+                                src="/icon-modes/lunatone-2.webp"
                                 alt="Light Mode"
                                 width={40}
                                 height={40}
+                                title="Mudar para Dark Mode"
                             />
                         )}
                     </button>
