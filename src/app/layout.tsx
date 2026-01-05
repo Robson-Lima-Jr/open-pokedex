@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Topo from "./components/Topo";
-import {ThemeProvider} from "./context/ThemeContext"
+import {ThemeProvider} from "./context/ThemeContext";
+import { PalleteProvider } from "./context/PalleteContext";
 import "./globals.css";
 
 
@@ -18,9 +19,11 @@ export default function RootLayout({
     <html lang="pt-br">
       <body>
         <ThemeProvider>
-          <Topo />
-          
-          {children}
+          <PalleteProvider>
+            <Topo />
+            
+            {children}
+          </PalleteProvider>
         </ThemeProvider>
       </body>
     </html>
