@@ -11,8 +11,8 @@ export default function Topo() {
     const [menuOpen, setMenuOpen] = useState(false);
     // muda a cor do pallete para os temas de pokemon
     const {pallete, changePallete} = usePallete(); 
-    // muda o fundo de light/dark
-    const {theme, toggleTheme} = useTheme();
+    // muda o fundo de light/dark e o loading
+    const {theme, toggleTheme, loaded} = useTheme();
 
     // tipo 
     type Pallete = "red" | "blue" | "yellow";
@@ -59,7 +59,7 @@ export default function Topo() {
                 {/* tema de fundo. dark e light modes */}
                 <div className={styles.mudar_tema}>
                     <button aria-label="Mudar Tema" className={styles.mode_btn} onClick={toggleTheme}>
-                        {theme === "dark" ? (
+                        {loaded && (theme === "dark" ? (
                             <Image
                                 src="/icon-modes/solrock-2.webp"
                                 alt="Dark Mode"
@@ -75,7 +75,7 @@ export default function Topo() {
                                 height={40}
                                 title="Mudar para Dark Mode"
                             />
-                        )}
+                        ))}
                     </button>
                 </div>
             </div>
