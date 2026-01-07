@@ -1,3 +1,10 @@
+@font-face {
+  font-family: PokemonGB;
+  src: url(/fonts/PokemonGb-RAeo.ttf) format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
 :root {
   /*--------- cores -----------*/
   /* fundo */
@@ -40,9 +47,14 @@
 
   /* ------ textos ------ */
   /* fontes titulos */
-  --fs-h1: 3.6rem;
+  --fs-h1: 3.2rem;
   --fs-h2: 2.4rem;
   --fs-h3: 2.0rem;
+
+  /* fonte-especial */
+  --pkm-h1: 2.5rem;
+  --pkm-h2: 1.8rem;
+  --pkm-h3: 1.7rem;
 
   /* fontes texto */
   --fs-grande: 1.8rem;
@@ -52,7 +64,10 @@
 
   /* line-heights */
   --lh-texto: 1.5;
-  --lh-titulo: 1.25;
+  --lh-titulo: 1.35;
+
+  /* Fonte especial */
+  --font-pokemon: "PokemonGB", monospace;
 
   /*------- bordas -------*/
   --radius-p: 0.6rem;
@@ -69,11 +84,11 @@
 
   /* Gap */
   --gap: 1.6rem;
-  --gap-grande: 3.2rem;
+  --gap-grande: 4rem;
 
   /* -------- Layout -------- */
   --container: 120rem;
-  --container-texto: 70rem;
+  --container-texto: 80rem;
   --container-aside: 15rem;
   --altura-topo: 6.4rem;
 

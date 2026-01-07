@@ -38,9 +38,9 @@ export default function Topo() {
 
                 {/* menu topo */}
                 <nav className={`${styles.nav} ${menuOpen ? styles.nav_aberto : ""}`}>
-                    <Link href="/" className={styles.link_nav}>Home</Link>
-                    <Link href="/pokedex" className={styles.link_nav}>Pokédex</Link>
-                    <Link href="/games" className={styles.link_nav}>Games</Link>
+                    <Link href="/" className={styles.link_nav}><span>▶ </span>HOME</Link>
+                    <Link href="/pokedex" className={styles.link_nav}><span>▶ </span>POKéDEX</Link>
+                    <Link href="/games" className={styles.link_nav}><span>▶ </span>GAMES</Link>
                 </nav>
 
                 {/* mudar tema seguindo jogos pokemon classicos */}

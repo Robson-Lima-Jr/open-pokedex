@@ -51,6 +51,7 @@
     display: flex;
     position: absolute;
     justify-content: center;
+    align-items: center;
     gap: var(--gap);
     top: var(--altura-topo);
     left: 0;
@@ -62,18 +63,27 @@
 }
 
 .link_nav {
-    padding: var(--esp-micro) var(--esp-pequeno);
+    font-family: var(--font-pokemon);
+    letter-spacing: 1px;
+
+    padding: var(--esp-pequeno) var(--esp-pequeno);
     color: var(--accent-color);
-    font-size: var(--fs-grande);
+    font-size: var(--fs-mini);
     font-weight: 600;
     text-decoration: none;
     border-radius: var(--radius-p);
 }
 
 .link_nav:hover {
-    color: var(--accent-color);
-    background-color: var(--accent-hover);
     transition: var(--tr-media);
+}
+
+.link_nav span {
+    color: var(--accent);
+}
+
+.link_nav:hover span {
+    color: var(--accent-color);
 }
 
 /* select de versao do jogo */
@@ -143,18 +153,18 @@
     }
 
     .link_nav {
-        padding: 0 0 0.3rem 0;
-        color: var(--text-secondary);
-        font-weight: 600;
+        padding: var(--esp-micro) 0;
+        color: var(--text);
+        font-weight: 500;
         border-radius: 0px;
-        border-bottom: 2px solid transparent;
         transition: var(--tr-media);
     }
 
-    .link_nav:hover {
-        color: var(--text);
-        background-color: var(--surface);
-        border-bottom: 2px solid var(--text);
+    .link_nav span {
+        color: var(--surface);
+    }
+
+    .link_nav:hover span {
         transition: var(--tr-media);
     }
 }
