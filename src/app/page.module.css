@@ -1,0 +1,108 @@
+/* cor de fundo ao container */
+.fundo_main {
+    background-color: var(--accent);
+}
+
+/* configurações basicas da página */
+.container_base {
+    width: 100%;
+    max-width: var(--container);
+    margin: 0 auto;
+    padding: var(--esp-secao) var(--esp-medio);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: var(--gap-grande);
+    align-items: center;
+
+    background-color: var(--bg);
+}
+
+.section_main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: var(--gap);
+
+    text-align: justify;
+}
+
+.container_base p {
+    max-width: var(--container-texto);
+    color: var(--text-secondary);
+    line-height: var(--lh-texto);
+    font-size: var(--fs-normal);
+}
+
+.container_base strong {
+    color: var(--text);
+}
+
+/* links */
+.link_main {
+    color: var(--accent);
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.link_main:hover {
+    color: var(--accent-hover);
+}
+
+/* estilo de fonte */
+.container_base h1,
+.container_base h2 {
+    font-family: var(--font-pokemon);
+    letter-spacing: 1px;
+    color: var(--text);
+    text-transform: uppercase;
+}
+
+.container_base h1 {
+    font-size: var(--pkm-h1);
+    line-height: var(--lh-titulo);
+    align-self: center;
+}
+
+.container_base h2 {
+    font-size: var(--pkm-h2);
+    align-self: flex-start;
+}
+
+.container_base ul {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap);
+}
+
+.container_base li {
+    padding-left: 30px;
+    align-self: flex-start;
+    list-style-type: none;
+    font-size: var(--fs-normal);
+    color: var(--text-secondary);
+}
+
+.container_base h1 span,
+.container_base li span {
+    color: var(--accent);
+}
+
+/* imagens */
+.main_imagens {
+    width: 100%;
+    max-width: 300px;
+
+    margin: var(--esp-grande) 0;
+}
+
+/* media-query */
+@media screen and (min-width: 768px) {
+    .main_imagens {
+        max-width: 400px;
+        height: auto;
+    }
+}

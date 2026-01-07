@@ -15,7 +15,13 @@ type PalleteProviderProps = {
 };
 
 export function PalleteProvider({children}: PalleteProviderProps) {
-    const [pallete, setPallete] = useState<"red" | "blue" | "yellow">("red");
+    const [pallete, setPallete] = useState<"red" | "blue" | "yellow">(() => {
+        if(typeof window !== "undefined") {
+            return(localStorage.getItem("pallete") as "red" | "blue" | "yellow") || "red";
+        };
+
+        return "red";
+    });
 
     function changePallete(value: "red" | "blue" | "yellow") {
         setPallete(value);
@@ -25,6 +31,8 @@ export function PalleteProvider({children}: PalleteProviderProps) {
     useEffect(() => {
         document.body.classList.remove("pallete_red", "pallete_blue", "pallete_yellow");
         document.body.classList.add(`pallete_${pallete}`);
+
+        localStorage.setItem("pallete", pallete);
     }, [pallete]);
 
     return (

@@ -6,7 +6,7 @@ import "./globals.css";
 
 
 export const metadata: Metadata = {
-  title: "Pokédex",
+  title: "Open Pokédex",
   description: "Projeto Pokédex fullstack com Next.js",
 };
 
