@@ -4,6 +4,10 @@
     transition: var(--tr-rapida);
 }
 
+.container_home {
+    max-width: var(--container);
+}
+
 /* imagens */
 .main_imagens {
     width: 100%;
@@ -11,4 +15,12 @@
     height: auto;
 
     margin: var(--esp-grande) 0;
+}
+
+/* media-query */
+@media screen and (min-width: 768px) {
+    .main_imagens {
+        max-width: 400px;
+        height: auto;
+    }
 }

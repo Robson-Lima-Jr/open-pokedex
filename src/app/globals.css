@@ -53,8 +53,8 @@
 
   /* fonte-especial */
   --pkm-icon: 3rem;
-  --pkm-h1: 2.4rem;
-  --pkm-h2: 2rem;
+  --pkm-h1: 2.5rem;
+  --pkm-h2: 1.9rem;
   --pkm-h1-mobile: 2.2rem;
   --pkm-icon-mobile: 3rem;
   --pkm-h2-mobile: 1.7rem;
@@ -182,13 +182,11 @@ body.dark_mode {
 /* configurações basicas da página */
 .container_base {
     width: 100%;
-    max-width: var(--container);
     margin: 0 auto;
     padding: var(--esp-secao) var(--esp-medio);
 
     display: flex;
     flex-direction: column;
-    justify-content: center;
     gap: var(--gap-grande);
     align-items: center;
 
@@ -301,11 +299,6 @@ body.dark_mode {
 
 /* media-query */
 @media screen and (min-width: 768px) {
-    .main_imagens {
-        max-width: 400px;
-        height: auto;
-    }
-
     .titulo_h1 {
         font-size: var(--pkm-h1);
         flex-direction: row;

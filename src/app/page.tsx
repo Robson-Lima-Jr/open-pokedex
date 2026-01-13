@@ -5,12 +5,12 @@ import Image from "next/image";
 export default function Home() {
   return (
     <div className={styles.fundo_main}>
-      <main className="container_base">
+      <main className={`container_base ${styles.container_home}`}>
         <div className="titulo_area">
           <h1 className="titulo_h1">
             <span className="h1_icone">◓</span>
 
-            <span className="h1_prefixo">Pokédex</span>
+            <span>Pokédex</span>
           </h1>
 
           <p className="paragrafo_h1">Projeto desenvolvimento Web</p>
