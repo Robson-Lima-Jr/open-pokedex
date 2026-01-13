@@ -40,7 +40,7 @@ export default function Topo() {
                 <nav className={`${styles.nav} ${menuOpen ? styles.nav_aberto : ""}`}>
                     <Link href="/" className={styles.link_nav}><span>▶ </span>HOME</Link>
                     <Link href="/pokedex" className={styles.link_nav}><span>▶ </span>POKéDEX</Link>
-                    <Link href="/games" className={styles.link_nav}><span>▶ </span>GAMES</Link>
+                    <Link href="/games" className={styles.link_nav}><span>▶ </span>JOGOS</Link>
                 </nav>
 
                 {/* mudar tema seguindo jogos pokemon classicos */}
