@@ -55,12 +55,11 @@
     position: absolute;
     justify-content: center;
     align-items: center;
-    gap: var(--gap);
     top: var(--altura-topo);
     left: 0;
     right: 0;
 
-    padding: var(--esp-micro);
+    padding: var(--esp-pequeno);
     background: var(--accent);
     color: var(--accent-text);
 }
@@ -69,11 +68,11 @@
     font-family: var(--font-pokemon);
     letter-spacing: 1px;
 
-    padding: var(--esp-pequeno) var(--esp-micro);
     color: var(--accent-color);
     font-size: var(--fs-mini);
     font-weight: 500;
     text-decoration: none;
+    padding: 0 var(--esp-micro);
 }
 
 .link_nav:hover {
@@ -140,7 +139,10 @@
 @media screen and (min-width: 400px) and (max-width: 767px) {
     .nav_aberto {
         flex-direction: row;
-        padding: var(--esp-pequeno) var(--esp-padrao);
+    }
+
+    .link_nav {
+        padding: var(--esp-micro);
     }
 }
 
@@ -163,7 +165,7 @@
     }
 
     .link_nav {
-        padding: var(--esp-micro) 0;
+        padding: var(--esp-micro);
         color: var(--text);
         font-weight: 500;
         border-radius: 0px;
