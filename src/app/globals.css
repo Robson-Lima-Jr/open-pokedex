@@ -22,7 +22,7 @@
   --text-2-dark: #b5b5b5;
 
   /* borda */
-  --border-light: rgba(0, 0, 0, .08);
+  --border-light: rgba(0, 0, 0, 0.12);
   --border-dark: rgba(255, 255, 255, .12);
 
   /* sombra */
@@ -93,7 +93,7 @@
   /* -------- Layout -------- */
   --container: 120rem;
   --container-texto: 80rem;
-  --container-aside: 15rem;
+  --container-aside: 25rem;
   --altura-topo: 6.4rem;
 
   /* -------- Transições -------- */

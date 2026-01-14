@@ -1,4 +1,5 @@
 import styles from "./pokedex.module.css";
+import PokedexAside from "../components/PokedexAside";
 
 export default function pokedex() {
     return (
@@ -13,10 +14,12 @@ export default function pokedex() {
                 <p className="paragrafo_h1">Database</p>
             </div>
 
+            <PokedexAside />
+
             <section className={`section_main ${styles.container_pokedex}`}>
-                <h2 className="subtitulo_h2">▶ Nacional <span>Dex</span></h2>
-                
-                
+                <h2 className="subtitulo_h2">▶ Nacional Dex</h2>
+
+
             </section>
         </main>
     )
