@@ -1,0 +1,83 @@
+.container_aside {
+    width: var(--container-aside);
+    min-height: 100vh;
+    padding: var(--esp-medio) var(--esp-pequeno);
+
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap);
+
+    background-color: var(--accent);
+    letter-spacing: 1px;
+    border-right: 5px solid var(--accent-hover);
+
+    /* esconder no mobile */
+    /* transform: translateX(-100%); */
+    transition: var(--tr-rapida);
+    z-index: 100;
+}
+
+/* titulo aside */
+.h2_aside {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-pokemon);
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    color: var(--accent-text);
+}
+
+.h2_aside span {
+    
+}
+
+/* container blocos aside */
+.aside_bloco {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/* label e input */
+.label_busca {
+    font-size: var(--fs-pequeno);
+    color: var(--accent-text);
+}
+
+.input_busca {
+    padding: var(--esp-micro);
+
+    font-size: var(--fs-pequeno);
+    border-radius: var(--radius-p);
+    background-color: var(--surface);
+    border: 2px solid var(--text-secondary);
+    color: var(--text);
+    outline: none;
+}
+
+/* botoes */
+.aside_botao {
+    all: unset;
+    cursor: pointer;
+    padding: var(--esp-micro);
+
+    display: flex;
+    align-items: center;
+
+    gap: 0.5rem;
+    font-size: var(--fs-pequeno);
+    color: var(--accent-text);
+    font-weight: 600;
+}
+
+.aside_botao span {
+    color: var(--accent);
+}
+
+.aside_botao:hover span{
+    color: var(--accent-text);
+    transition: var(--tr-rapida);
+}
+
+/*  */
