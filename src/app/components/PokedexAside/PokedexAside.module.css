@@ -10,11 +10,15 @@
     background-color: var(--accent);
     letter-spacing: 1px;
     border-right: 5px solid var(--accent-hover);
+        text-transform: uppercase;
 
     /* esconder no mobile */
     /* transform: translateX(-100%); */
     transition: var(--tr-rapida);
     z-index: 100;
+
+    position: relative;
+    overflow: hidden;
 }
 
 /* titulo aside */
@@ -22,14 +26,8 @@
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    font-family: var(--font-pokemon);
-    font-size: 1.1rem;
-    text-transform: uppercase;
+    font-size: var(--pkm-h2);
     color: var(--accent-text);
-}
-
-.h2_aside span {
-    
 }
 
 /* container blocos aside */
@@ -46,7 +44,7 @@
 }
 
 .input_busca {
-    padding: var(--esp-micro);
+    padding: var(--esp-micro) var(--esp-pequeno);
 
     font-size: var(--fs-pequeno);
     border-radius: var(--radius-p);
@@ -66,7 +64,7 @@
     align-items: center;
 
     gap: 0.5rem;
-    font-size: var(--fs-pequeno);
+    font-size: var(--fs-normal);
     color: var(--accent-text);
     font-weight: 600;
 }
@@ -75,9 +73,27 @@
     color: var(--accent);
 }
 
-.aside_botao:hover span{
+.aside_botao:hover span {
     color: var(--accent-text);
     transition: var(--tr-rapida);
 }
 
-/*  */
+/* listas */
+.aside_ul {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    list-style-type: none;
+}
+
+.aside_li {
+    cursor: pointer;
+    padding: var(--esp-micro) 0;
+    padding-left: var(--esp-medio);
+    display: flex;
+    gap: 0.5rem;
+
+    font-size: var(--fs-mini);
+    text-transform: uppercase;
+    color: var(--accent-text);
+}
