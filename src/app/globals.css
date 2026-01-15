@@ -8,7 +8,7 @@
 :root {
   /*--------- cores -----------*/
   /* fundo */
-  --bg-1: #fafafa;
+  --bg-1: #f8f7f7;
   --bg-2: #ffffff;
   --hover: rgba(0, 0, 0, 0.2);
   --bg-1-dark: #0D0D0D;
@@ -22,12 +22,12 @@
   --text-2-dark: #b5b5b5;
 
   /* borda */
-  --border-light: rgba(0, 0, 0, 0.12);
-  --border-dark: rgba(255, 255, 255, .12);
+  --border-light: rgba(0, 0, 0, 0.18);
+  --border-dark: rgba(255, 255, 255, 0.18);
 
   /* sombra */
   --shadow-light: 0 6px 20px rgba(0, 0, 0, .12);
-  --shadow-dark: 0 6px 20px rgba(0, 0, 0, .55);
+  --shadow-dark: 0 6px 20px rgba(255, 255, 255, 0.12);
 
   /* Tokens (caso falhem os dark/light mode */
   --bg: var(--bg-1);
@@ -109,6 +109,11 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+html, body {
+    height: auto;
+    overflow-y: auto;
 }
 
 /* Fonte padronizada, pra deixar 1rem = 10px */
