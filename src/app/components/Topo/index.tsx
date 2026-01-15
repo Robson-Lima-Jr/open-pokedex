@@ -28,7 +28,7 @@ export default function Topo() {
                 {/* logo do site */}
                 <div className={styles.logo}>
                     <Link href="/">
-                        <Image src="/pokeball-logo.png" alt="logo" width={48} height={48} className={styles.topo} />
+                        <Image src="/pokeball-logo.png" alt="logo" width={45} height={45} className={styles.topo} />
                     </Link>
                 </div>
 
@@ -63,16 +63,16 @@ export default function Topo() {
                             <Image
                                 src="/icon-modes/solrock-2.webp"
                                 alt="Dark Mode"
-                                width={40}
-                                height={40}
+                                width={38}
+                                height={38}
                                 title="Mudar para Light Mode"
                             />
                         ) : (
                             <Image
                                 src="/icon-modes/lunatone-2.webp"
                                 alt="Light Mode"
-                                width={40}
-                                height={40}
+                                width={38}
+                                height={38}
                                 title="Mudar para Dark Mode"
                             />
                         ))}
