@@ -41,7 +41,7 @@
 
     /* Accents */
     --accent: #f22350;
-    --accent-hover: #9f1239;
+    --accent-hover: #ad1a44;
     --accent-soft: rgba(225, 29, 72, .1);
     --accent-text: rgb(255, 255, 255);
 
@@ -169,7 +169,7 @@ body.dark_mode {
 /* tema pokemon red */
 .pallete_red {
     --accent: #f22350;
-    --accent-hover: #9f1239;
+    --accent-hover: #ad1a44;
     --accent-soft: rgba(225, 29, 72, .12);
     --accent-text: rgb(255, 255, 255);
 }
