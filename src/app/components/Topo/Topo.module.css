@@ -63,6 +63,8 @@
 
     padding: var(--esp-pequeno);
     background: var(--accent);
+    border-bottom: 3px solid var(--accent-hover);
+    border-top:  3px solid var(--accent-hover);
     color: var(--accent-text);
 }
 
@@ -164,6 +166,7 @@
 
     .nav_aberto {
         color: var(--text-secondary);
+        border: none;
     }
 
     .link_nav {

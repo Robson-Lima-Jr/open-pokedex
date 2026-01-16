@@ -1,14 +1,14 @@
 "use client";
-import { useState } from "react";
 import styles from "./Topo.module.css";
 import Link from "next/link";
 import Image from "next/image";
 import { useTheme } from "@/app/context/ThemeContext";
 import { usePallete } from "@/app/context/PalleteContext";
+import { useMenu } from "@/app/context/MenuContext";
 
 export default function Topo() {
-    // muda estado do menu no mobile
-    const [menuOpen, setMenuOpen] = useState(false);
+    // muda o estado do menu no mobile
+    const {menuOpen, toggleMenu, closeMenu} = useMenu();
     // muda a cor do pallete para os temas de pokemon
     const {pallete, changePallete} = usePallete(); 
     // muda o fundo de light/dark e o loading
@@ -16,10 +16,6 @@ export default function Topo() {
 
     // tipo 
     type Pallete = "red" | "blue" | "yellow";
-
-    function toggleMenu() {
-        setMenuOpen(prev => !prev);
-    }
 
     return (
         <header className={styles.fundo_topo}>
@@ -38,9 +34,9 @@ export default function Topo() {
 
                 {/* menu topo */}
                 <nav className={`${styles.nav} ${menuOpen ? styles.nav_aberto : ""}`}>
-                    <Link href="/" className={styles.link_nav}><span>▶ </span>HOME</Link>
-                    <Link href="/pokedex" className={styles.link_nav}><span>▶ </span>POKéDEX</Link>
-                    <Link href="/games" className={styles.link_nav}><span>▶ </span>JOGOS</Link>
+                    <Link href="/" className={styles.link_nav} onClick={closeMenu}><span>▶ </span>HOME</Link>
+                    <Link href="/pokedex" className={styles.link_nav} onClick={closeMenu}><span>▶ </span>POKéDEX</Link>
+                    <Link href="/games" className={styles.link_nav} onClick={closeMenu}><span>▶ </span>JOGOS</Link>
                 </nav>
 
                 {/* mudar tema seguindo jogos pokemon classicos */}
