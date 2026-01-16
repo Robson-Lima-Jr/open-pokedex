@@ -1,104 +1,104 @@
 @font-face {
-  font-family: PokemonGB;
-  src: url(/fonts/PokemonGb-RAeo.ttf) format("truetype");
-  font-weight: normal;
-  font-style: normal;
+    font-family: PokemonGB;
+    src: url(/fonts/PokemonGb-RAeo.ttf) format("truetype");
+    font-weight: normal;
+    font-style: normal;
 }
 
 :root {
-  /*--------- cores -----------*/
-  /* fundo */
-  --bg-1: #f8f7f7;
-  --bg-2: #ffffff;
-  --hover: rgba(0, 0, 0, 0.2);
-  --bg-1-dark: #0D0D0D;
-  --bg-2-dark: #1C1C1C;
-  --hover-dark: rgba(255, 255, 255, 0.2);
+    /*--------- cores -----------*/
+    /* fundo */
+    --bg-1: #f8f7f7;
+    --bg-2: #ffffff;
+    --hover: rgba(0, 0, 0, 0.2);
+    --bg-1-dark: #0D0D0D;
+    --bg-2-dark: #1C1C1C;
+    --hover-dark: rgba(255, 255, 255, 0.2);
 
-  /* texto */
-  --text-1: #080f1d;
-  --text-2: #485262;
-  --text-1-dark: #ffffff;
-  --text-2-dark: #b5b5b5;
+    /* texto */
+    --text-1: #080f1d;
+    --text-2: #485262;
+    --text-1-dark: #ffffff;
+    --text-2-dark: #b5b5b5;
 
-  /* borda */
-  --border-light: rgba(0, 0, 0, 0.18);
-  --border-dark: rgba(255, 255, 255, 0.18);
+    /* borda */
+    --border-light: rgba(0, 0, 0, 0.18);
+    --border-dark: rgba(255, 255, 255, 0.18);
 
-  /* sombra */
-  --shadow-light: 0 6px 20px rgba(0, 0, 0, .12);
-  --shadow-dark: 0 6px 20px rgba(255, 255, 255, 0.12);
+    /* sombra */
+    --shadow-light: 0 6px 20px rgba(0, 0, 0, .12);
+    --shadow-dark: 0 6px 20px rgba(255, 255, 255, 0.12);
 
-  /* Tokens (caso falhem os dark/light mode */
-  --bg: var(--bg-1);
-  --surface: var(--bg-2);
+    /* Tokens (caso falhem os dark/light mode */
+    --bg: var(--bg-1);
+    --surface: var(--bg-2);
 
-  --text: var(--text-1);
-  --text-secondary: var(--text-2);
+    --text: var(--text-1);
+    --text-secondary: var(--text-2);
 
-  --border: var(--border-light);
-  --shadow: var(--shadow-light);
+    --border: var(--border-light);
+    --shadow: var(--shadow-light);
 
-  /* Accents */
-  --accent: #e11d48;
-  --accent-hover: #9f1239;
-  --accent-soft: rgba(225, 29, 72, .1);
-  --accent-text: rgb(255, 255, 255);
+    /* Accents */
+    --accent: #f22350;
+    --accent-hover: #ad1a44;
+    --accent-soft: rgba(225, 29, 72, .1);
+    --accent-text: rgb(255, 255, 255);
 
-  /* ------ textos ------ */
-  /* fontes titulos */
-  --fs-h1: 3.2rem;
-  --fs-h2: 2.4rem;
-  --fs-h3: 2.0rem;
+    /* ------ textos ------ */
+    /* fontes titulos */
+    --fs-h1: 3.2rem;
+    --fs-h2: 2.4rem;
+    --fs-h3: 2.0rem;
 
-  /* fonte-especial */
-  --pkm-icon: 3rem;
-  --pkm-h1: 2.5rem;
-  --pkm-h2: 1.9rem;
-  --pkm-h1-mobile: 2.2rem;
-  --pkm-icon-mobile: 3rem;
-  --pkm-h2-mobile: 1.7rem;
+    /* fonte-especial */
+    --pkm-icon: 3rem;
+    --pkm-h1: 2.5rem;
+    --pkm-h2: 1.9rem;
+    --pkm-h1-mobile: 2.2rem;
+    --pkm-icon-mobile: 3rem;
+    --pkm-h2-mobile: 1.7rem;
 
-  /* fontes texto */
-  --fs-titulo: 2rem;
-  --fs-grande: 1.8rem;
-  --fs-normal: 1.6rem;
-  --fs-pequeno: 1.4rem;
-  --fs-mini: 1.2rem;
+    /* fontes texto */
+    --fs-titulo: 2rem;
+    --fs-grande: 1.8rem;
+    --fs-normal: 1.6rem;
+    --fs-pequeno: 1.4rem;
+    --fs-mini: 1.2rem;
 
-  /* line-heights */
-  --lh-texto: 1.5;
-  --lh-titulo: 1.35;
+    /* line-heights */
+    --lh-texto: 1.5;
+    --lh-titulo: 1.35;
 
-  /* Fonte especial */
-  --font-pokemon: "PokemonGB", monospace;
+    /* Fonte especial */
+    --font-pokemon: "PokemonGB", monospace;
 
-  /*------- bordas -------*/
-  --radius-p: 0.6rem;
-  --radius-m: 1.0rem;
-  --radius-g: 1.6rem;
+    /*------- bordas -------*/
+    --radius-p: 0.6rem;
+    --radius-m: 1.0rem;
+    --radius-g: 1.6rem;
 
-  /*------- espaçamentos -------*/
-  --esp-secao: 4.8rem;
-  --esp-grande: 3.2rem;
-  --esp-medio: 2.4rem;
-  --esp-padrao: 1.6rem;
-  --esp-pequeno: 1.2rem;
-  --esp-micro: 0.6rem;
+    /*------- espaçamentos -------*/
+    --esp-secao: 4.8rem;
+    --esp-grande: 3.2rem;
+    --esp-medio: 2.4rem;
+    --esp-padrao: 1.6rem;
+    --esp-pequeno: 1.2rem;
+    --esp-micro: 0.6rem;
 
-  /* Gap */
-  --gap: 1.6rem;
-  --gap-grande: 4rem;
+    /* Gap */
+    --gap: 1.6rem;
+    --gap-grande: 4rem;
 
-  /* -------- Layout -------- */
-  --container: 120rem;
-  --container-texto: 80rem;
-  --container-aside: 25rem;
-  --altura-topo: 6.4rem;
+    /* -------- Layout -------- */
+    --container: 120rem;
+    --container-texto: 80rem;
+    --container-aside: 25rem;
+    --altura-topo: 6.5rem;
 
-  /* -------- Transições -------- */
-  --tr-rapida: .25s ease;
-  --tr-media: .40s ease;
+    /* -------- Transições -------- */
+    --tr-rapida: .25s ease;
+    --tr-media: .40s ease;
 }
 
 
@@ -106,81 +106,88 @@
 *,
 *::before,
 *::after {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 html, body {
-    height: auto;
-    overflow-y: auto;
+  min-height: 100%;
 }
+
+.layout_pagina {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.layout_main {
+  flex: 1;
+  display: block;
+}
+
 
 /* Fonte padronizada, pra deixar 1rem = 10px */
 html {
-  font-size: 62.5%;
-  scroll-behavior: smooth;
+    font-size: 62.5%;
+    scroll-behavior: smooth;
 }
 
 body {
-  background-color: var(--bg);
-  color: var(--text-1);
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  transition: var(--tr-rapida);
-}
-
-main {
-  min-height: 100vh;
+    background-color: var(--bg);
+    color: var(--text-1);
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    transition: var(--tr-rapida);
 }
 
 /* modo claro do site */
 body.light_mode {
-  --bg: var(--bg-1);
-  --surface: var(--bg-2);
-  --bg-hover: var(--hover);
+    --bg: var(--bg-1);
+    --surface: var(--bg-2);
+    --bg-hover: var(--hover);
 
-  --text: var(--text-1);
-  --text-secondary: var(--text-2);
+    --text: var(--text-1);
+    --text-secondary: var(--text-2);
 
-  --border: var(--border-light);
-  --shadow: var(--shadow-light);
+    --border: var(--border-light);
+    --shadow: var(--shadow-light);
 }
 
 /* modo escuro do site */
 body.dark_mode {
-  --bg: var(--bg-1-dark);
-  --surface: var(--bg-2-dark);
-  --bg-hover: var(--hover-dark);
+    --bg: var(--bg-1-dark);
+    --surface: var(--bg-2-dark);
+    --bg-hover: var(--hover-dark);
 
-  --text: var(--text-1-dark);
-  --text-secondary: var(--text-2-dark);
+    --text: var(--text-1-dark);
+    --text-secondary: var(--text-2-dark);
 
-  --border: var(--border-dark);
-  --shadow: var(--shadow-dark);
+    --border: var(--border-dark);
+    --shadow: var(--shadow-dark);
 }
 
 /* tema pokemon red */
 .pallete_red {
-  --accent: #e11d48;
-  --accent-hover: #9f1239;
-  --accent-soft: rgba(225, 29, 72, .12);
-  --accent-text: rgb(255, 255, 255);
+    --accent: #f22350;
+    --accent-hover: #ad1a44;
+    --accent-soft: rgba(225, 29, 72, .12);
+    --accent-text: rgb(255, 255, 255);
 }
 
 /* tema pokémon blue */
 .pallete_blue {
-  --accent: #2563eb;
-  --accent-hover: #1944b9;
-  --accent-soft: rgba(37, 99, 235, .12);
-  --accent-text: rgb(255, 255, 255);
+    --accent: #2563eb;
+    --accent-hover: #1944b9;
+    --accent-soft: rgba(37, 99, 235, .12);
+    --accent-text: rgb(255, 255, 255);
 }
 
 /* tema pokémon yellow */
 .pallete_yellow {
-  --accent: #eab308;
-  --accent-hover: #c8911a;
-  --accent-soft: rgba(234, 179, 8, .14);
-  --accent-text: var(--text-1);
+    --accent: #eab308;
+    --accent-hover: #c8911a;
+    --accent-soft: rgba(234, 179, 8, .14);
+    --accent-text: var(--text-1);
 }
 
 /* ---------> configurações das paginas <--------- */
@@ -188,7 +195,7 @@ body.dark_mode {
 .container_base {
     width: 100%;
     margin: 0 auto;
-    padding: var(--esp-secao) var(--esp-medio);
+    padding: 0 var(--esp-medio) var(--esp-secao);
 
     display: flex;
     flex-direction: column;
@@ -225,6 +232,7 @@ body.dark_mode {
 }
 
 .titulo_h1 {
+    margin-top: var(--esp-secao);
     display: flex;
     align-items: center;
     gap: var(--gap);

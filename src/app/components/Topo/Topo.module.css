@@ -2,7 +2,9 @@
     position: sticky;
     top: 0;
     z-index: 1000;
-    height: var(--altura-topo);
+
+    display: flex;
+    align-items: center;
 
     background: var(--surface);
     border-bottom: 1px solid var(--border);
@@ -11,11 +13,11 @@
 }
 
 .container_base {
+    width: 100%;
     position: relative;
-    height: 100%;
     max-width: var(--container);
     margin: 0px auto;
-    padding: var(--esp-pequeno) var(--esp-padrao);
+    padding: var(--esp-micro) var(--esp-padrao);
 
     display: flex;
     justify-content: space-between;
@@ -55,12 +57,14 @@
     position: absolute;
     justify-content: center;
     align-items: center;
-    top: var(--altura-topo);
+    top: 100%;
     left: 0;
     right: 0;
 
     padding: var(--esp-pequeno);
     background: var(--accent);
+    border-bottom: 3px solid var(--accent-hover);
+    border-top:  3px solid var(--accent-hover);
     color: var(--accent-text);
 }
 
@@ -116,8 +120,8 @@
     background: var(--bg);
     border-radius: 100%;
     border: 2px solid var(--accent);
-    width: 48px;
-    height: 48px;
+    width: 45px;
+    height: 45px;
 
     display: flex;
     align-items: center;
@@ -162,6 +166,7 @@
 
     .nav_aberto {
         color: var(--text-secondary);
+        border: none;
     }
 
     .link_nav {

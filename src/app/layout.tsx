@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import Topo from "./components/Topo";
-import {ThemeProvider} from "./context/ThemeContext";
+import { ThemeProvider } from "./context/ThemeContext";
 import { PalleteProvider } from "./context/PalleteContext";
+import { MenuProvider } from "./context/MenuContext";
 import "./globals.css";
 
 
@@ -20,9 +21,14 @@ export default function RootLayout({
       <body>
         <ThemeProvider>
           <PalleteProvider>
-            <Topo />
-            
-            {children}
+            <MenuProvider>
+              <div className="layout_pagina">
+                <Topo />
+                <main className="layout_main">
+                  {children}
+                </main>
+              </div>
+            </MenuProvider>
           </PalleteProvider>
         </ThemeProvider>
       </body>
