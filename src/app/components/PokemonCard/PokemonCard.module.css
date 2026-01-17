@@ -1,0 +1,112 @@
+.card_container {
+    width: 260px;
+    height: 260px;
+
+    padding: var(--esp-pequeno);
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap);
+
+    border: 3px solid var(--text);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-family: var(--font-pokemon);
+}
+
+/* separação, area de cima */
+.card_cima {
+    width: 100%;
+    height: 100px;
+    display: flex;
+    align-items: center;
+
+    gap: 0.6rem;
+}
+
+/* area imagem/ nº dex */
+.sprite_area {
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.dex_num {
+    align-self: center;
+    color: var(--text);
+    font-size: var(--fs-card-nome);
+}
+
+/* area dos dados/tipos */
+
+.header_poke {
+    height: 100%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.5rem;
+    border-right: 2px solid var(--text);
+    border-bottom: 2px solid var(--text);
+}
+
+.nome {
+    color: var(--accent);
+    font-size: var(--fs-card-nome);
+}
+
+.tipos_area {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.tipos_desc {
+    padding-left: var(--esp-micro);
+    color: var(--text);
+}
+
+.tipos {
+    padding-left: var(--esp-pequeno);
+    color: var(--text-secondary);
+}
+
+/* area de stats */
+
+.stats_area {
+    padding: var(--esp-micro) var(--esp-medio);
+    display: flex;
+    justify-content: center;
+    border: 2px solid var(--text);
+}
+
+.stats {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    list-style-type: none;
+}
+
+.stats_li {
+    align-self: center;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    font-size: var(--fs-card-stats);
+    justify-content: space-between;
+}
+
+.stats_li:nth-child(odd) {
+    color: var(--text);
+}
+
+.stats_li:nth-child(even) {
+    color: var(--text-secondary);
+}
+
+.stats_li strong {
+    font-weight: 500;
+}

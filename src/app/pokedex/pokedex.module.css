@@ -13,3 +13,12 @@
 .container_pokedex {
     width: 100%;
 }
+
+.teste_dex {
+    width: 100%;
+    padding: var(--esp-padrao);
+    display: flex;
+    justify-content: center;
+    gap: var(--gap);
+    flex-wrap: wrap;
+}

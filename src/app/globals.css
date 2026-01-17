@@ -65,6 +65,8 @@
     --fs-normal: 1.6rem;
     --fs-pequeno: 1.4rem;
     --fs-mini: 1.2rem;
+    --fs-card-nome: 1.1rem;
+    --fs-card-stats: 1.1rem;
 
     /* line-heights */
     --lh-texto: 1.5;
