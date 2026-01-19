@@ -8,7 +8,7 @@
 :root {
     /*--------- cores -----------*/
     /* fundo */
-    --bg-1: #f8f7f7;
+    --bg-1: #f8f1f1;
     --bg-2: #ffffff;
     --hover: rgba(0, 0, 0, 0.2);
     --bg-1-dark: #0D0D0D;
@@ -95,7 +95,7 @@
     /* -------- Layout -------- */
     --container: 120rem;
     --container-texto: 80rem;
-    --container-aside: 25rem;
+    --container-aside: 27rem;
     --altura-topo: 6.5rem;
 
     /* -------- Transições -------- */
@@ -211,7 +211,6 @@ body.dark_mode {
 .section_main {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
     gap: var(--gap);
 }
@@ -311,7 +310,6 @@ body.dark_mode {
 .link_main:hover {
     color: var(--accent-hover);
 }
-
 /* media-query */
 @media screen and (min-width: 768px) {
     .titulo_h1 {

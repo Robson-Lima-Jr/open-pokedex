@@ -1,6 +1,7 @@
 .layout_pokedex {
     display: flex;
     min-height: calc(100vh - var(--altura-topo));
+    background-color: var(--surface);
 }
 
 .conteudo_dex {

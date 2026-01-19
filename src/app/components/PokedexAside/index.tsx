@@ -4,7 +4,13 @@ import pokemonTypes from "@/app/data/pokemonTypes";
 import regions from "@/app/data/regions";
 import { useState } from "react";
 
-export default function PokedexAside() {
+// props para colocar a config de abrir e fechar do filtro
+type Props = {
+    isOpen: boolean;
+    closeAside: () => void;
+};
+
+export default function PokedexAside({ isOpen, closeAside }: Props) {
     // configurar botôes - abrir lista
     type AsideSection = "tipos" | "regioes" | null;
 
@@ -15,7 +21,7 @@ export default function PokedexAside() {
     };
 
     return (
-        <aside className={styles.container_aside}>
+        <aside className={`${styles.container_aside} ${isOpen ? styles.aside_aberto : ""}`}>
             <h2 className={styles.h2_aside}><span>◓</span> Filtros</h2>
 
             {/* Busca por texto */}
@@ -33,7 +39,7 @@ export default function PokedexAside() {
 
             {/* tipos */}
             <div className={styles.aside_bloco}>
-                <button className={` ${styles.aside_botao} ${openSection === "tipos" ? styles.botao_ativado : ""}`} onClick={() =>          toggleSection("tipos")}>
+                <button className={` ${styles.aside_botao} ${openSection === "tipos" ? styles.botao_ativado : ""}`} onClick={() => toggleSection("tipos")}>
                     ▶ Tipos
                 </button>
 
@@ -41,7 +47,7 @@ export default function PokedexAside() {
                     {pokemonTypes.map((type) => (
                         <li key={type.id} className={styles.aside_li}>
                             <span>◓</span> {type.namePt} ({type.nameEn})
-                        </li> 
+                        </li>
                     ))}
                 </ul>
             </div>
