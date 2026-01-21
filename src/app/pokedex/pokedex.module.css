@@ -11,8 +11,36 @@
     overflow-y: auto;
 }
 
+.config_area {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: var(--gap);
+}
+
+.botao_filtro {
+    position: absolute;
+    top: 50%;
+    right:80;
+    padding: var(--esp-micro);
+}
+
+.icone_filtro {
+    width: 25px;
+    height: 20px;
+}
+
 .container_pokedex {
     width: 100%;
+}
+
+.overlay {
+    position: fixed;
+    inset: 0;
+    background-color: var(--accent-overlay);
+    z-index: 40;
 }
 
 .teste_dex {
@@ -22,4 +50,11 @@
     justify-content: center;
     gap: var(--gap);
     flex-wrap: wrap;
+}
+
+/* media-query */
+@media screen and (min-width: 768px) {
+    .overlay {
+        display: none;
+    }
 }
