@@ -14,9 +14,9 @@
 
     background-color: var(--surface);
     letter-spacing: 1px;
-    border-right: 5px solid var(--accent);
     text-transform: uppercase;
-    transition: var(--tr-rapida);
+    border-right: 5px solid var(--accent);
+
     overflow-y: hidden;
 
     /* esconder no mobile */
@@ -30,8 +30,31 @@
     -ms-overflow-style: none;
 }
 
+.fechar_aside {
+    cursor: pointer;
+    align-self: flex-end;
+
+    display: flex;
+    justify-content: center;
+    padding: 8px 10px;
+
+    font-size: var(--pkm-h1-mobile);
+    font-weight: 700;
+    border: none;
+    border-radius: var(--radius-p);
+    background-color: var(--surface);
+    color: var(--text);
+}
+
+.fechar_aside:hover {
+    background-color: var(--bg-hover);
+    transition: var(--tr-rapida);
+}
+
+
 .aside_aberto {
     transform: translateX(0);
+    transition: var(--tr-media);
 }
 
 .container_aside:hover {
@@ -150,7 +173,7 @@
 
 .aside_li:hover,
 .aside_li:hover .seta_icone {
-    color: var(--accent);
+    color: var(--text);
 }
 
 @media (max-width: 767px) {
@@ -170,9 +193,13 @@
     }
 }
 
-@media (min-width: 768px) {
+@media (min-width: 950px) {
     .container_aside {
         position: sticky;
         transform: none;
+    }
+
+    .fechar_aside {
+        display: none;
     }
 }

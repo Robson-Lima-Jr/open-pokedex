@@ -23,6 +23,12 @@ export default function PokedexAside({ isOpen, closeAside }: Props) {
 
     return (
         <aside className={`${styles.container_aside} ${isOpen ? styles.aside_aberto : ""}`}>
+            <button className={styles.fechar_aside}
+                    aria-label="Fechar filtros"
+                    onClick={closeAside}>
+                X
+            </button>
+
             <h2 className={styles.h2_aside}><IconePokeball className={styles.icone_h2}/> Filtros</h2>
 
             {/* Busca por texto */}
