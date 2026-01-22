@@ -3,8 +3,10 @@
     height: calc(100vh - var(--altura-topo));
     padding: var(--esp-medio);
 
-    position: sticky;
+    position: fixed;
     top: var(--altura-topo);
+    left: 0;
+    z-index: 100;
 
     display: flex;
     flex-direction: column;
@@ -12,14 +14,13 @@
 
     background-color: var(--surface);
     letter-spacing: 1px;
-    border-right: 5px solid var(--accent);
     text-transform: uppercase;
-    transition: var(--tr-rapida);
-    z-index: 100;
+    border-right: 5px solid var(--accent);
+
     overflow-y: hidden;
 
     /* esconder no mobile */
-    /* transform: translateX(-100%); */
+    transform: translateX(-100%);
 
     /* scrollbar */
     /* firefox */
@@ -27,6 +28,33 @@
 
     /* antigos */
     -ms-overflow-style: none;
+}
+
+.fechar_aside {
+    cursor: pointer;
+    align-self: flex-end;
+
+    display: flex;
+    justify-content: center;
+    padding: 8px 10px;
+
+    font-size: var(--pkm-h1-mobile);
+    font-weight: 700;
+    border: none;
+    border-radius: var(--radius-p);
+    background-color: var(--surface);
+    color: var(--text);
+}
+
+.fechar_aside:hover {
+    background-color: var(--bg-hover);
+    transition: var(--tr-rapida);
+}
+
+
+.aside_aberto {
+    transform: translateX(0);
+    transition: var(--tr-media);
 }
 
 .container_aside:hover {
@@ -42,12 +70,15 @@
 .h2_aside {
     display: flex;
     align-items: center;
+
     gap: 0.5rem;
     font-size: var(--pkm-h2);
     color: var(--text);
 }
 
-.h2_aside span {
+.icone_h2 {
+    width: 25px;
+    height: auto;
     color: var(--accent);
 }
 
@@ -95,11 +126,16 @@
 .botao_ativado {
     width: 100%;
     max-width: 125px;
-    
+
     background-color: var(--accent);
     border: 2px solid var(--accent-hover);
     color: var(--accent-text);
     transition: var(--tr-rapida);
+}
+
+.icone_area {
+    width: 20px;
+    height: auto;
 }
 
 /* listas */
@@ -120,6 +156,7 @@
     padding: var(--esp-micro) 0;
     padding-left: var(--esp-pequeno);
     display: flex;
+    align-items: center;
     gap: 0.5rem;
 
     font-size: var(--fs-mini);
@@ -128,11 +165,41 @@
     color: var(--text-secondary);
 }
 
-.aside_li span {
+.seta_icone {
+    width: 15px;
+    height: auto;
     color: var(--surface);
 }
 
 .aside_li:hover,
-.aside_li:hover span {
-    color: var(--accent);
+.aside_li:hover .seta_icone {
+    color: var(--text);
+}
+
+@media (max-width: 767px) {
+    .container_aside {
+        position: fixed;
+        top: var(--altura-topo);
+        left: 0;
+        height: calc(100vh - var(--altura-topo));
+
+        transform: translateX(-100%);
+        transition: var(--tr-rapida);
+        z-index: 999;
+    }
+
+    .aside_aberto {
+        transform: translateX(0);
+    }
+}
+
+@media (min-width: 950px) {
+    .container_aside {
+        position: sticky;
+        transform: none;
+    }
+
+    .fechar_aside {
+        display: none;
+    }
 }

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import styles from "./page.module.css";
 import Image from "next/image";
+import { IconeSeta, IconeFiltro, IconePokeball } from "./components/icons/Icons";
 
 export default function Home() {
   return (
@@ -8,7 +9,7 @@ export default function Home() {
       <main className={`container_base ${styles.container_home}`}>
         <div className="titulo_area">
           <h1 className="titulo_h1">
-            <span className="h1_icone">◓</span>
+            <IconePokeball className="h1_icone" />
 
             <span>Pokédex</span>
           </h1>
@@ -17,7 +18,7 @@ export default function Home() {
         </div>
 
         <section className="section_main">
-          <h2 className="subtitulo_h2">▶ Introdução</h2>
+          <h2 className="subtitulo_h2"><IconeSeta className="h2_icone" /><span>Introdução</span></h2>
 
           <p className="texto_p">Este projeto foi criado como parte dos meus estudos em desenvolvimento web, usando Pokémon como temática <em> ( eu sei que existem umas 15.000 Pokédex que o pessoal faz para práticar - mas convenhamos, é bem divertido )</em>.</p>
 
@@ -33,7 +34,7 @@ export default function Home() {
         </section>
 
         <section className="section_main">
-          <h2 className="subtitulo_h2">▶ Temática</h2>
+          <h2 className="subtitulo_h2"><IconeSeta className="h2_icone" /><span>Temática</span></h2>
 
           <p className="texto_p">Como já mencionei, tentei aplicar alguns elementos visuais que lembram o universo Pokémon, como as paletas temáticas, além dos ícones de Solrock e Lunatone para os modos de tema.
             Também utilizei fontes clássicas dos jogos da primeira geração em alguns títulos e seções da Pokédex, para dar um toque mais nostálgico.</p>
@@ -43,31 +44,65 @@ export default function Home() {
         </section>
 
         <section className="section_main">
-          <h2 className="subtitulo_h2">▶ Tecnologias</h2>
+          <h2 className="subtitulo_h2"><IconeSeta className="h2_icone" /><span>Tecnologias</span></h2>
 
           <ul className="lista_ul">
-            <li className="lista_li"><span>◓</span> Next.js</li>
+            <li className="lista_li">
+              <IconePokeball className="icone_li" />
+              <span>Next.js</span>
+            </li>
 
-            <li className="lista_li"><span>◓</span> React</li>
+            <li className="lista_li">
+              <IconePokeball className="icone_li" />
+              <span>React</span>
+            </li>
 
-            <li className="lista_li"><span>◓</span> Context API</li>
+            <li className="lista_li">
+              <IconePokeball className="icone_li" />
+              <span>Context API</span>
+            </li>
 
-            <li className="lista_li"><span>◓</span> TypeScript</li>
+            <li className="lista_li">
+              <IconePokeball className="icone_li" />
+              <span>TypeScript</span>
+            </li>
 
-            <li className="lista_li"><span>◓</span> CSS Modules</li>
+            <li className="lista_li">
+              <IconePokeball className="icone_li" />
+              <span>CSS Modules</span>
+            </li>
 
-            <li className="lista_li"><span>◓</span> Mobile First</li>
+            <li className="lista_li">
+              <IconePokeball className="icone_li" />
+              <span>Mobile First</span>
+            </li>
 
-            <li className="lista_li"><span>◓</span> Dark/Light Theme</li>
+            <li className="lista_li">
+              <IconePokeball className="icone_li" />
+              <span>Dark / Light Theme</span>
+            </li>
 
-            <li className="lista_li"><span>◓</span> Paleta de cores dinâmica (Red / Blue / Yellow)</li>
+            <li className="lista_li">
+              <IconePokeball className="icone_li" />
+              <span>Paleta de cores dinâmica (Red / Blue / Yellow)</span>
+            </li>
 
-            <li className="lista_li"><span>◓</span> Consumo de API externa (PokéAPI)</li>
+            <li className="lista_li">
+              <IconePokeball className="icone_li" />
+              <span>Consumo de API externa (PokéAPI)</span>
+            </li>
 
-            <li className="lista_li"><span>◓</span> Imagens em WebP quando possível</li>
+            <li className="lista_li">
+              <IconePokeball className="icone_li" />
+              <span>Imagens em WebP quando possível</span>
+            </li>
 
-            <li className="lista_li"><span>◓</span> Fonte temática customizada</li>
+            <li className="lista_li">
+              <IconePokeball className="icone_li" />
+              <span>Fonte temática customizada</span>
+            </li>
           </ul>
+
 
           <p className="texto_p">Durante o desenvolvimento, utilizei o ChatGPT como ferramenta de apoio para revisão de texto, troca de ideias e geração de algumas imagens, mantendo o foco no aprendizado prático e na implementação manual do projeto.</p>
         </section>
