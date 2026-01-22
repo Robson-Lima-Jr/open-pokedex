@@ -64,11 +64,17 @@
     padding: var(--esp-pequeno);
     background: var(--accent);
     border-bottom: 3px solid var(--accent-hover);
-    border-top:  3px solid var(--accent-hover);
+    border-top: 3px solid var(--accent-hover);
     color: var(--accent-text);
 }
 
 .link_nav {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+
     font-family: var(--font-pokemon);
     letter-spacing: 1px;
 
@@ -79,18 +85,22 @@
     padding: 0 var(--esp-micro);
 }
 
-.link_nav:hover {
+.icone_seta {
+    width: 20px;
+    height: auto;
+    color: var(--accent);
+}
+
+
+.link_nav:hover .icone_seta {
     transition: var(--tr-media);
+    color: var(--accent-text);
 }
 
 .link_nav span {
-    color: var(--accent);
     transition: var(--tr-rapida);
 }
 
-.link_nav:hover span {
-    color: var(--accent-color);
-}
 
 /* select de versao do jogo */
 .container_paleta {
@@ -146,7 +156,8 @@
     }
 
     .link_nav {
-        padding: var(--esp-micro);
+        width: auto;
+        padding: var(--esp-micro) var(--esp-padrao);
     }
 }
 
@@ -170,18 +181,25 @@
     }
 
     .link_nav {
+        width: auto;
         padding: var(--esp-micro);
-        color: var(--text);
+        color: var(--text-secondary);
         font-weight: 500;
         border-radius: 0px;
         transition: var(--tr-media);
     }
 
-    .link_nav span {
+    .link_nav:hover {
+        color: var(--text);
+        transition: var(--tr-media);
+    }
+
+    .icone_seta {
         color: var(--surface);
     }
 
-    .link_nav:hover span {
+    .link_nav:hover .icone_seta {
+        color: var(--text);
         transition: var(--tr-media);
     }
 }

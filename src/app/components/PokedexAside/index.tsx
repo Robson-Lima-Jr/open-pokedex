@@ -3,6 +3,7 @@ import styles from "./PokedexAside.module.css";
 import pokemonTypes from "@/app/data/pokemonTypes";
 import regions from "@/app/data/regions";
 import { useState } from "react";
+import { IconePokeball, IconeSeta } from "../icons/Icons";
 
 // props para colocar a config de abrir e fechar do filtro
 type Props = {
@@ -22,7 +23,7 @@ export default function PokedexAside({ isOpen, closeAside }: Props) {
 
     return (
         <aside className={`${styles.container_aside} ${isOpen ? styles.aside_aberto : ""}`}>
-            <h2 className={styles.h2_aside}><span>◓</span> Filtros</h2>
+            <h2 className={styles.h2_aside}><IconePokeball className={styles.icone_h2}/> Filtros</h2>
 
             {/* Busca por texto */}
             <div className={styles.aside_bloco}>
@@ -40,13 +41,13 @@ export default function PokedexAside({ isOpen, closeAside }: Props) {
             {/* tipos */}
             <div className={styles.aside_bloco}>
                 <button className={` ${styles.aside_botao} ${openSection === "tipos" ? styles.botao_ativado : ""}`} onClick={() => toggleSection("tipos")}>
-                    ▶ Tipos
+                    <IconePokeball className={styles.icone_area}/> Tipos
                 </button>
 
                 <ul className={`${styles.aside_ul} ${openSection === "tipos" ? styles.lista_aberta : ""}`}>
                     {pokemonTypes.map((type) => (
                         <li key={type.id} className={styles.aside_li}>
-                            <span>◓</span> {type.namePt} ({type.nameEn})
+                            <IconeSeta className={styles.seta_icone}/> {type.namePt} ({type.nameEn})
                         </li>
                     ))}
                 </ul>
@@ -55,13 +56,13 @@ export default function PokedexAside({ isOpen, closeAside }: Props) {
             {/* Região */}
             <div className={styles.aside_bloco}>
                 <button className={` ${styles.aside_botao} ${openSection === "regioes" ? styles.botao_ativado : ""}`} onClick={() => toggleSection("regioes")}>
-                    ▶ Regiões
+                    <IconePokeball className={styles.icone_area}/> Regiões
                 </button>
 
                 <ul className={`${styles.aside_ul} ${openSection === "regioes" ? styles.lista_aberta : ""}`}>
                     {regions.map((region) => (
                         <li key={region.id} className={styles.aside_li}>
-                            <span>◓</span> {region.namePt}
+                            <IconeSeta className={styles.seta_icone}/> {region.namePt}
                         </li>
                     ))}
                 </ul>

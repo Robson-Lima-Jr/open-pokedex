@@ -47,12 +47,15 @@
 .h2_aside {
     display: flex;
     align-items: center;
+
     gap: 0.5rem;
     font-size: var(--pkm-h2);
     color: var(--text);
 }
 
-.h2_aside span {
+.icone_h2 {
+    width: 25px;
+    height: auto;
     color: var(--accent);
 }
 
@@ -107,6 +110,11 @@
     transition: var(--tr-rapida);
 }
 
+.icone_area {
+    width: 20px;
+    height: auto;
+}
+
 /* listas */
 .aside_ul {
     display: none;
@@ -125,6 +133,7 @@
     padding: var(--esp-micro) 0;
     padding-left: var(--esp-pequeno);
     display: flex;
+    align-items: center;
     gap: 0.5rem;
 
     font-size: var(--fs-mini);
@@ -133,12 +142,14 @@
     color: var(--text-secondary);
 }
 
-.aside_li span {
+.seta_icone {
+    width: 15px;
+    height: auto;
     color: var(--surface);
 }
 
 .aside_li:hover,
-.aside_li:hover span {
+.aside_li:hover .seta_icone {
     color: var(--accent);
 }
 

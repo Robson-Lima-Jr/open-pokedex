@@ -3,7 +3,7 @@ import { useState } from "react";
 import styles from "./pokedex.module.css";
 import PokedexAside from "../components/PokedexAside";
 import PokemonCard from "../components/PokemonCard";
-import { IconeFiltro, IconePokeball } from "../components/icons/Icons";
+import { IconeFiltro, IconePokeball, IconeSeta } from "../components/icons/Icons";
 
 export default function pokedex() {
     const [asideOpen, setAsideOpen] = useState(false);
@@ -47,7 +47,7 @@ export default function pokedex() {
                     </div>
 
                     <section className={`section_main ${styles.container_pokedex}`}>
-                        <h2 className="subtitulo_h2">▶ Nacional Dex</h2>
+                        <h2 className="subtitulo_h2"><IconeSeta className="h2_icone" /><span>Nacional Dex</span></h2>
 
                         <div className={styles.teste_dex}>
                             <PokemonCard />

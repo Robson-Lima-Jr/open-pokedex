@@ -5,14 +5,15 @@ import Image from "next/image";
 import { useTheme } from "@/app/context/ThemeContext";
 import { usePallete } from "@/app/context/PalleteContext";
 import { useMenu } from "@/app/context/MenuContext";
+import { IconeSeta } from "../icons/Icons";
 
 export default function Topo() {
     // muda o estado do menu no mobile
-    const {menuOpen, toggleMenu, closeMenu} = useMenu();
+    const { menuOpen, toggleMenu, closeMenu } = useMenu();
     // muda a cor do pallete para os temas de pokemon
-    const {pallete, changePallete} = usePallete(); 
+    const { pallete, changePallete } = usePallete();
     // muda o fundo de light/dark e o loading
-    const {theme, toggleTheme, loaded} = useTheme();
+    const { theme, toggleTheme, loaded } = useTheme();
 
     // tipo 
     type Pallete = "red" | "blue" | "yellow";
@@ -34,18 +35,26 @@ export default function Topo() {
 
                 {/* menu topo */}
                 <nav className={`${styles.nav} ${menuOpen ? styles.nav_aberto : ""}`}>
-                    <Link href="/" className={styles.link_nav} onClick={closeMenu}><span>▶ </span>HOME</Link>
-                    <Link href="/pokedex" className={styles.link_nav} onClick={closeMenu}><span>▶ </span>POKéDEX</Link>
-                    <Link href="/games" className={styles.link_nav} onClick={closeMenu}><span>▶ </span>JOGOS</Link>
+                    <Link href="/" className={styles.link_nav} onClick={closeMenu}>
+                    <IconeSeta className={styles.icone_seta} /> <span>HOME</span>
+                    </Link>
+
+                    <Link href="/pokedex" className={styles.link_nav} onClick={closeMenu}>
+                    <IconeSeta className={styles.icone_seta} /><span>POKéDEX</span>
+                    </Link>
+
+                    <Link href="/games" className={styles.link_nav} onClick={closeMenu}>
+                    <IconeSeta className={styles.icone_seta} /><span>JOGOS</span>
+                    </Link>
                 </nav>
 
                 {/* mudar tema seguindo jogos pokemon classicos */}
                 <div className={styles.container_paleta}>
-                    <select aria-label="Paleta" 
+                    <select aria-label="Paleta"
                         className={styles.select_btn}
                         value={pallete}
                         onChange={(e) => changePallete(e.target.value as Pallete)}
-                        >
+                    >
                         <option value="red">Red</option>
                         <option value="blue">Blue</option>
                         <option value="yellow">Yellow</option>
