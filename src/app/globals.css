@@ -53,11 +53,11 @@
     --fs-h3: 2.0rem;
 
     /* fonte-especial */
-    --pkm-h1: 2.5rem;
+    --pkm-h1: 2.7rem;
     --pkm-h2: 1.9rem;
     --pkm-icon: 3.2rem;
     --pkm-icon-h2: 2.4rem;
-    --pkm-h1-mobile: 2.2rem;
+    --pkm-h1-mobile: 2.4rem;
     --pkm-h2-mobile: 1.7rem;
     --pkm-icon-mobile: 3rem;
 
@@ -103,6 +103,7 @@
     /* -------- Transições -------- */
     --tr-rapida: .25s ease;
     --tr-media: .40s ease;
+    --tr-aside: .50s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 
@@ -257,7 +258,7 @@ body.dark_mode {
 }
 
 .paragrafo_h1 {
-    font-size: var(--fs-titulo);
+    font-size: 23px;
     color: var(--accent);
     text-align: center;
 }

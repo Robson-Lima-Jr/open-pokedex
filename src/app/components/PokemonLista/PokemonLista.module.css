@@ -1,0 +1,63 @@
+.lista_container {
+    position: relative;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.icone_lista {
+    width: 40px;
+    height: auto;
+    color: var(--text-secondary);
+    background-color: var(--surface);
+    border-radius: 50%;
+    border: 3px solid var(--text);
+
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translate(-50%, -50%);
+}
+
+.area_info {
+    cursor: pointer;
+    width: 100%;
+    padding: 0 var(--esp-micro);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+
+    background-color: var(--surface);
+    border: 3px solid var(--text);
+    border-top-right-radius: 25px;
+    border-bottom-right-radius: 25px;
+
+
+    font-family: var(--font-pokemon);
+    text-transform: uppercase;
+}
+
+.lista_container:hover .icone_lista {
+    color: var(--accent);
+    transition: var(--tr-rapida);
+}
+
+.dex_num {
+    flex-shrink: 0;
+}
+
+.sprite_area {
+    flex-shrink: 0;
+}
+
+.lista_nome {}
+
+.lista_tipos {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}

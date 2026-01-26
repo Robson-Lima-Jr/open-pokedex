@@ -1,8 +1,9 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./pokedex.module.css";
 import PokedexAside from "../components/PokedexAside";
 import PokemonCard from "../components/PokemonCard";
+import PokemonLista from "../components/PokemonLista";
 import { IconeFiltro, IconePokeball, IconeSeta } from "../components/icons/Icons";
 
 export default function pokedex() {
@@ -16,16 +17,29 @@ export default function pokedex() {
         setAsideOpen(false);
     }
 
+    // travar a tela quando o overlay estiver ativo
+    useEffect(() => {
+        if (asideOpen) {
+            document.body.style.overflow = "hidden";
+        } else {
+            document.body.style.overflow = "";
+        }
+
+        return () => {
+            document.body.style.overflow = "";
+        };
+    }, [asideOpen]);
+
     return (
         <main >
             <div className={styles.layout_pokedex}>
-                <PokedexAside isOpen={asideOpen} closeAside={closeAside}/>
+                <PokedexAside isOpen={asideOpen} closeAside={closeAside} />
 
                 {/* criar o fundo clicavel pro apos o aside abrir no mobile */}
                 {asideOpen && (
                     <div className={styles.overlay}
-                         onClick={closeAside}
-                         aria-hidden="true">
+                        onClick={closeAside}
+                        aria-hidden="true">
                     </div>
                 )}
 
@@ -33,7 +47,7 @@ export default function pokedex() {
                     <div className={`titulo_area ${styles.config_area}`}>
                         <div>
                             <h1 className="titulo_h1">
-                                <IconePokeball className="h1_icone"/>
+                                <IconePokeball className="h1_icone" />
                                 <span>Pokédex</span>
                             </h1>
                             <p className="paragrafo_h1">Database</p>
@@ -42,7 +56,7 @@ export default function pokedex() {
                         <button onClick={toggleAside}
                             className={styles.botao_filtro}
                             aria-label="Abrir Filtro">
-                                <IconeFiltro className={styles.icone_filtro}/>
+                            <IconeFiltro className={styles.icone_filtro} />
                         </button>
                     </div>
 
@@ -56,6 +70,15 @@ export default function pokedex() {
                             <PokemonCard />
                             <PokemonCard />
                             <PokemonCard />
+                        </div>
+
+                        <div className={styles.lista_dex}>
+                            <PokemonLista />
+                            <PokemonLista />
+                            <PokemonLista />
+                            <PokemonLista />
+                            <PokemonLista />
+                            <PokemonLista />
                         </div>
                     </section>
                 </div>

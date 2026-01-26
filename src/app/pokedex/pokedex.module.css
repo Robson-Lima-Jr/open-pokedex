@@ -23,7 +23,7 @@
     cursor: pointer;
     position: fixed;
     top: 70px;
-    left: 12px;
+    left: 16px;
     z-index: 40;
 
     padding: 8px 10px;
@@ -32,8 +32,8 @@
     align-items: center;
     justify-content: center;
 
-    background-color: var(--bg-hover);
-    color: var(--text);
+    background-color: var(--text-secondary);
+    color: var(--surface);
     border: none;
     border-radius: var(--radius-p);
 }
@@ -61,6 +61,14 @@
     justify-content: center;
     gap: var(--gap);
     flex-wrap: wrap;
+}
+
+.lista_dex{
+    width: 100%;
+    max-width: 330px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
 }
 
 /* media-query */
