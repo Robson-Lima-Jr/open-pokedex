@@ -177,7 +177,7 @@ body.dark_mode {
     --accent: #f22350;
     --accent-hover: #ad1a44;
     --accent-overlay: #f2235050;
-    --accent-soft: rgba(225, 29, 72, .12);
+    --accent-soft: rgba(225, 29, 71, 0.35);
     --accent-text: rgb(255, 255, 255);
 }
 
@@ -186,7 +186,7 @@ body.dark_mode {
     --accent: #2563eb;
     --accent-hover: #1944b9;
     --accent-overlay: #2564eb50;
-    --accent-soft: rgba(37, 99, 235, .12);
+    --accent-soft: rgba(37, 99, 235, 0.35);
     --accent-text: rgb(255, 255, 255);
 }
 
@@ -195,7 +195,7 @@ body.dark_mode {
     --accent: #eab308;
     --accent-hover: #c8911a;
     --accent-overlay: #eab30850;
-    --accent-soft: rgba(234, 179, 8, .14);
+    --accent-soft: rgba(234, 179, 8, 0.35);
     --accent-text: var(--text-1);
 }
 
@@ -204,7 +204,7 @@ body.dark_mode {
 .container_base {
     width: 100%;
     margin: 0 auto;
-    padding: 0 var(--esp-medio) var(--esp-secao);
+    padding: 0 var(--esp-padrao) var(--esp-secao);
 
     display: flex;
     flex-direction: column;

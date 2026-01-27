@@ -6,7 +6,7 @@ const pokemonTypes = [
   { id: 5, namePt: "Elétrico", nameEn: "electric" },
   { id: 6, namePt: "Gelo", nameEn: "ice" },
   { id: 7, namePt: "Lutador", nameEn: "fighting" },
-  { id: 8, namePt: "Venenoso", nameEn: "poison" },
+  { id: 8, namePt: "Veneno", nameEn: "poison" },
   { id: 9, namePt: "Terra", nameEn: "ground" },
   { id: 10, namePt: "Voador", nameEn: "flying" },
   { id: 11, namePt: "Psíquico", nameEn: "psychic" },

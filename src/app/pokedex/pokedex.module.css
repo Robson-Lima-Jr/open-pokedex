@@ -63,12 +63,12 @@
     flex-wrap: wrap;
 }
 
-.lista_dex{
+.lista_dex {
     width: 100%;
-    max-width: 330px;
+    max-width: 294px;
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: 0.7rem;
 }
 
 /* media-query */
@@ -79,5 +79,11 @@
 
     .botao_filtro {
         display: none;
+    }
+}
+
+@media screen and (min-width: 455px) {
+    .lista_dex {
+        max-width: 400px;
     }
 }

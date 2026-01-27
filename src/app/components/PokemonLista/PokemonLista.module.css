@@ -1,3 +1,4 @@
+/* container geral */
 .lista_container {
     position: relative;
     cursor: pointer;
@@ -5,9 +6,11 @@
     align-items: center;
 }
 
+/* icones de lista */
 .icone_lista {
     width: 40px;
     height: auto;
+
     color: var(--text-secondary);
     background-color: var(--surface);
     border-radius: 50%;
@@ -19,15 +22,15 @@
     transform: translate(-50%, -50%);
 }
 
+/* dados da lista */
 .area_info {
     cursor: pointer;
     width: 100%;
-    padding: 0 var(--esp-micro);
+    padding-left: 23px;
 
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
+    gap: 0.8rem;
 
     background-color: var(--surface);
     border: 3px solid var(--text);
@@ -39,25 +42,53 @@
     text-transform: uppercase;
 }
 
-.lista_container:hover .icone_lista {
+.lista_container:hover .icone_lista,
+.lista_container:hover .lista_nome {
     color: var(--accent);
     transition: var(--tr-rapida);
 }
 
+/* numero */
 .dex_num {
     flex-shrink: 0;
+    font-size: var(--fs-card-nome);
+    letter-spacing: 1px;
+    color: var(--text);
 }
 
+/* sprite */
 .sprite_area {
-    flex-shrink: 0;
+    background-color: var(--accent-soft);
 }
 
-.lista_nome {}
+/* nome do pokemon */
+.lista_nome {
+    font-size: var(--fs-card-nome);
+    letter-spacing: 1px;
+    color: var(--text);
+    font-weight: 600;
+}
 
-.lista_tipos {
+/* lista de tipos  */
+.tipos_area {
     height: 100%;
-    display: flex;
+    padding-left: 8px;
+
+    display: none;
     flex-direction: column;
     align-items: center;
+    gap: 0.5rem;
     justify-content: center;
+
+    font-size: var(--fs-card-nome);
+    color: var(--text-secondary);
+    line-height: var(--lh-texto);
+    text-align: center;
+}
+
+/* media-query */
+@media screen and (min-width: 455px) {
+    .tipos_area {
+        display: flex;
+    }
 }
