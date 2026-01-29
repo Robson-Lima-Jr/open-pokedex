@@ -1,7 +1,7 @@
 .container_aside {
     width: var(--container-aside);
     height: calc(100vh - var(--altura-topo));
-    padding: var(--esp-medio);
+    padding: var(--esp-pequeno) var(--esp-medio);
 
     position: fixed;
     top: var(--altura-topo);
@@ -54,7 +54,6 @@
 
 .aside_aberto {
     transform: translateX(0);
-    transition: var(--tr-media);
 }
 
 .container_aside:hover {
@@ -176,7 +175,7 @@
     color: var(--text);
 }
 
-@media (max-width: 767px) {
+@media (max-width: 949px) {
     .container_aside {
         position: fixed;
         top: var(--altura-topo);
@@ -184,7 +183,7 @@
         height: calc(100vh - var(--altura-topo));
 
         transform: translateX(-100%);
-        transition: var(--tr-rapida);
+        transition: var(--tr-aside);
         z-index: 999;
     }
 

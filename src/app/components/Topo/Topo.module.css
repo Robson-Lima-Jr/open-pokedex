@@ -150,7 +150,11 @@
 }
 
 /* >>>>>>>> Media Query - Desktop <<<<<<<<*/
-@media screen and (min-width: 400px) and (max-width: 767px) {
+@media screen and (min-width: 410px) and (max-width: 767px) {
+    .nav {
+        gap: 0;
+    }
+    
     .nav_aberto {
         flex-direction: row;
     }
@@ -170,7 +174,6 @@
         position: static;
         display: flex;
         flex-direction: row;
-        gap: var(--gap);
         background: var(--surface);
         color: var(--text-secondary);
     }
@@ -195,7 +198,7 @@
     }
 
     .icone_seta {
-        color: var(--surface);
+        color: transparent;
     }
 
     .link_nav:hover .icone_seta {

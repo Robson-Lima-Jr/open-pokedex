@@ -53,11 +53,11 @@
     --fs-h3: 2.0rem;
 
     /* fonte-especial */
-    --pkm-h1: 2.5rem;
+    --pkm-h1: 2.7rem;
     --pkm-h2: 1.9rem;
     --pkm-icon: 3.2rem;
     --pkm-icon-h2: 2.4rem;
-    --pkm-h1-mobile: 2.2rem;
+    --pkm-h1-mobile: 2.4rem;
     --pkm-h2-mobile: 1.7rem;
     --pkm-icon-mobile: 3rem;
 
@@ -103,6 +103,7 @@
     /* -------- Transições -------- */
     --tr-rapida: .25s ease;
     --tr-media: .40s ease;
+    --tr-aside: .50s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 
@@ -176,7 +177,7 @@ body.dark_mode {
     --accent: #f22350;
     --accent-hover: #ad1a44;
     --accent-overlay: #f2235050;
-    --accent-soft: rgba(225, 29, 72, .12);
+    --accent-soft: rgba(225, 29, 71, 0.35);
     --accent-text: rgb(255, 255, 255);
 }
 
@@ -185,7 +186,7 @@ body.dark_mode {
     --accent: #2563eb;
     --accent-hover: #1944b9;
     --accent-overlay: #2564eb50;
-    --accent-soft: rgba(37, 99, 235, .12);
+    --accent-soft: rgba(37, 99, 235, 0.35);
     --accent-text: rgb(255, 255, 255);
 }
 
@@ -194,7 +195,7 @@ body.dark_mode {
     --accent: #eab308;
     --accent-hover: #c8911a;
     --accent-overlay: #eab30850;
-    --accent-soft: rgba(234, 179, 8, .14);
+    --accent-soft: rgba(234, 179, 8, 0.35);
     --accent-text: var(--text-1);
 }
 
@@ -203,7 +204,7 @@ body.dark_mode {
 .container_base {
     width: 100%;
     margin: 0 auto;
-    padding: 0 var(--esp-medio) var(--esp-secao);
+    padding: 0 var(--esp-padrao) var(--esp-secao);
 
     display: flex;
     flex-direction: column;
@@ -257,7 +258,7 @@ body.dark_mode {
 }
 
 .paragrafo_h1 {
-    font-size: var(--fs-titulo);
+    font-size: 23px;
     color: var(--accent);
     text-align: center;
 }

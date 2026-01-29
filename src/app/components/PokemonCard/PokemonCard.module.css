@@ -1,6 +1,6 @@
 .card_container {
     width: 260px;
-    height: 260px;
+    height: 265px;
 
     padding: var(--esp-pequeno);
     display: flex;

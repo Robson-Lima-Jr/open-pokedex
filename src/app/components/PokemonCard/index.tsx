@@ -21,7 +21,7 @@ export default function PokemonCard() {
 
                     <div className={styles.tipos_area}>
                         <p className={styles.tipos_desc}>Tipo <span>2</span>/</p>
-                        <p className={styles.tipos}>Voador</p>
+                        <p className={styles.tipos}>Flying</p>
                     </div>
                 </div>
             </div>
