@@ -53,7 +53,7 @@ export default function PokedexAside({ isOpen, closeAside }: Props) {
                 <ul className={`${styles.aside_ul} ${openSection === "tipos" ? styles.lista_aberta : ""}`}>
                     {pokemonTypes.map((type) => (
                         <li key={type.id} className={styles.aside_li}>
-                            <IconeSeta className={styles.seta_icone}/> {type.namePt} ({type.nameEn})
+                            <IconeSeta className={styles.seta_icone}/> {type.nameEn} ({type.namePt})
                         </li>
                     ))}
                 </ul>

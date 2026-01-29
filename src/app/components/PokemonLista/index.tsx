@@ -18,7 +18,7 @@ export default function PokemonLista() {
 
                 <div className={styles.tipos_area}>
                     <span>Normal</span>
-                    <span>Elétrico</span>
+                    <span>Fighting</span>
                 </div>
             </div>
         </article>
