@@ -238,6 +238,10 @@ body.dark_mode {
     height: 1.15em;
 }
 
+.h1_icone, .h2_icone {
+    top: -0.1em;
+}
+
 .icone_wrap,
 .texto_titulo,
 .texto_li {
