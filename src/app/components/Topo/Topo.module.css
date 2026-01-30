@@ -87,18 +87,21 @@
     line-height: 1;
 }
 
-.link_nav span {
-  display: inline-flex;
-  align-items: center;
+
+.icone_wrap,
+.texto_nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
 }
 
 .icone_seta {
-    width: 20px;
-    height: 20px;
-
-    display: block;
-    flex-shrink: 0;
-
+    width: 1.4em;
+    height: 1.4em;
+    position: relative;
+    top: -0.03em;
+    
     color: var(--accent);
 }
 

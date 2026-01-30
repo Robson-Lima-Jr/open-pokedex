@@ -36,15 +36,28 @@ export default function Topo() {
                 {/* menu topo */}
                 <nav className={`${styles.nav} ${menuOpen ? styles.nav_aberto : ""}`}>
                     <Link href="/" className={styles.link_nav} onClick={closeMenu}>
-                    <IconeSeta className={styles.icone_seta} /> <span>HOME</span>
+
+                        <span className={styles.icone_wrap}>
+                            <IconeSeta className={styles.icone_seta} />
+                        </span>
+
+                        <span className={styles.texto_nav}>HOME</span>
                     </Link>
 
                     <Link href="/pokedex" className={styles.link_nav} onClick={closeMenu}>
-                    <IconeSeta className={styles.icone_seta} /><span>POKéDEX</span>
+                        <span className={styles.icone_wrap}>
+                            <IconeSeta className={styles.icone_seta} />
+                        </span>
+
+                         <span className={styles.texto_nav}>POKéDEX</span>
                     </Link>
 
                     <Link href="/games" className={styles.link_nav} onClick={closeMenu}>
-                    <IconeSeta className={styles.icone_seta} /><span>JOGOS</span>
+                        <span className={styles.icone_wrap}>
+                            <IconeSeta className={styles.icone_seta} />
+                        </span>
+
+                         <span className={styles.texto_nav}>JOGOS</span>
                     </Link>
                 </nav>
 
