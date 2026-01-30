@@ -238,8 +238,12 @@ body.dark_mode {
     height: 1.15em;
 }
 
-.h1_icone, .h2_icone {
-    top: -3em;
+.h1_icone,
+.h2_icone {
+    display: block;
+    position: relative;
+    top: -0.15em;
+
 }
 
 .icone_wrap,
