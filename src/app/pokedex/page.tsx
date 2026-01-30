@@ -47,9 +47,13 @@ export default function pokedex() {
                     <div className={`titulo_area ${styles.config_area}`}>
                         <div>
                             <h1 className="titulo_h1">
-                                <IconePokeball className="h1_icone" />
-                                <span>Pokédex</span>
+                                <div className="icone_wrap">
+                                    <IconePokeball className="h1_icone" />
+                                </div>
+
+                                <span className="texto_titulo">Pokédex</span>
                             </h1>
+
                             <p className="paragrafo_h1">Database</p>
                         </div>
 
@@ -61,7 +65,13 @@ export default function pokedex() {
                     </div>
 
                     <section className={`section_main ${styles.container_pokedex}`}>
-                        <h2 className="subtitulo_h2"><IconeSeta className="h2_icone" /><span>Nacional Dex</span></h2>
+                        <h2 className="subtitulo_h2">
+                            <div className="icone_wrap">
+                                <IconeSeta className="h2_icone" />
+                            </div>
+
+                            <span className="texto_titulo">Nacional Dex</span>
+                        </h2>
 
                         <div className={styles.teste_dex}>
                             <PokemonCard />
