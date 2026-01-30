@@ -239,7 +239,7 @@ body.dark_mode {
 }
 
 .h1_icone, .h2_icone {
-    top: -0.1em;
+    top: -3em;
 }
 
 .icone_wrap,
@@ -348,11 +348,6 @@ body.dark_mode {
     .titulo_h1 {
         font-size: var(--pkm-h1);
         flex-direction: row;
-    }
-
-    .h1_icone {
-        font-size: var(--pkm-icon);
-        height: auto;
     }
 
     .h1_principal {
