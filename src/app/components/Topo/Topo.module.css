@@ -51,7 +51,7 @@
 
 /* nav quando for clicado pra abrir o menu no mobile */
 .nav_aberto {
-    min-height: 48px;
+    height: 125px;
     display: flex;
     flex-direction: column;
     position: absolute;
@@ -101,7 +101,7 @@
     height: 1.4em;
     position: relative;
     top: -0.03em;
-    
+
     color: var(--accent);
 }
 
@@ -170,12 +170,17 @@
     }
 
     .nav_aberto {
+        height: 60px;
         flex-direction: row;
     }
 
     .link_nav {
         width: auto;
         padding: var(--esp-micro) var(--esp-padrao);
+    }
+
+    .icone_seta {
+        top: -0.05em;
     }
 }
 
@@ -185,6 +190,7 @@
     }
 
     .nav {
+        height: 100%;
         position: static;
         display: flex;
         flex-direction: row;
