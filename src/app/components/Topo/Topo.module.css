@@ -101,7 +101,7 @@
     width: 1.4em;
     height: 1.4em;
     position: relative;
-    top: -0.03em;
+    top: -0.1em;
 
     color: var(--accent);
 }
@@ -179,10 +179,6 @@
         width: auto;
         padding: var(--esp-micro) var(--esp-padrao);
     }
-
-    .icone_seta {
-        top: -0.07em;
-    }
 }
 
 @media screen and (min-width: 768px) {
@@ -225,9 +221,5 @@
     .link_nav:hover .icone_seta {
         color: var(--text);
         transition: var(--tr-media);
-    }
-
-    .icone_seta {
-        top: -0.07em;
     }
 }
