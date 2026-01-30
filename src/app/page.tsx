@@ -70,61 +70,93 @@ export default function Home() {
 
           <ul className="lista_ul">
             <li className="lista_li">
-              <IconePokeball className="icone_li" />
-              <span>Next.js</span>
+              <div className="icone_wrap">
+                <IconePokeball className="icone_li" />
+              </div>
+
+              <span className="texto_li">Next.js</span>
             </li>
 
             <li className="lista_li">
-              <IconePokeball className="icone_li" />
-              <span>React</span>
+              <div className="icone_wrap">
+                <IconePokeball className="icone_li" />
+              </div>
+             
+              <span className="texto_li">React</span>
             </li>
 
             <li className="lista_li">
-              <IconePokeball className="icone_li" />
-              <span>Context API</span>
+              <div className="icone_wrap">
+                <IconePokeball className="icone_li" />
+              </div>
+             
+              <span className="texto_li">Context API</span>
             </li>
 
             <li className="lista_li">
-              <IconePokeball className="icone_li" />
-              <span>TypeScript</span>
+              <div className="icone_wrap">
+                <IconePokeball className="icone_li" />
+              </div>
+             
+              <span className="texto_li">TypeScript</span>
             </li>
 
             <li className="lista_li">
-              <IconePokeball className="icone_li" />
-              <span>CSS Modules</span>
+              <div className="icone_wrap">
+                <IconePokeball className="icone_li" />
+              </div>
+             
+              <span className="texto_li">CSS Modules</span>
             </li>
 
             <li className="lista_li">
-              <IconePokeball className="icone_li" />
-              <span>Mobile First</span>
+              <div className="icone_wrap">
+                <IconePokeball className="icone_li" />
+              </div>
+             
+              <span className="texto_li">Mobile First</span>
             </li>
 
             <li className="lista_li">
-              <IconePokeball className="icone_li" />
-              <span>Dark / Light Theme</span>
+              <div className="icone_wrap">
+                <IconePokeball className="icone_li" />
+              </div>
+             
+              <span className="texto_li">Dark / Light Theme</span>
             </li>
 
             <li className="lista_li">
-              <IconePokeball className="icone_li" />
-              <span>Paleta de cores dinâmica (Red / Blue / Yellow)</span>
+              <div className="icone_wrap">
+                <IconePokeball className="icone_li" />
+              </div>
+             
+              <span className="texto_li">Paleta dinâmica (Red / Blue / Yellow)</span>
             </li>
 
             <li className="lista_li">
-              <IconePokeball className="icone_li" />
-              <span>Consumo de API externa (PokéAPI)</span>
+              <div className="icone_wrap">
+                <IconePokeball className="icone_li" />
+              </div>
+             
+              <span className="texto_li">Consumo de API externa (PokéAPI)</span>
             </li>
 
             <li className="lista_li">
-              <IconePokeball className="icone_li" />
-              <span>Imagens em WebP quando possível</span>
+              <div className="icone_wrap">
+                <IconePokeball className="icone_li" />
+              </div>
+             
+              <span className="texto_li">Imagens em WebP quando possível</span>
             </li>
 
             <li className="lista_li">
-              <IconePokeball className="icone_li" />
-              <span>Fonte temática customizada</span>
+              <div className="icone_wrap">
+                <IconePokeball className="icone_li" />
+              </div>
+             
+              <span className="texto_li">Fonte temática customizada</span>
             </li>
           </ul>
-
 
           <p className="texto_p">Durante o desenvolvimento, utilizei o ChatGPT como ferramenta de apoio para revisão de texto, troca de ideias e geração de algumas imagens, mantendo o foco no aprendizado prático e na implementação manual do projeto.</p>
         </section>

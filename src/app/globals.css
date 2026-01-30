@@ -231,6 +231,22 @@ body.dark_mode {
     align-items: center;
 }
 
+.h1_icone,
+.h2_icone,
+.icone_li {
+    width: 1.15em;
+    height: 1.15em;
+}
+
+.icone_wrap,
+.texto_titulo,
+.texto_li {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
+
 .titulo_h1,
 .subtitulo_h2 {
     font-family: var(--font-pokemon);
@@ -251,18 +267,7 @@ body.dark_mode {
     text-align: center;
 }
 
-.icone_wrap,
-.texto_titulo {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    line-height: 1;
-}
-
-
 .h1_icone {
-    width: var(--pkm-icon-mobile);
-    height: auto;
     color: var(--accent);
 }
 
@@ -282,8 +287,6 @@ body.dark_mode {
 }
 
 .h2_icone {
-    width: var(--pkm-icon-h2);
-    height: auto;
     color: var(--text);
 }
 
@@ -322,8 +325,6 @@ body.dark_mode {
 }
 
 .icone_li {
-    width: var(--fs-titulo);
-    height: auto;
     color: var(--accent);
 }
 
