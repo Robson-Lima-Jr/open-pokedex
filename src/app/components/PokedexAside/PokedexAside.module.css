@@ -36,18 +36,19 @@
 
     display: flex;
     justify-content: center;
-    padding: 8px 10px;
+    padding: 4px 8px;
 
     font-size: var(--pkm-h1-mobile);
     font-weight: 700;
     border: none;
     border-radius: var(--radius-p);
-    background-color: var(--surface);
+    background-color: var(--bg-hover);
     color: var(--text);
 }
 
 .fechar_aside:hover {
-    background-color: var(--bg-hover);
+    background-color: var(--accent-hover);
+    color: var(--accent-text);
     transition: var(--tr-rapida);
 }
 
@@ -116,9 +117,10 @@
 
     gap: 0.5rem;
     font-size: var(--fs-pequeno);
+    background-color: transparent;
     color: var(--text);
     font-weight: 600;
-    border: 2px solid var(--surface);
+    border: 2px solid transparent;
     border-radius: var(--radius-p);
 }
 
@@ -167,7 +169,7 @@
 .seta_icone {
     width: 15px;
     height: auto;
-    color: var(--surface);
+    color: transparent;
 }
 
 .aside_li:hover,

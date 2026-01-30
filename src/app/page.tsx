@@ -9,16 +9,24 @@ export default function Home() {
       <main className={`container_base ${styles.container_home}`}>
         <div className="titulo_area">
           <h1 className="titulo_h1">
-            <IconePokeball className="h1_icone" />
+            <div className="icone_wrap">
+              <IconePokeball className="h1_icone" />
+            </div>
 
-            <span>Pokédex</span>
+            <span className="texto_titulo">Pokédex</span>
           </h1>
 
           <p className="paragrafo_h1">Projeto desenvolvimento Web</p>
         </div>
 
         <section className="section_main">
-          <h2 className="subtitulo_h2"><IconeSeta className="h2_icone" /><span>Introdução</span></h2>
+          <h2 className="subtitulo_h2">
+            <div className="icone_wrap">
+              <IconeSeta className="h2_icone" />
+            </div>
+
+            <span className="texto_titulo">Introdução</span>
+          </h2>
 
           <p className="texto_p">Este projeto foi criado como parte dos meus estudos em desenvolvimento web, usando Pokémon como temática <em> ( eu sei que existem umas 15.000 Pokédex que o pessoal faz para práticar - mas convenhamos, é bem divertido )</em>.</p>
 
@@ -34,7 +42,13 @@ export default function Home() {
         </section>
 
         <section className="section_main">
-          <h2 className="subtitulo_h2"><IconeSeta className="h2_icone" /><span>Temática</span></h2>
+          <h2 className="subtitulo_h2">
+            <div className="icone_wrap">
+              <IconeSeta className="h2_icone" />
+            </div>
+
+            <span className="texto_titulo">Temática</span>
+          </h2>
 
           <p className="texto_p">Como já mencionei, tentei aplicar alguns elementos visuais que lembram o universo Pokémon, como as paletas temáticas, além dos ícones de Solrock e Lunatone para os modos de tema.
             Também utilizei fontes clássicas dos jogos da primeira geração em alguns títulos e seções da Pokédex, para dar um toque mais nostálgico.</p>
@@ -44,7 +58,15 @@ export default function Home() {
         </section>
 
         <section className="section_main">
-          <h2 className="subtitulo_h2"><IconeSeta className="h2_icone" /><span>Tecnologias</span></h2>
+          <h2 className="subtitulo_h2">
+
+            <div className="icone_wrap">
+              <IconeSeta className="h2_icone" />
+            </div>
+
+            <span className="texto_titulo">Tecnologias</span>
+
+          </h2>
 
           <ul className="lista_ul">
             <li className="lista_li">

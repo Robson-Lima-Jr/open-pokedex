@@ -251,6 +251,15 @@ body.dark_mode {
     text-align: center;
 }
 
+.icone_wrap,
+.texto_titulo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
+
+
 .h1_icone {
     width: var(--pkm-icon-mobile);
     height: auto;
