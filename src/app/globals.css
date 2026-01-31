@@ -364,9 +364,16 @@ body.dark_mode {
     .lista_li {
         margin-left: var(--esp-medio);
     }
+
+    .h1_icone,
+    .h2_icone {
+        top: -0.08em;
+    }
+
 }
 
 @media screen and (min-width: 900px) {
+
     .h1_icone,
     .h2_icone {
         top: 0;
