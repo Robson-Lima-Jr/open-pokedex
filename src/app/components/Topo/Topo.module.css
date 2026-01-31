@@ -100,7 +100,7 @@
     width: 1.4em;
     height: 1.4em;
     position: relative;
-    top: -0.12em;
+    top: -0.14em;
 
     color: transparent;
 }
@@ -180,7 +180,7 @@
     }
 
     .icone_seta {
-        top: -0.1em;
+        top: -0.12em;
     }
 }
 
