@@ -11,8 +11,8 @@
     --bg-1: #f8f1f1;
     --bg-2: #ffffff;
     --hover: rgba(0, 0, 0, 0.2);
-    --bg-1-dark: #0D0D0D;
-    --bg-2-dark: #1C1C1C;
+    --bg-1-dark: #252424;
+    --bg-2-dark: #0D0D0D;
     --hover-dark: rgba(255, 255, 255, 0.2);
 
     /* texto */
@@ -53,11 +53,11 @@
     --fs-h3: 2.0rem;
 
     /* fonte-especial */
-    --pkm-h1: 2.7rem;
+    --pkm-h1: 3rem;
     --pkm-h2: 1.9rem;
     --pkm-icon: 3.2rem;
     --pkm-icon-h2: 2.4rem;
-    --pkm-h1-mobile: 2.4rem;
+    --pkm-h1-mobile: 2.7rem;
     --pkm-h2-mobile: 1.7rem;
     --pkm-icon-mobile: 3rem;
 
@@ -175,7 +175,7 @@ body.dark_mode {
 /* tema pokemon red */
 .pallete_red {
     --accent: #f22350;
-    --accent-hover: #ad1a44;
+    --accent-hover: #9c153c;
     --accent-overlay: #f2235050;
     --accent-soft: rgba(225, 29, 71, 0.35);
     --accent-text: rgb(255, 255, 255);
@@ -184,7 +184,7 @@ body.dark_mode {
 /* tema pokémon blue */
 .pallete_blue {
     --accent: #2563eb;
-    --accent-hover: #1944b9;
+    --accent-hover: #173ea9;
     --accent-overlay: #2564eb50;
     --accent-soft: rgba(37, 99, 235, 0.35);
     --accent-text: rgb(255, 255, 255);
@@ -193,7 +193,7 @@ body.dark_mode {
 /* tema pokémon yellow */
 .pallete_yellow {
     --accent: #eab308;
-    --accent-hover: #c8911a;
+    --accent-hover: #b78416;
     --accent-overlay: #eab30850;
     --accent-soft: rgba(234, 179, 8, 0.35);
     --accent-text: var(--text-1);
@@ -347,7 +347,7 @@ body.dark_mode {
 }
 
 /* media-query */
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 768px) and (max-width: 899px){
     .titulo_h1 {
         font-size: var(--pkm-h1);
         flex-direction: row;
@@ -373,7 +373,6 @@ body.dark_mode {
 }
 
 @media screen and (min-width: 900px) {
-
     .h1_icone,
     .h2_icone {
         top: 0;
