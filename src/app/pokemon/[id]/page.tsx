@@ -11,7 +11,7 @@ export default function PokemonPage({ params }: { params: { id: string } }) {
                     <div className={styles.nav_pokemon}>
                         <Link href="#" className={styles.link_pokemon}>
                             <IconeLink className={styles.link_icon} />
-                            <span>#0017</span> Pidgeot
+                            <span>#0017</span> Pidgeotto
                         </Link>
 
                         <Link href="#" className={styles.link_pokemon}>
@@ -22,23 +22,31 @@ export default function PokemonPage({ params }: { params: { id: string } }) {
 
                     <h1 className={styles.h1_pokemon}>Pidgeot</h1>
                 </section>
-                
+
                 <section className={styles.imagem_area}>
                     <Image src="/018.png" width={200} height={200} alt="Pokémon" className={styles.imagem_pokemon}></Image>
-
-                    <span>Nº Nacional: 0018</span>
                 </section>
 
-                <section className={styles.tipos_area}>
-                    <span className={styles.tipo_pokemon}>Normal</span>
+                <section className={styles.dados_pokemon}>
+                    <h2 className={styles.h2_descricao}>Dados na Pokédex</h2>
 
-                    <span className={styles.tipo_pokemon}>Flying</span>
-                </section>
+                    <span className={styles.dex_num}><strong>Nº Pokédex: </strong>#0018</span>
 
-                <section className={styles.habilidade_area}>
-                    <span className={styles.habilidade_pokemon}>1 No Guard(Sem guarda)</span>
-                    
-                    <span className={styles.habilidade_pokemon}>2 Levitate (Levitação)</span>
+                    <div className={styles.tipos_area}>
+                        <span className={styles.dex_num}><strong>Tipo: </strong></span>
+
+                        <span className={styles.tipo_pokemon} data-type="normal">Normal</span>
+
+                        <span className={styles.tipo_pokemon} data-type="flying">Flying</span>
+                    </div>
+
+                    <div className={styles.habilidade_area}>
+                        <span className={styles.dex_num}><strong>Habilidade: </strong></span>
+
+                        <span className={styles.habilidade_pokemon}>1 No Guard(Sem guarda)</span>
+
+                        <span className={styles.habilidade_pokemon}>2 Levitate (Levitação)</span>
+                    </div>
                 </section>
 
                 <section className={styles.descricao_area}>
