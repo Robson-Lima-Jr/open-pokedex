@@ -11,8 +11,8 @@
     --bg-1: #f8f1f1;
     --bg-2: #ffffff;
     --hover: rgba(0, 0, 0, 0.2);
-    --bg-1-dark: #252424;
-    --bg-2-dark: #0D0D0D;
+    --bg-2-dark: #252424;
+    --bg-1-dark: #0D0D0D;
     --hover-dark: rgba(255, 255, 255, 0.2);
 
     /* texto */
@@ -179,6 +179,8 @@ body.dark_mode {
     --accent-overlay: #f2235050;
     --accent-soft: rgba(225, 29, 71, 0.35);
     --accent-text: rgb(255, 255, 255);
+    --accent-descricao: var(--text-2-dark);
+
 }
 
 /* tema pokémon blue */
@@ -188,6 +190,7 @@ body.dark_mode {
     --accent-overlay: #2564eb50;
     --accent-soft: rgba(37, 99, 235, 0.35);
     --accent-text: rgb(255, 255, 255);
+    --accent-descricao: var(--text-2-dark);
 }
 
 /* tema pokémon yellow */
@@ -197,6 +200,7 @@ body.dark_mode {
     --accent-overlay: #eab30850;
     --accent-soft: rgba(234, 179, 8, 0.35);
     --accent-text: var(--text-1);
+    --accent-descricao: var(--text-2);
 }
 
 /* ---------> configurações das paginas <--------- */

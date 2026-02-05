@@ -30,32 +30,39 @@ export default function PokemonPage({ params }: { params: { id: string } }) {
                 <section className={styles.dados_pokemon}>
                     <h2 className={styles.h2_descricao}>Dados na Pokédex</h2>
 
-                    <span className={styles.dex_num}><strong>Nº Pokédex: </strong>#0018</span>
+                    <div>
+                        <div className={styles.fundo_dados}>
+                            <p className={styles.item_dados}>Nº Pokédex: <span className={styles.valores_dados}>#0018</span></p>
 
-                    <div className={styles.tipos_area}>
-                        <span className={styles.dex_num}><strong>Tipo: </strong></span>
+                            <p className={styles.item_dados}>Altura: <span className={styles.valores_dados}>1.50 m</span></p>
 
-                        <span className={styles.tipo_pokemon} data-type="normal">Normal</span>
+                            <p className={styles.item_dados}>Peso: <span className={styles.valores_dados}>30 kg</span></p>
 
-                        <span className={styles.tipo_pokemon} data-type="flying">Flying</span>
-                    </div>
+                            <p className={styles.item_dados}>Gênero: <span className={styles.valores_dados}>Desconhecido</span></p>
 
-                    <div className={styles.habilidade_area}>
-                        <span className={styles.dex_num}><strong>Habilidade: </strong></span>
+                            <p className={styles.item_dados}>Categoria: <span className={styles.valores_dados}>Bola</span></p>
 
-                        <span className={styles.habilidade_pokemon}>1 No Guard(Sem guarda)</span>
+                            <p className={styles.item_dados}>Habilidades: <span className={styles.valores_dados}>No Guard</span> / <span className={styles.valores_dados}>Overgrow</span></p>
+                        </div>
 
-                        <span className={styles.habilidade_pokemon}>2 Levitate (Levitação)</span>
+                        <div className={`${styles.fundo_dados} ${styles.descricao_dados}`}>
+                            <p className={styles.item_dados}>Descrição: <span className={styles.valores_dados}> Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam, cupiditate, dolor alias doloremque saepe quisquam amet quod quia ipsa eum praesentium quibusdam ex in perspiciatis officia repellat obcaecati ipsam corporis.</span></p>
+                        </div>
                     </div>
                 </section>
 
-                <section className={styles.descricao_area}>
-                    <p className={styles.descricao}>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laboriosam asperiores commodi est! Eos, consequatur. Illum minus optio earum ipsam distinctio dolorem quae consequuntur aspernatur, explicabo, omnis et voluptates vitae itaque!</p>
-                </section>
+                <div className={styles.tipos_area}>
+                    <span><strong>Tipo: </strong></span>
 
-                <section className={styles.fraqueza_area}>
+                    <span className={styles.tipo_pokemon} data-type="normal">Normal</span>
+
+                    <span className={styles.tipo_pokemon} data-type="flying">Flying</span>
+                </div>
+
+
+                <div>
                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam, cupiditate, dolor alias doloremque saepe quisquam amet quod quia ipsa eum praesentium quibusdam ex in perspiciatis officia repellat obcaecati ipsam corporis.</p>
-                </section>
+                </div>
 
                 <section className={styles.container_stats}>
                 </section>
