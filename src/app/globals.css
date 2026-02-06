@@ -179,8 +179,6 @@ body.dark_mode {
     --accent-overlay: #f2235050;
     --accent-soft: rgba(225, 29, 71, 0.35);
     --accent-text: rgb(255, 255, 255);
-    --accent-descricao: var(--text-2-dark);
-
 }
 
 /* tema pokémon blue */
@@ -190,7 +188,6 @@ body.dark_mode {
     --accent-overlay: #2564eb50;
     --accent-soft: rgba(37, 99, 235, 0.35);
     --accent-text: rgb(255, 255, 255);
-    --accent-descricao: var(--text-2-dark);
 }
 
 /* tema pokémon yellow */
@@ -200,7 +197,6 @@ body.dark_mode {
     --accent-overlay: #eab30850;
     --accent-soft: rgba(234, 179, 8, 0.35);
     --accent-text: var(--text-1);
-    --accent-descricao: var(--text-2);
 }
 
 /* ---------> configurações das paginas <--------- */
