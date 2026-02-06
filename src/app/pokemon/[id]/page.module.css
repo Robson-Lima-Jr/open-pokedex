@@ -70,7 +70,7 @@
 
     font-family: var(--font-pokemon);
     font-size: var(--pkm-h1-mobile);
-    letter-spacing: 1px;
+    letter-spacing: 2px;
     text-transform: uppercase;
 
     color: var(--text);
@@ -96,10 +96,10 @@
 }
 
 /* dados dex */
-.dados_pokemon {
+.section_pokemon {
     width: 100%;
     max-width: 500px;
-    
+
     display: flex;
     flex-direction: column;
     gap: var(--gap);
@@ -117,8 +117,7 @@
 }
 
 .descricao_dados {
-    background-color: var(--accent);
-    color: var(--accent-text);
+    padding-top: 0;
 }
 
 .item_dados {
@@ -135,20 +134,21 @@
 }
 
 .descricao_dados .item_dados {
-    color: var(--accent-text);
+    color: var(--text);
     border-bottom: none;
 }
 
 .descricao_dados .valores_dados {
     letter-spacing: 0;
-    color: var(--accent-descricao);
+    color: var(--text-secondary);
 }
 
 /* tipos */
-.tipos_area {
+.container_tipos {
     display: flex;
-    justify-content: center;
-    gap: 0.7rem;
+    flex-wrap: wrap;
+
+    gap: 0.5rem;
 }
 
 .tipo_pokemon {

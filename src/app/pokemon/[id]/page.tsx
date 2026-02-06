@@ -27,7 +27,7 @@ export default function PokemonPage({ params }: { params: { id: string } }) {
                     <Image src="/018.png" width={200} height={200} alt="Pokémon" className={styles.imagem_pokemon}></Image>
                 </section>
 
-                <section className={styles.dados_pokemon}>
+                <section className={styles.section_pokemon}>
                     <h2 className={styles.h2_descricao}>Dados na Pokédex</h2>
 
                     <div>
@@ -51,17 +51,37 @@ export default function PokemonPage({ params }: { params: { id: string } }) {
                     </div>
                 </section>
 
-                <div className={styles.tipos_area}>
-                    <span><strong>Tipo: </strong></span>
+                <div className={styles.section_pokemon}>
+                    <h2 className={styles.h2_descricao}>Tipo</h2>
 
-                    <span className={styles.tipo_pokemon} data-type="normal">Normal</span>
+                    <div className={styles.container_tipos}>
+                        <span className={styles.tipo_pokemon} data-type="normal">Normal</span>
 
-                    <span className={styles.tipo_pokemon} data-type="flying">Flying</span>
-                </div>
+                        <span className={styles.tipo_pokemon} data-type="flying">Flying</span>
+                    </div>
 
+                    <h2 className={styles.h2_descricao}>Fraquezas</h2>
 
-                <div>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam, cupiditate, dolor alias doloremque saepe quisquam amet quod quia ipsa eum praesentium quibusdam ex in perspiciatis officia repellat obcaecati ipsam corporis.</p>
+                    <div className={styles.container_tipos}>
+                        <span className={styles.tipo_pokemon} data-type="electric">Electric</span>
+
+                        <span className={styles.tipo_pokemon} data-type="ice">Ice</span>
+
+                        <span className={styles.tipo_pokemon} data-type="rock">Rock</span>
+                    </div>
+
+                    <h2 className={styles.h2_descricao}>Resistências</h2>
+
+                    <div className={styles.container_tipos}>
+                        <span className={styles.tipo_pokemon} data-type="grass">Grass</span>
+
+                        <span className={styles.tipo_pokemon} data-type="bug">Bug</span>
+
+                        <span className={styles.tipo_pokemon} data-type="ground">Ground</span>
+
+                        <span className={styles.tipo_pokemon} data-type="ghost">Ghost</span>
+                    </div>
+
                 </div>
 
                 <section className={styles.container_stats}>
