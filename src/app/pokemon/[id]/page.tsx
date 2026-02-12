@@ -1,9 +1,19 @@
 import styles from "./page.module.css";
 import Link from "next/link";
 import { IconeSeta, IconeLink } from "../../components/icons/Icons";
+import { StatsGroup } from "@/app/components/Stats/StatsGroup";
 import Image from "next/image";
 
 export default function PokemonPage({ params }: { params: { id: string } }) {
+    const mockStats = {
+        hp: 83,
+        atk: 20,
+        def: 65,
+        spa: 131,
+        spd: 95,
+        spe: 151,
+    };
+
     return (
         <div className={styles.center}>
             <main className={styles.container_pokemon}>
@@ -104,6 +114,9 @@ export default function PokemonPage({ params }: { params: { id: string } }) {
                 </div>
 
                 <section className={styles.container_stats}>
+                    <h2 className={styles.h2_descricao}>Stats</h2>
+                    
+                    <StatsGroup stats={mockStats} />
                 </section>
 
                 <section className={styles.linha_evolutiva}>

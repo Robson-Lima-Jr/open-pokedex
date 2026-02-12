@@ -171,7 +171,7 @@
 }
 
 .tipo_pokemon:hover {
-    filter: brightness(1.20);
+    filter: brightness(1.25);
     cursor: pointer;
     transition: var(--tr-rapida);
 }
@@ -182,7 +182,7 @@
 }
 
 .tipo_pokemon[data-type="grass"] {
-    background: #2ab765;
+    background: #1e914e;
     color: white;
 }
 
@@ -197,7 +197,7 @@
 }
 
 .tipo_pokemon[data-type="electric"] {
-    background: #f1c40f;
+    background: #e4ba10;
     color: #333;
 }
 
@@ -232,7 +232,7 @@
 }
 
 .tipo_pokemon[data-type="bug"] {
-    background: #70b553;
+    background: #81cc61;
     color: #333;
 }
 
