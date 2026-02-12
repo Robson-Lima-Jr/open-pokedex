@@ -73,15 +73,32 @@ export default function PokemonPage({ params }: { params: { id: string } }) {
                     <h2 className={styles.h2_descricao}>Resistências</h2>
 
                     <div className={styles.container_tipos}>
-                        <span className={styles.tipo_pokemon} data-type="grass">Grass</span>
+                        {/* <span className={styles.tipo_pokemon} data-type="grass">Grass</span>
 
                         <span className={styles.tipo_pokemon} data-type="bug">Bug</span>
 
                         <span className={styles.tipo_pokemon} data-type="ground">Ground</span>
 
-                        <span className={styles.tipo_pokemon} data-type="ghost">Ghost</span>
+                        <span className={styles.tipo_pokemon} data-type="ghost">Ghost</span> */}
 
+                        <span className={styles.tipo_pokemon} data-type="bug">Bug</span>
+                        <span className={styles.tipo_pokemon} data-type="dark">Dark</span>
+                        <span className={styles.tipo_pokemon} data-type="dragon">Dragon</span>
+                        <span className={styles.tipo_pokemon} data-type="electric">Electric</span>
+                        <span className={styles.tipo_pokemon} data-type="fairy">Fairy</span>
                         <span className={styles.tipo_pokemon} data-type="fighting">Fighting</span>
+                        <span className={styles.tipo_pokemon} data-type="fire">Fire</span>
+                        <span className={styles.tipo_pokemon} data-type="flying">Flying</span>
+                        <span className={styles.tipo_pokemon} data-type="ghost">Ghost</span>
+                        <span className={styles.tipo_pokemon} data-type="grass">Grass</span>
+                        <span className={styles.tipo_pokemon} data-type="ground">Ground</span>
+                        <span className={styles.tipo_pokemon} data-type="ice">Ice</span>
+                        <span className={styles.tipo_pokemon} data-type="normal">Normal</span>
+                        <span className={styles.tipo_pokemon} data-type="poison">Poison</span>
+                        <span className={styles.tipo_pokemon} data-type="psychic">Psychic</span>
+                        <span className={styles.tipo_pokemon} data-type="rock">Rock</span>
+                        <span className={styles.tipo_pokemon} data-type="steel">Steel</span>
+                        <span className={styles.tipo_pokemon} data-type="water">Water</span>
                     </div>
 
                 </div>

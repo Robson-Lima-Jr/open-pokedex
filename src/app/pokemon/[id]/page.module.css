@@ -147,34 +147,37 @@
 .container_tipos {
     display: flex;
     flex-wrap: wrap;
+    gap: 0.7rem;
 
-    gap: 0.5rem;
+    margin-left: 10px;
 }
 
 .tipo_pokemon {
-    min-width: 5rem;
-    padding: 0 0.8rem;
-    padding-top: calc(var(--esp-micro) + 0.2rem);
-    padding-bottom: var(--esp-micro);
+    width: 9.5rem;
+    padding: 0.4rem var(--esp-micro);
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    font-family: var(--font-pokemon);
-    font-size: 0.9rem;
+    font-size: var(--fs-pequeno);
     text-transform: uppercase;
     letter-spacing: 1.5px;
     font-weight: 600;
-    line-height: 1;
     text-align: center;
 
-    border-radius: var(--radius-p);
-    border: 2px solid rgba(0, 0, 0, 0.274);
+    border-radius: var(--radius-m);
+    border: 2px solid rgba(0, 0, 0, 0.259);
+}
+
+.tipo_pokemon:hover {
+    filter: brightness(1.20);
+    cursor: pointer;
+    transition: var(--tr-rapida);
 }
 
 .tipo_pokemon[data-type="normal"] {
-    background: #c2b689;
+    background: #d0ccc0;
     color: #333;
 }
 
@@ -200,7 +203,7 @@
 
 .tipo_pokemon[data-type="ice"] {
     background: #74b9ff;
-    color: white;
+    color: #333;
 }
 
 .tipo_pokemon[data-type="fighting"] {
@@ -214,37 +217,37 @@
 }
 
 .tipo_pokemon[data-type="ground"] {
-    background: #d2a937;
-    color: #333;
+    background: #c57b30;
+    color: white;
 }
 
 .tipo_pokemon[data-type="flying"] {
-    background: #89aedc;
+    background: #b0aef1;
     color: #333;
 }
 
 .tipo_pokemon[data-type="psychic"] {
-    background: #fd79a8;
+    background: #db2866;
     color: white;
 }
 
 .tipo_pokemon[data-type="bug"] {
     background: #70b553;
-    color: white;
+    color: #333;
 }
 
 .tipo_pokemon[data-type="rock"] {
-    background: #b2bec3;
+    background: #d4bf75;
     color: #333;
 }
 
 .tipo_pokemon[data-type="ghost"] {
-    background: #6c5ce7;
+    background: #5846da;
     color: white;
 }
 
 .tipo_pokemon[data-type="dragon"] {
-    background: #341f97;
+    background: #184fb0;
     color: white;
 }
 
@@ -259,6 +262,6 @@
 }
 
 .tipo_pokemon[data-type="fairy"] {
-    background: #ee7b79;
+    background: #ec448d;
     color: white;
 }
