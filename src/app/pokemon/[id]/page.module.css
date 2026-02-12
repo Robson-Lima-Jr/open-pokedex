@@ -152,23 +152,23 @@
 }
 
 .tipo_pokemon {
-    width: 105px;
-    padding: var(--esp-micro);
+    min-width: 5rem;
+    padding: calc(var(--esp-micro) + 0.2rem) 0.8rem;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
     font-family: var(--font-pokemon);
-    font-size: 0.85rem;
+    font-size: 0.9rem;
     text-transform: uppercase;
     letter-spacing: 1.5px;
     font-weight: 600;
     line-height: 1;
     text-align: center;
 
-    border-radius: var(--radius-g);
-    border: 3px solid rgba(0, 0, 0, 0.274);
+    border-radius: var(--radius-p);
+    border: 2px solid rgba(0, 0, 0, 0.274);
 }
 
 .tipo_pokemon[data-type="normal"] {
