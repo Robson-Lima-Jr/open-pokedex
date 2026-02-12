@@ -80,6 +80,8 @@ export default function PokemonPage({ params }: { params: { id: string } }) {
                         <span className={styles.tipo_pokemon} data-type="ground">Ground</span>
 
                         <span className={styles.tipo_pokemon} data-type="ghost">Ghost</span>
+
+                        <span className={styles.tipo_pokemon} data-type="fighting">Fighting</span>
                     </div>
 
                 </div>
