@@ -154,6 +154,7 @@ body.light_mode {
 
     --text: var(--text-1);
     --text-secondary: var(--text-2);
+    --stats-background: rgb(198, 193, 193);
 
     --border: var(--border-light);
     --shadow: var(--shadow-light);
@@ -167,6 +168,7 @@ body.dark_mode {
 
     --text: var(--text-1-dark);
     --text-secondary: var(--text-2-dark);
+    --stats-background: rgb(79, 76, 76);
 
     --border: var(--border-dark);
     --shadow: var(--shadow-dark);
@@ -347,7 +349,7 @@ body.dark_mode {
 }
 
 /* media-query */
-@media screen and (min-width: 768px) and (max-width: 899px){
+@media screen and (min-width: 768px) and (max-width: 899px) {
     .titulo_h1 {
         font-size: var(--pkm-h1);
         flex-direction: row;
@@ -373,6 +375,7 @@ body.dark_mode {
 }
 
 @media screen and (min-width: 900px) {
+
     .h1_icone,
     .h2_icone {
         top: 0;

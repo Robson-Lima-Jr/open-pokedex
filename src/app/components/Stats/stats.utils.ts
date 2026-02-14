@@ -7,4 +7,4 @@ export function getStatColor(value: number): string {
     if (value < 120) return "#a0e515";
     if (value < 150) return "#23cd5e";
     return "#00c2b8";
-}
+};
