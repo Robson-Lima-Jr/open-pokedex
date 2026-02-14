@@ -6,11 +6,11 @@ import Image from "next/image";
 
 export default function PokemonPage({ params }: { params: { id: string } }) {
     const mockStats = {
-        hp: 83,
+        hp: 95,
         atk: 20,
         def: 65,
         spa: 131,
-        spd: 95,
+        spd: 55,
         spe: 151,
     };
 
@@ -113,13 +113,31 @@ export default function PokemonPage({ params }: { params: { id: string } }) {
 
                 </div>
 
-                <section className={styles.container_stats}>
+                <section className={styles.section_pokemon}>
                     <h2 className={styles.h2_descricao}>Stats</h2>
-                    
-                    <StatsGroup stats={mockStats} />
+
+                    <div className={styles.container_stats}>
+
+                        <StatsGroup stats={mockStats} />
+                    </div>
                 </section>
 
-                <section className={styles.linha_evolutiva}>
+                <section className={styles.section_pokemon}>
+                    <h2 className={styles.h2_descricao}>Linha Evolutiva</h2>
+
+                    <div className={styles.container_evolucao}>
+                        <div className={styles.borda_evo}>
+                            <Image src="/016.png" width={200} height={200} alt="Pokémon" className={styles.evo_pokemon}></Image>
+                        </div>
+
+                        <div className={styles.borda_evo}>
+                            <Image src="/017.png" width={200} height={200} alt="Pokémon" className={styles.evo_pokemon}></Image>
+                        </div>
+
+                        <div className={styles.borda_evo}>
+                            <Image src="/018.png" width={200} height={200} alt="Pokémon" className={styles.evo_pokemon}></Image>
+                        </div>
+                    </div>
                 </section>
             </main>
         </div>

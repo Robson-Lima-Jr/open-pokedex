@@ -3,35 +3,63 @@
     display: flex;
     flex-direction: column;
     gap: var(--gap);
+    padding: 0 var(--esp-micro);
 }
 
 .stat {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
+    display: grid;
+    grid-template-columns: 30px 1fr 30px;
+    align-items: center;
+    gap: var(--gap);
 }
 
 .statLabel {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     font-size: var(--fs-mini);
     font-weight: 600;
+    letter-spacing: 0.5px;
     color: var(--text-secondary);
 }
 
 .statBar {
-    height: 10px;
-    background: var(--bg);
-    border-radius: 999px;
+    position: relative;
+    width: 100%;
+    height: 20px;
+    background-color: var(--stats-background);
     overflow: hidden;
+    border: 2px solid var(--text-secondary);
 }
 
 .statFill {
-  height: 100%;
-  border-radius: 999px;
-  transition: width 0.4s ease;
+    height: 100%;
+    transition: width 0.4s ease;
+}
+
+.stat_name,
+.value_area {
+    font-family: var(--font-pokemon);
+    color: var(--text);
+    font-size: var(--fs-mini);
+}
+
+.value_area {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.stat_value {
+    font-size: var(--fs-mini);
 }
 
 .total {
-    margin: 0px auto;
+    display: flex;
+    justify-content: flex-end;
+
+    font-family: var(--font-pokemon);
+    font-size: var(--fs-mini);
+
+    color: var(--text);
 }

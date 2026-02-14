@@ -3,7 +3,7 @@ import { MAX_STATS, getStatColor } from "./stats.utils";
 
 interface StatBarProps {
     label: string;
-    value: number
+    value: number;
 }
 
 export function StatBar({ label, value }: StatBarProps) {
@@ -11,11 +11,7 @@ export function StatBar({ label, value }: StatBarProps) {
 
     return (
         <div className={styles.stat}>
-            <div className={styles.statLabel}>
-                <span>{label}</span>
-
-                <span>{value}</span>
-            </div>
+            <span className={styles.stat_name}>{label}</span>
 
             <div className={styles.statBar}>
                 <div
@@ -26,6 +22,10 @@ export function StatBar({ label, value }: StatBarProps) {
                     }}
                 />
             </div>
+
+            <div className={styles.value_area}>
+                <span className={styles.stat_value}>{value}</span>
+            </div>
         </div>
-    )
+    );
 }
