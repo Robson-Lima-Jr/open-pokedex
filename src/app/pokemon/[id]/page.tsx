@@ -1,6 +1,6 @@
 import styles from "./page.module.css";
 import Link from "next/link";
-import { IconeSeta, IconeLink } from "../../components/icons/Icons";
+import { IconeSeta, IconeLink, IconeBaixo } from "../../components/icons/Icons";
 import { StatsGroup } from "@/app/components/Stats/StatsGroup";
 import Image from "next/image";
 
@@ -126,16 +126,50 @@ export default function PokemonPage({ params }: { params: { id: string } }) {
                     <h2 className={styles.h2_descricao}>Linha Evolutiva</h2>
 
                     <div className={styles.container_evolucao}>
-                        <div className={styles.borda_evo}>
-                            <Image src="/016.png" width={200} height={200} alt="Pokémon" className={styles.evo_pokemon}></Image>
+                        <div className={styles.divisoria_evo}>
+                            <div className={styles.borda_evo}>
+                                <Image src="/016.png" width={200} height={200} alt="Pokémon" className={styles.evo_pokemon}></Image>
+                            </div>
+
+                            <p className={styles.poke_nome}>Pidgey <span className={styles.poke_num}>#0016</span></p>
+
+                            <div className={styles.tipo_evo}>
+                                <span className={styles.tipo_pokemon} data-type="normal">Normal</span>
+
+                                <span className={styles.tipo_pokemon} data-type="flying">Flying</span>
+                            </div>
                         </div>
 
-                        <div className={styles.borda_evo}>
-                            <Image src="/017.png" width={200} height={200} alt="Pokémon" className={styles.evo_pokemon}></Image>
+                        <IconeBaixo className={styles.icone_evo} />
+
+                        <div className={styles.divisoria_evo}>
+                            <div className={styles.borda_evo}>
+                                <Image src="/017.png" width={200} height={200} alt="Pokémon" className={styles.evo_pokemon}></Image>
+                            </div>
+
+                            <p className={styles.poke_nome}>Pidgeotto <span className={styles.poke_num}>#0017</span></p>
+
+                            <div className={styles.tipo_evo}>
+                                <span className={styles.tipo_pokemon} data-type="normal">Normal</span>
+
+                                <span className={styles.tipo_pokemon} data-type="flying">Flying</span>
+                            </div>
                         </div>
 
-                        <div className={styles.borda_evo}>
-                            <Image src="/018.png" width={200} height={200} alt="Pokémon" className={styles.evo_pokemon}></Image>
+                        <IconeBaixo className={styles.icone_evo} />
+
+                        <div className={styles.divisoria_evo}>
+                            <div className={styles.borda_evo}>
+                                <Image src="/018.png" width={200} height={200} alt="Pokémon" className={styles.evo_pokemon}></Image>
+                            </div>
+
+                            <p className={styles.poke_nome}>Pidgeot <span className={styles.poke_num}>#0018</span></p>
+
+                            <div className={styles.tipo_evo}>
+                                <span className={styles.tipo_pokemon} data-type="normal">Normal</span>
+
+                                <span className={styles.tipo_pokemon} data-type="flying">Flying</span>
+                            </div>
                         </div>
                     </div>
                 </section>
