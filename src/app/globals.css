@@ -154,7 +154,7 @@ body.light_mode {
 
     --text: var(--text-1);
     --text-secondary: var(--text-2);
-    --stats-background: rgb(198, 193, 193);
+    --stats-background: rgb(212, 206, 206);
 
     --border: var(--border-light);
     --shadow: var(--shadow-light);
@@ -168,7 +168,7 @@ body.dark_mode {
 
     --text: var(--text-1-dark);
     --text-secondary: var(--text-2-dark);
-    --stats-background: rgb(79, 76, 76);
+    --stats-background: rgb(62, 60, 60);
 
     --border: var(--border-dark);
     --shadow: var(--shadow-dark);
