@@ -17,6 +17,8 @@ export default function PokemonPage({ params }: { params: { id: string } }) {
     return (
         <div className={styles.center}>
             <main className={styles.container_pokemon}>
+
+                {/* cabeçalho pokémon */}
                 <section className={styles.header_pokemon}>
                     <div className={styles.nav_pokemon}>
                         <Link href="#" className={styles.link_pokemon}>
@@ -33,11 +35,13 @@ export default function PokemonPage({ params }: { params: { id: string } }) {
                     <h1 className={styles.h1_pokemon}>Pidgeot</h1>
                 </section>
 
+                {/* imagem do pokemon */}
                 <section className={styles.imagem_area}>
-                    <Image src="/018.png" width={200} height={200} alt="Pokémon" className={styles.imagem_pokemon}></Image>
+                    <Image src="/018.png" width={400} height={400} alt="Pokémon" className={styles.imagem_pokemon}></Image>
                 </section>
 
-                <section className={styles.section_pokemon}>
+                {/* dados pokemon */}
+                <section className={`${styles.section_pokemon} ${styles.section_dados}`}>
                     <h2 className={styles.h2_descricao}>Dados na Pokédex</h2>
 
                     <div>
@@ -61,7 +65,8 @@ export default function PokemonPage({ params }: { params: { id: string } }) {
                     </div>
                 </section>
 
-                <div className={styles.section_pokemon}>
+                {/* tipagem */}
+                <div className={`${styles.section_pokemon} ${styles.section_tipos}`}>
                     <h2 className={styles.h2_descricao}>Tipo</h2>
 
                     <div className={styles.container_tipos}>
@@ -70,6 +75,7 @@ export default function PokemonPage({ params }: { params: { id: string } }) {
                         <span className={styles.tipo_pokemon} data-type="flying">Flying</span>
                     </div>
 
+                    {/* fraquezas */}
                     <h2 className={styles.h2_descricao}>Fraquezas</h2>
 
                     <div className={styles.container_tipos}>
@@ -80,49 +86,31 @@ export default function PokemonPage({ params }: { params: { id: string } }) {
                         <span className={styles.tipo_pokemon} data-type="rock">Rock</span>
                     </div>
 
+                    {/* resistencias */}
                     <h2 className={styles.h2_descricao}>Resistências</h2>
 
                     <div className={styles.container_tipos}>
-                        {/* <span className={styles.tipo_pokemon} data-type="grass">Grass</span>
-
-                        <span className={styles.tipo_pokemon} data-type="bug">Bug</span>
-
-                        <span className={styles.tipo_pokemon} data-type="ground">Ground</span>
-
-                        <span className={styles.tipo_pokemon} data-type="ghost">Ghost</span> */}
-
-                        <span className={styles.tipo_pokemon} data-type="bug">Bug</span>
-                        <span className={styles.tipo_pokemon} data-type="dark">Dark</span>
-                        <span className={styles.tipo_pokemon} data-type="dragon">Dragon</span>
-                        <span className={styles.tipo_pokemon} data-type="electric">Electric</span>
-                        <span className={styles.tipo_pokemon} data-type="fairy">Fairy</span>
-                        <span className={styles.tipo_pokemon} data-type="fighting">Fighting</span>
-                        <span className={styles.tipo_pokemon} data-type="fire">Fire</span>
-                        <span className={styles.tipo_pokemon} data-type="flying">Flying</span>
-                        <span className={styles.tipo_pokemon} data-type="ghost">Ghost</span>
                         <span className={styles.tipo_pokemon} data-type="grass">Grass</span>
+
+                        <span className={styles.tipo_pokemon} data-type="bug">Bug</span>
+
                         <span className={styles.tipo_pokemon} data-type="ground">Ground</span>
-                        <span className={styles.tipo_pokemon} data-type="ice">Ice</span>
-                        <span className={styles.tipo_pokemon} data-type="normal">Normal</span>
-                        <span className={styles.tipo_pokemon} data-type="poison">Poison</span>
-                        <span className={styles.tipo_pokemon} data-type="psychic">Psychic</span>
-                        <span className={styles.tipo_pokemon} data-type="rock">Rock</span>
-                        <span className={styles.tipo_pokemon} data-type="steel">Steel</span>
-                        <span className={styles.tipo_pokemon} data-type="water">Water</span>
+
+                        <span className={styles.tipo_pokemon} data-type="ghost">Ghost</span>
                     </div>
 
                 </div>
-
-                <section className={styles.section_pokemon}>
+                
+                {/* stats */}
+                <section className={`${styles.section_pokemon} ${styles.section_stats}`}>
                     <h2 className={styles.h2_descricao}>Stats</h2>
 
-                    <div className={styles.container_stats}>
 
-                        <StatsGroup stats={mockStats} />
-                    </div>
+                    <StatsGroup stats={mockStats} />
                 </section>
-
-                <section className={styles.section_pokemon}>
+                
+                {/* linha evolutiva */}
+                <section className={`${styles.section_pokemon} ${styles.section_evolucao}`}>
                     <h2 className={styles.h2_descricao}>Linha Evolutiva</h2>
 
                     <div className={styles.container_evolucao}>
@@ -163,7 +151,11 @@ export default function PokemonPage({ params }: { params: { id: string } }) {
                                 <Image src="/018.png" width={200} height={200} alt="Pokémon" className={styles.evo_pokemon}></Image>
                             </div>
 
-                            <p className={styles.poke_nome}>Pidgeot <span className={styles.poke_num}>#0018</span></p>
+                            <div>
+                                <p className={styles.poke_nome}>Pidgeot</p>
+                                
+                                <p className={styles.poke_num}>#0018</p>
+                            </div>
 
                             <div className={styles.tipo_evo}>
                                 <span className={styles.tipo_pokemon} data-type="normal">Normal</span>
