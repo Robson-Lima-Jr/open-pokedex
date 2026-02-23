@@ -48,6 +48,11 @@
     transition: var(--tr-rapida);
 }
 
+.lista_container:hover .icone_lista {
+    background-color: var(--accent);
+    color: var(--accent-text);
+}
+
 /* numero */
 .dex_num {
     flex-shrink: 0;

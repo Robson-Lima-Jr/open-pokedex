@@ -30,6 +30,9 @@
 }
 
 .nav_pokemon {
+    width: 100%;
+    max-width: 80rem;
+    margin: 0 auto;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -48,14 +51,11 @@
     letter-spacing: 1px;
     font-size: var(--fs-pequeno);
 
-    border-radius: var(--radius-m);
-    border: 2px solid var(--accent-hover);
+    border-radius: var(--radius-p);
 }
 
 .link_pokemon:hover {
     background-color: var(--accent-hover);
-    border-color: var(--accent);
-
     transition: var(--tr-rapida);
 }
 
@@ -98,7 +98,6 @@
 /* dados dex */
 .section_pokemon {
     width: 100%;
-    max-width: 500px;
 
     display: flex;
     flex-direction: column;
@@ -267,13 +266,12 @@
 }
 
 /* stats */
-.container_stats {}
 
 /* evolução area */
 .container_evolucao {
     align-self: center;
     width: 100%;
-    max-width: 300px;
+    max-width: 30rem;
     padding: var(--esp-padrao);
 
     display: flex;
@@ -322,8 +320,79 @@
     color: var(--text);
 }
 
+.poke_num {
+    font-family: var(--font-pokemon);
+    font-size: var(--fs-mini);
+    text-align: center;
+    color: var(--text-secondary);
+}
+
 .icone_evo {
     width: 60px;
     height: auto;
     color: var(--accent);
+}
+
+/* media-query */
+@media screen and (min-width: 600px) and (max-width: 849px) {
+    .imagem_area {
+        width: 350px;
+        height: auto;
+    }
+
+    .container_evolucao {
+        max-width: 40rem;
+    }
+}
+
+@media screen and (min-width: 850px) {
+    .container_pokemon {
+        padding: var(--esp-grande);
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        column-gap: var(--gap-grande);
+        row-gap: var(--gap-grande);
+        align-items: start;
+    }
+
+    .imagem_area {
+        width: 100%;
+        max-width: 400px;
+        height: auto;
+    }
+
+    .header_pokemon {
+        grid-column: 1 / -1;
+    }
+
+    .imagem_area {
+        grid-column: 1;
+        height: 100%;
+    }
+
+    .section_dados {
+        grid-column: 2;
+    }
+
+    .section_tipos {
+        grid-column: 1;
+    }
+
+    .section_stats {
+        grid-column: 2;
+    }
+
+    .section_evolucao {
+        grid-column: 1 / -1;
+    }
+
+    /* area evolução */
+    .container_evolucao {
+        flex-direction: row;
+        max-width: 100%;
+    }
+
+    .icone_evo {
+        transform: rotate(-90deg);
+    }
 }
