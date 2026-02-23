@@ -4,6 +4,32 @@
     background-color: var(--red);
 }
 
+/* botoes de exibição da dex */
+.view_toggle {
+    display: flex;
+    gap: var(--gap);
+    padding: var(--esp-micro);
+}
+
+.view_toggle button {
+    cursor: pointer;
+    padding: var(--esp-pequeno);
+
+    font-family: var(--font-pokemon);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border: 2px solid var(--text);
+    border-radius: var(--radius-p);
+    background-color: var(--surface);
+    color: var(--text-secondary);
+}
+
+.view_toggle button.ativo {
+    background-color: var(--accent-hover);
+    color: var(--accent-text);
+}
+
+/* conteudo da pokedex */
 .conteudo_dex {
     flex: 1;
     display: flex;
@@ -56,7 +82,7 @@
 
 .teste_dex {
     width: 100%;
-    padding: var(--esp-padrao);
+    padding: var(--esp-padrao) 0;
     display: flex;
     justify-content: center;
     gap: var(--gap);
@@ -65,10 +91,11 @@
 
 .lista_dex {
     width: 100%;
+    padding: var(--esp-padrao) 0;
     max-width: 294px;
     display: flex;
     flex-direction: column;
-    gap: 0.7rem;
+    gap: 0.8rem;
 }
 
 /* media-query */
