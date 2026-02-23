@@ -8,6 +8,7 @@ import { IconeFiltro, IconePokeball, IconeSeta } from "../components/icons/Icons
 
 export default function pokedex() {
     const [asideOpen, setAsideOpen] = useState(false);
+    const [viewMode, setViewMode] = useState<"card" | "list">("card");
 
     function toggleAside() {
         setAsideOpen(prev => !prev);
@@ -73,6 +74,22 @@ export default function pokedex() {
                             <span className="texto_titulo">Nacional Dex</span>
                         </h2>
 
+                        {/* botoes de exibição da dex */}
+                        <div className={styles.view_toggle}>
+                            <button onClick={() => setViewMode("card")}
+                                className={viewMode === "card" ? styles.ativo : ""}
+                            >
+                                Cards
+                            </button>
+
+                            <button onClick={() => setViewMode("list")}
+                                className={viewMode === "list" ? styles.ativo : ""}
+                            >
+                                Lista
+                            </button>
+                        </div>
+
+                        {viewMode === "card" ? (
                         <div className={styles.teste_dex}>
                             <PokemonCard />
                             <PokemonCard />
@@ -82,6 +99,8 @@ export default function pokedex() {
                             <PokemonCard />
                         </div>
 
+                        ) : (
+                            
                         <div className={styles.lista_dex}>
                             <PokemonLista />
                             <PokemonLista />
@@ -90,6 +109,7 @@ export default function pokedex() {
                             <PokemonLista />
                             <PokemonLista />
                         </div>
+                        )}
                     </section>
                 </div>
             </div>
