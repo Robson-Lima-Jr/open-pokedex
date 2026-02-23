@@ -100,7 +100,7 @@ export default function PokemonPage({ params }: { params: { id: string } }) {
                     </div>
 
                 </div>
-                
+
                 {/* stats */}
                 <section className={`${styles.section_pokemon} ${styles.section_stats}`}>
                     <h2 className={styles.h2_descricao}>Stats</h2>
@@ -108,7 +108,7 @@ export default function PokemonPage({ params }: { params: { id: string } }) {
 
                     <StatsGroup stats={mockStats} />
                 </section>
-                
+
                 {/* linha evolutiva */}
                 <section className={`${styles.section_pokemon} ${styles.section_evolucao}`}>
                     <h2 className={styles.h2_descricao}>Linha Evolutiva</h2>
@@ -119,7 +119,11 @@ export default function PokemonPage({ params }: { params: { id: string } }) {
                                 <Image src="/016.png" width={200} height={200} alt="Pokémon" className={styles.evo_pokemon}></Image>
                             </div>
 
-                            <p className={styles.poke_nome}>Pidgey <span className={styles.poke_num}>#0016</span></p>
+                            <div>
+                                <p className={styles.poke_nome}>Pidgey</p>
+
+                                <p className={styles.poke_num}>#0016</p>
+                            </div>
 
                             <div className={styles.tipo_evo}>
                                 <span className={styles.tipo_pokemon} data-type="normal">Normal</span>
@@ -135,7 +139,11 @@ export default function PokemonPage({ params }: { params: { id: string } }) {
                                 <Image src="/017.png" width={200} height={200} alt="Pokémon" className={styles.evo_pokemon}></Image>
                             </div>
 
-                            <p className={styles.poke_nome}>Pidgeotto <span className={styles.poke_num}>#0017</span></p>
+                            <div>
+                                <p className={styles.poke_nome}>Pidgeotto</p>
+
+                                <p className={styles.poke_num}>#0017</p>
+                            </div>
 
                             <div className={styles.tipo_evo}>
                                 <span className={styles.tipo_pokemon} data-type="normal">Normal</span>
@@ -153,7 +161,7 @@ export default function PokemonPage({ params }: { params: { id: string } }) {
 
                             <div>
                                 <p className={styles.poke_nome}>Pidgeot</p>
-                                
+
                                 <p className={styles.poke_num}>#0018</p>
                             </div>
 

@@ -98,7 +98,6 @@
 /* dados dex */
 .section_pokemon {
     width: 100%;
-    max-width: var(--container);
 
     display: flex;
     flex-direction: column;
@@ -272,7 +271,7 @@
 .container_evolucao {
     align-self: center;
     width: 100%;
-    max-width: 300px;
+    max-width: 30rem;
     padding: var(--esp-padrao);
 
     display: flex;
@@ -321,6 +320,13 @@
     color: var(--text);
 }
 
+.poke_num {
+    font-family: var(--font-pokemon);
+    font-size: var(--fs-mini);
+    text-align: center;
+    color: var(--text-secondary);
+}
+
 .icone_evo {
     width: 60px;
     height: auto;
@@ -328,6 +334,17 @@
 }
 
 /* media-query */
+@media screen and (min-width: 600px) and (max-width: 849px) {
+    .imagem_area {
+        width: 350px;
+        height: auto;
+    }
+
+    .container_evolucao {
+        max-width: 40rem;
+    }
+}
+
 @media screen and (min-width: 850px) {
     .container_pokemon {
         padding: var(--esp-grande);
@@ -350,6 +367,7 @@
 
     .imagem_area {
         grid-column: 1;
+        height: 100%;
     }
 
     .section_dados {
