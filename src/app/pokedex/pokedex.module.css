@@ -13,15 +13,23 @@
 
 .view_toggle button {
     cursor: pointer;
-    padding: var(--esp-pequeno);
+    padding: var(--esp-micro) var(--esp-pequeno);
+    display: flex;
+    gap: 1rem;
+    align-items: center;
 
-    font-family: var(--font-pokemon);
+    font-size: var(--fs-normal);
     text-transform: uppercase;
     letter-spacing: 1px;
-    border: 2px solid var(--text);
+    border: 3px solid var(--text);
     border-radius: var(--radius-p);
     background-color: var(--surface);
     color: var(--text-secondary);
+}
+
+.icone_botao {
+    width: 35px;
+    height: auto;
 }
 
 .view_toggle button.ativo {
@@ -112,5 +120,11 @@
 @media screen and (min-width: 455px) {
     .lista_dex {
         max-width: 400px;
+    }
+}
+
+@media screen and (min-width: 560px) {
+    .lista_dex {
+        max-width: 490px;
     }
 }

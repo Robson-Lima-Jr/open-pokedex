@@ -92,8 +92,16 @@
 }
 
 /* media-query */
-@media screen and (min-width: 455px) {
+@media screen and (min-width: 455px) and (max-width: 599px) {
     .tipos_area {
         display: flex;
+    }
+}
+
+@media screen and (min-width: 560px) {
+    .tipos_area {
+        display: flex;
+        flex-direction: row;
+        gap: var(--gap);
     }
 }
