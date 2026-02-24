@@ -95,13 +95,13 @@ export function IconeLista({ size = 24, className }: IconProps) {
       className={className}
       aria-hidden="true"
     >
-      <path fill-rule="evenodd" clip-rule="evenodd" d="M10.5 11.25H16.5V12.75H10.5V11.25Z"  />
-      <path fill-rule="evenodd" clip-rule="evenodd" d="M10.5 7.5H16.5V9H10.5V7.5Z"  />
-      <path fill-rule="evenodd" clip-rule="evenodd" d="M10.5 15H16.5V16.5H10.5V15Z"  />
-      <path fill-rule="evenodd" clip-rule="evenodd" d="M7.5 7.5H9V9H7.5V7.5Z"  />
-      <path fill-rule="evenodd" clip-rule="evenodd" d="M7.5 11.25H9V12.75H7.5V11.25Z"  />
-      <path fill-rule="evenodd" clip-rule="evenodd" d="M7.5 15H9V16.5H7.5V15Z"  />
-      <path fill-rule="evenodd" clip-rule="evenodd" d="M3.75 4.5L4.5 3.75H19.5L20.25 4.5V19.5L19.5 20.25H4.5L3.75 19.5V4.5ZM5.25 5.25V18.75H18.75V5.25H5.25Z"  />
+      <path fillRule="evenodd" clip-rule="evenodd" d="M10.5 11.25H16.5V12.75H10.5V11.25Z"  />
+      <path fillRule="evenodd" clip-rule="evenodd" d="M10.5 7.5H16.5V9H10.5V7.5Z"  />
+      <path fillRule="evenodd" clip-rule="evenodd" d="M10.5 15H16.5V16.5H10.5V15Z"  />
+      <path fillRule="evenodd" clip-rule="evenodd" d="M7.5 7.5H9V9H7.5V7.5Z"  />
+      <path fillRule="evenodd" clip-rule="evenodd" d="M7.5 11.25H9V12.75H7.5V11.25Z"  />
+      <path fillRule="evenodd" clip-rule="evenodd" d="M7.5 15H9V16.5H7.5V15Z"  />
+      <path fillRule="evenodd" clip-rule="evenodd" d="M3.75 4.5L4.5 3.75H19.5L20.25 4.5V19.5L19.5 20.25H4.5L3.75 19.5V4.5ZM5.25 5.25V18.75H18.75V5.25H5.25Z"  />
     </svg>
   );
 }

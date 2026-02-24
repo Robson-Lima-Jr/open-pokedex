@@ -1,31 +1,55 @@
 import styles from "./PokemonCard.module.css";
 import Image from "next/image";
 
-export default function PokemonCard() {
+interface PokemonCardProps {
+    pokemon: {
+        id: number;
+        name: string;
+        sprites: {
+            front_default: string;
+        };
+        types: {
+            slot: number;
+            type: {
+                name: string;
+            };
+        }[];
+    };
+}
+
+export default function PokemonCard({ pokemon }: PokemonCardProps) {
     return (
         <article className={styles.card_container}>
             <div className={styles.card_cima}>
+                {/* imagem e nº */}
                 <div className={styles.sprite_area}>
-                    <Image src="/pidgeot.png" width={80} height={80} alt="pidgeot" className={styles.image}/>
+                    <Image src={pokemon.sprites.front_default} width={100} height={100} alt={pokemon.name} className={styles.image} />
 
-                    <span className={styles.dex_num}>#016</span>
+                    <span className={styles.dex_num}>#{pokemon.id.toString().padStart(4, "0")}</span>
                 </div>
 
+                {/* nome e tipos */}
                 <div className={styles.header_poke}>
-                    <h2 className={styles.nome}>Pidgeot</h2>
+                    <h2 className={styles.nome}>{pokemon.name}</h2>
 
-                    <div className={styles.tipos_area}>
-                        <p className={styles.tipos_desc}>Tipo <span>1</span>/</p>
-                        <p className={styles.tipos}>Normal</p>
-                    </div>
+                    {pokemon.types.map((typeInfo, index) => (
+                        <div
+                            key={typeInfo.type.name}
+                            className={styles.tipos_area}
+                        >
+                            <p className={styles.tipos_desc}>
+                                Tipo {index + 1}/
+                            </p>
 
-                    <div className={styles.tipos_area}>
-                        <p className={styles.tipos_desc}>Tipo <span>2</span>/</p>
-                        <p className={styles.tipos}>Flying</p>
-                    </div>
+                            <p className={styles.tipos}>
+                                {typeInfo.type.name}
+                            </p>
+                        </div>
+                    ))}
                 </div>
             </div>
-
+            
+            {/* stats */}
             <div className={styles.stats_area}>
                 <ul className={styles.stats}>
                     <li className={styles.stats_li}><span>HP</span><strong>200</strong></li>

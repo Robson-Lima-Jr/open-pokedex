@@ -1,6 +1,6 @@
 .card_container {
     width: 290px;
-    height: 285px;
+    height: 280px;
 
     padding: var(--esp-pequeno);
     display: flex;
@@ -27,11 +27,16 @@
 /* area imagem/ nº dex */
 .sprite_area {
     height: 100px;
+    padding-left: -(var(--esp-pequeno));
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 0.3rem;
+}
+
+.image {
+    width: 9rem;
+    height: auto;
 }
 
 .dex_num {
@@ -48,7 +53,7 @@
     flex: 1;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     gap: 0.5rem;
     border-right: 2px solid var(--text);
     border-bottom: 2px solid var(--text);
@@ -116,7 +121,7 @@
 @media screen and (min-width: 400px) {
     .card_container{
         width: 100%;
-        max-width: 260px;
+        max-width: 270px;
     }
 
     .stats_area {

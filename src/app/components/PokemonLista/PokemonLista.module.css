@@ -66,6 +66,7 @@
     background-color: var(--accent-soft);
 }
 
+
 /* nome do pokemon */
 .lista_nome {
     font-size: var(--fs-card-nome);
@@ -76,6 +77,7 @@
 
 /* lista de tipos  */
 .tipos_area {
+    margin-left: auto;
     height: 100%;
     padding-left: 8px;
 
@@ -92,16 +94,18 @@
 }
 
 /* media-query */
-@media screen and (min-width: 455px) and (max-width: 599px) {
+@media screen and (min-width: 480px) and (max-width: 599px) {
     .tipos_area {
         display: flex;
+        padding-right: 2rem;
     }
 }
 
-@media screen and (min-width: 560px) {
+@media screen and (min-width: 600px) {
     .tipos_area {
         display: flex;
         flex-direction: row;
-        gap: var(--gap);
+        gap: 1rem;
+        padding-right: 2.8rem;
     }
 }

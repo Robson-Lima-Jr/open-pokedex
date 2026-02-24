@@ -15,7 +15,7 @@
     cursor: pointer;
     padding: var(--esp-micro) var(--esp-pequeno);
     display: flex;
-    gap: 1rem;
+    gap: 0.5rem;
     align-items: center;
 
     font-size: var(--fs-normal);
@@ -38,6 +38,12 @@
 }
 
 /* conteudo da pokedex */
+.loading {
+    font-family: var(--font-pokemon);
+    font-size: var(--fs-normal);
+    color: var(--text);
+}
+
 .conteudo_dex {
     flex: 1;
     display: flex;
@@ -100,7 +106,7 @@
 .lista_dex {
     width: 100%;
     padding: var(--esp-padrao) 0;
-    max-width: 294px;
+    max-width: 300px;
     display: flex;
     flex-direction: column;
     gap: 0.8rem;
@@ -117,13 +123,13 @@
     }
 }
 
-@media screen and (min-width: 455px) {
+@media screen and (min-width: 480px) and  (max-width: 599px){
     .lista_dex {
-        max-width: 400px;
+        max-width: 425px;
     }
 }
 
-@media screen and (min-width: 560px) {
+@media screen and (min-width: 600px) {
     .lista_dex {
         max-width: 490px;
     }
