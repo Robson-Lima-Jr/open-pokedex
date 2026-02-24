@@ -4,7 +4,7 @@ import styles from "./pokedex.module.css";
 import PokedexAside from "../components/PokedexAside";
 import PokemonCard from "../components/PokemonCard";
 import PokemonLista from "../components/PokemonLista";
-import { IconeFiltro, IconePokeball, IconeSeta } from "../components/icons/Icons";
+import { IconeFiltro, IconePokeball, IconeSeta, IconeCard, IconeLista } from "../components/icons/Icons";
 
 export default function pokedex() {
     const [asideOpen, setAsideOpen] = useState(false);
@@ -79,13 +79,13 @@ export default function pokedex() {
                             <button onClick={() => setViewMode("card")}
                                 className={viewMode === "card" ? styles.ativo : ""}
                             >
-                                Cards
+                                <IconeCard className={styles.icone_botao}/>Cards
                             </button>
 
                             <button onClick={() => setViewMode("list")}
                                 className={viewMode === "list" ? styles.ativo : ""}
                             >
-                                Lista
+                                <IconeLista className={styles.icone_botao}/>Lista
                             </button>
                         </div>
 
