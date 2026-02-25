@@ -18,7 +18,7 @@ interface PokemonCardProps {
     };
 }
 
-export default function PokemonLista({pokemon}: PokemonCardProps) {
+export default function PokemonLista({ pokemon }: PokemonCardProps) {
     return (
         <article className={styles.lista_container}>
             <IconePokeball className={styles.icone_lista} />
@@ -27,14 +27,17 @@ export default function PokemonLista({pokemon}: PokemonCardProps) {
                 <span className={styles.dex_num}>#{pokemon.id.toString().padStart(4, "0")}</span>
 
                 <div className={styles.sprite_area}>
-                    <Image src={pokemon.sprites.front_default} width={60} height={60} alt="pidgeot" className={styles.image} />
+                    <Image src={pokemon.sprites.front_default} width={62} height={62} alt="pidgeot" className={styles.image} />
                 </div>
 
                 <p className={styles.lista_nome}>{pokemon.name}</p>
 
                 <div className={styles.tipos_area}>
-                    <span>Normal</span>
-                    <span>Fighting</span>
+                    {pokemon.types.map((typeInfo) => (
+                        <span key={typeInfo.type.name}>
+                            {typeInfo.type.name}
+                        </span>
+                    ))}
                 </div>
             </div>
         </article>
