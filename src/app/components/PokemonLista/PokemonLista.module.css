@@ -11,6 +11,7 @@
     width: 40px;
     height: auto;
 
+    display: none;
     color: var(--text-secondary);
     background-color: var(--surface);
     border-radius: 50%;
@@ -42,6 +43,7 @@
     text-transform: uppercase;
 }
 
+
 .lista_container:hover .icone_lista,
 .lista_container:hover .lista_nome {
     color: var(--accent);
@@ -63,9 +65,13 @@
 
 /* sprite */
 .sprite_area {
-    background-color: var(--accent-soft);
+    object-fit: contain;
+    background-color: var(--bg-list);
 }
 
+.lista_container:hover .sprite_area {
+    background-color: var(--accent-list);
+}
 
 /* nome do pokemon */
 .lista_nome {
@@ -73,6 +79,7 @@
     letter-spacing: 1px;
     color: var(--text);
     font-weight: 600;
+    text-align: center;
 }
 
 /* lista de tipos  */
@@ -90,19 +97,26 @@
     font-size: var(--fs-card-nome);
     color: var(--text-secondary);
     line-height: var(--lh-texto);
-    text-align: center;
+    text-align: start;
 }
 
 /* media-query */
+@media screen and (min-width: 360px) {
+    .icone_lista {
+        display: block;
+    }
+}
+
 @media screen and (min-width: 480px) and (max-width: 599px) {
     .tipos_area {
         display: flex;
-        padding-right: 2rem;
+        min-width: 130px;
     }
 }
 
 @media screen and (min-width: 600px) {
     .tipos_area {
+        min-width: 190px;
         display: flex;
         flex-direction: row;
         gap: 1rem;

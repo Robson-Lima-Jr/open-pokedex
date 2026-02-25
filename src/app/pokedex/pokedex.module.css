@@ -94,7 +94,7 @@
     z-index: 40;
 }
 
-.teste_dex {
+.card_dex {
     width: 100%;
     padding: var(--esp-padrao) 0;
     display: flex;
@@ -106,7 +106,7 @@
 .lista_dex {
     width: 100%;
     padding: var(--esp-padrao) 0;
-    max-width: 300px;
+    max-width: 310px;
     display: flex;
     flex-direction: column;
     gap: 0.8rem;
@@ -125,12 +125,12 @@
 
 @media screen and (min-width: 480px) and  (max-width: 599px){
     .lista_dex {
-        max-width: 425px;
+        max-width: 420px;
     }
 }
 
 @media screen and (min-width: 600px) {
     .lista_dex {
-        max-width: 490px;
+        max-width: 500px;
     }
 }

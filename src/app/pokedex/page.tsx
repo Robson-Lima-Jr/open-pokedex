@@ -41,7 +41,7 @@ export default function pokedex() {
     useEffect(() => {
         async function fetchPokemons() {
             try {
-                const response = await fetch("https://pokeapi.co/api/v2/pokemon?limit=36");
+                const response = await fetch("https://pokeapi.co/api/v2/pokemon?limit=360");
                 const data = await response.json();
 
                 const detailedPokemons = await Promise.all(
@@ -125,7 +125,7 @@ export default function pokedex() {
 
                         {/* exibição card/lista */}
                         {viewMode === "card" ? (
-                            <div className={styles.teste_dex}>
+                            <div className={styles.card_dex}>
                                 {loading ? (
                                     <p className={styles.loading}>Carregando...</p>
                                 ) : (
