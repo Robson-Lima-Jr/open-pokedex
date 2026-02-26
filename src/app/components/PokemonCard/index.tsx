@@ -14,7 +14,21 @@ interface PokemonCardProps {
                 name: string;
             };
         }[];
+        stats: {
+            base_stat: number;
+            stat: {
+                name: string;
+            };
+        }[];
     };
+}
+
+// formatar sp.atk e sp.def pra formas abreviadas
+const formatarNome = (name: string) => {
+    if (name === "special-attack") return "sp.attack";
+    if (name === "special-defense") return "sp.defense";
+
+    return name.toUpperCase();
 }
 
 export default function PokemonCard({ pokemon }: PokemonCardProps) {
@@ -48,21 +62,16 @@ export default function PokemonCard({ pokemon }: PokemonCardProps) {
                     ))}
                 </div>
             </div>
-            
+
             {/* stats */}
             <div className={styles.stats_area}>
                 <ul className={styles.stats}>
-                    <li className={styles.stats_li}><span>HP</span><strong>200</strong></li>
-
-                    <li className={styles.stats_li}><span>ATTACK</span><strong>135</strong></li>
-
-                    <li className={styles.stats_li}><span>DEFENSE</span><strong>157</strong></li>
-
-                    <li className={styles.stats_li}><span>SP.ATTACK</span><strong>121</strong></li>
-
-                    <li className={styles.stats_li}><span>SP.DEFENSE</span><strong>121</strong></li>
-
-                    <li className={styles.stats_li}><span>SPEED</span><strong>150</strong></li>
+                    {pokemon?.stats?.map((stat) => (
+                        <li key={stat.stat.name} className={styles.stats_li}>
+                            <span>{formatarNome(stat.stat.name)}</span>
+                            <strong>{stat.base_stat}</strong>
+                        </li>
+                    ))}
                 </ul>
             </div>
         </article>
