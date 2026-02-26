@@ -35,13 +35,13 @@
 }
 
 .image {
-    width: 9rem;
+    width: 11rem;
     height: auto;
 }
 
 .dex_num {
     align-self: center;
-    color: var(--text);
+    color: var(--accent);
     font-size: var(--fs-card-nome);
 }
 
@@ -60,6 +60,7 @@
 }
 
 .nome {
+    padding-top: 0.2rem;
     color: var(--accent);
     font-size: var(--fs-card-nome);
 }
@@ -122,6 +123,10 @@
     .card_container{
         width: 100%;
         max-width: 270px;
+    }
+
+    .sprite_area {
+        width: 9rem;
     }
 
     .stats_area {
