@@ -125,12 +125,12 @@
 
 @media screen and (min-width: 480px) and  (max-width: 599px){
     .lista_dex {
-        max-width: 420px;
+        max-width: 430px;
     }
 }
 
 @media screen and (min-width: 600px) {
     .lista_dex {
-        max-width: 500px;
+        max-width: 550px;
     }
 }

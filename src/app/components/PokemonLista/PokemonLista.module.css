@@ -65,8 +65,15 @@
 
 /* sprite */
 .sprite_area {
+    width: 65px;
+    height: auto;
     object-fit: contain;
     background-color: var(--bg-list);
+}
+
+.image {
+    width: 100%;
+    height: auto;
 }
 
 .lista_container:hover .sprite_area {
@@ -121,5 +128,10 @@
         flex-direction: row;
         gap: 1rem;
         padding-right: 2.8rem;
+    }
+
+    .sprite_area {
+        width: 80px;
+        height: auto;
     }
 }
