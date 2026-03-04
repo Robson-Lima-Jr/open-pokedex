@@ -12,6 +12,13 @@
     text-transform: uppercase;
     letter-spacing: 1px;
     font-family: var(--font-pokemon);
+    transition: transform 0.25s ease, box-shadow 0.15s ease;
+}
+
+.card_container:hover {
+    transform: translateY(-3px);
+    box-shadow: 4px 4px 0px var(--text);
+    cursor: pointer;
 }
 
 /* separação, area de cima */
@@ -34,6 +41,7 @@
     align-items: center;
     object-fit: contain;
 }
+
 
 .image {
     width: 11rem;

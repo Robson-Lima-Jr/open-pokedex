@@ -1,7 +1,7 @@
 import Link from "next/link";
 import styles from "./page.module.css";
 import Image from "next/image";
-import { IconeSeta, IconeFiltro, IconePokeball } from "./components/icons/Icons";
+import { IconeSeta, IconePokeball } from "./components/icons/Icons";
 
 export default function Home() {
   return (
