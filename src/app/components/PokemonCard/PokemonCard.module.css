@@ -1,5 +1,5 @@
 .card_container {
-    width: 290px;
+    width: 280px;
     height: 280px;
 
     padding: var(--esp-pequeno);
@@ -139,6 +139,6 @@
     }
 
     .stats_area {
-        padding: var(--esp-pequeno);
+        padding: var(--esp-pequeno) var(--esp-medio);
     }
 }

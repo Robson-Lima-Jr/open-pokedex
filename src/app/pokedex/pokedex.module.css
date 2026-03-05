@@ -112,6 +112,12 @@
     gap: 0.8rem;
 }
 
+/* scroll depois das exibições */
+#scroll-trigger {
+    width: 100%;
+    height: 20px;
+}
+
 /* media-query */
 @media screen and (min-width: 950px) {
     .overlay {
