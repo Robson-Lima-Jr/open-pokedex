@@ -6,7 +6,7 @@ import PokemonCard from "../components/PokemonCard";
 import PokemonLista from "../components/PokemonLista";
 import { IconeFiltro, IconePokeball, IconeSeta, IconeCard, IconeLista } from "../components/icons/Icons";
 
-export default function pokedex() {
+export default function Pokedex() {
     // aside
     const [asideOpen, setAsideOpen] = useState(false);
     // viewmode dos botoes
@@ -15,6 +15,12 @@ export default function pokedex() {
     const [pokemonsBase, setPokemonsBase] = useState<any[]>([]);
     // loading
     const [loading, setLoading] = useState(true);
+    // offset
+    const [offset, setOffset] = useState(0);
+    //limite de pokemons por chamada na api
+    const limit = 30;
+    //loading pra cada chamada
+    const [loadingMore, setLoadingMore] = useState(false);
 
     function toggleAside() {
         setAsideOpen(prev => !prev);
@@ -38,29 +44,73 @@ export default function pokedex() {
     }, [asideOpen]);
 
     // busca de pokemons na api oficial
-    useEffect(() => {
-        async function fetchPokemons() {
-            try {
-                const response = await fetch("https://pokeapi.co/api/v2/pokemon?limit=150");
-                const data = await response.json();
+    async function fetchPokemons() {
+        try {
+            setLoadingMore(true);
 
-                const detailedPokemons = await Promise.all(
-                    data.results.map(async (pokemon: { url: string }) => {
-                        const res = await fetch(pokemon.url);
-                        return res.json();
-                    })
+            const response = await fetch(
+                `https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`
+            );
+
+            const data = await response.json();
+
+            const detailedPokemons = await Promise.all(
+                data.results.map(async (pokemon: { url: string }) => {
+                    const res = await fetch(pokemon.url);
+
+                    return res.json();
+                })
+            );
+
+            setPokemonsBase(prev => {
+                const novos = detailedPokemons.filter(
+                    (p: any) => !prev.some(existing => existing.id === p.id)
                 );
 
-                setPokemonsBase(detailedPokemons);
-            } catch (error) {
-                console.error("Erro ao buscar Pokémon:", error);
-            } finally {
-                setLoading(false);
-            }
-        }
+                return [...prev, ...novos];
+            });
 
+        } catch (error) {
+            console.error("Erro ao buscar Pokémon:", error);
+        } finally {
+            setLoading(false);
+            setLoadingMore(false);
+        }
+    }
+
+    //ativar o fetch, quando o offset muda
+    useEffect(() => {
         fetchPokemons();
-    }, []);
+    }, [offset]);
+
+    // carregar mais pokemons
+    function loadMore() {
+        if (!loadingMore) {
+            setOffset(prev => prev + limit);
+        }
+    }
+
+    // chamar observer
+    useEffect(() => {
+        const trigger = document.querySelector("#scroll-trigger");
+
+        if (!trigger) return;
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                if (entries[0].isIntersecting && !loadingMore) {
+                    loadMore();
+                }
+            },
+            {
+                rootMargin: "200px"
+            }
+        );
+
+        observer.observe(trigger);
+
+        return () => observer.disconnect();
+    }, [loadingMore]);
 
     return (
         <main >
@@ -97,7 +147,7 @@ export default function pokedex() {
                             <IconeFiltro className={styles.icone_filtro} />
                         </button>
                     </div>
-                    
+
                     {/* subtitulo */}
                     <section className={`section_main ${styles.container_pokedex}`}>
                         <h2 className="subtitulo_h2">
@@ -146,13 +196,15 @@ export default function pokedex() {
                                     <p className={styles.loading}>Carregando...</p>
                                 ) : (
                                     pokemonsBase.map((pokemon) => (
-                                        <PokemonLista 
+                                        <PokemonLista
                                             key={pokemon.id}
                                             pokemon={pokemon} />
                                     ))
                                 )}
                             </div>
                         )}
+
+                        <div id="scroll-trigger"></div>
                     </section>
                 </div>
             </div>
