@@ -1,7 +1,5 @@
 import { IconePokeball } from "../icons/Icons";
 import styles from "./PokemonLista.module.css";
-import Image from "next/image";
-
 interface PokemonCardProps {
     pokemon: {
         id: number;
@@ -27,7 +25,7 @@ export default function PokemonLista({ pokemon }: PokemonCardProps) {
                 <span className={styles.dex_num}>#{pokemon.id.toString().padStart(4, "0")}</span>
 
                 <div className={styles.sprite_area}>
-                    <Image src={pokemon.sprites.front_default} width={96} height={96} alt="pidgeot" className={styles.image} />
+                    <img src={pokemon.sprites.front_default} width={96} height={96} alt="pidgeot" className={styles.image} />
                 </div>
 
                 <p className={styles.lista_nome}>{pokemon.name}</p>
