@@ -36,7 +36,7 @@ export default function PokemonCard({ pokemon }: PokemonCardProps) {
             <div className={styles.card_cima}>
                 {/* imagem e nº */}
                 <div className={styles.sprite_area}>
-                    <img src={pokemon.sprites.front_default} width={100} height={100} alt={pokemon.name} className={styles.image} />
+                    <img src={pokemon.sprites.front_default} width={100} height={100} alt={pokemon.name} className={styles.image} loading="lazy"/>
 
                     <span className={styles.dex_num}>#{pokemon.id.toString().padStart(4, "0")}</span>
                 </div>
