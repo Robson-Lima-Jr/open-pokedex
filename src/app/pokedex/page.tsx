@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import styles from "./pokedex.module.css";
 import PokedexAside from "../components/PokedexAside";
 import PokemonCard from "../components/PokemonCard";
@@ -21,6 +21,8 @@ export default function Pokedex() {
     const limit = 30;
     //loading pra cada chamada
     const [loadingMore, setLoadingMore] = useState(false);
+    // busca no aside
+    const [search, setSearch] = useState("");
 
     function toggleAside() {
         setAsideOpen(prev => !prev);
@@ -112,10 +114,22 @@ export default function Pokedex() {
         return () => observer.disconnect();
     }, [loadingMore]);
 
+    // filtrar pokemons, nome/numero
+    const filteredPokemons = useMemo(() => {
+        return pokemonsBase.filter((pokemon) =>
+            pokemon.name.toLowerCase().includes(search.toLowerCase()) ||
+            pokemon.id.toString().includes(search)
+        );
+    }, [pokemonsBase, search]);
+
     return (
         <main >
             <div className={styles.layout_pokedex}>
-                <PokedexAside isOpen={asideOpen} closeAside={closeAside} />
+                <PokedexAside isOpen={asideOpen}
+                    closeAside={closeAside}
+                    search={search}
+                    setSearch={setSearch}
+                />
 
                 {/* criar o fundo clicavel pro apos o aside abrir no mobile */}
                 {asideOpen && (
@@ -180,7 +194,7 @@ export default function Pokedex() {
                                     {loading ? (
                                         <p className={styles.loading}>Carregando...</p>
                                     ) : (
-                                        pokemonsBase.map((pokemon) => (
+                                        filteredPokemons.map((pokemon) => (
                                             <PokemonCard
                                                 key={pokemon.id}
                                                 pokemon={pokemon} />
@@ -195,7 +209,7 @@ export default function Pokedex() {
                                 {loading ? (
                                     <p className={styles.loading}>Carregando...</p>
                                 ) : (
-                                    pokemonsBase.map((pokemon) => (
+                                    filteredPokemons.map((pokemon) => (
                                         <PokemonLista
                                             key={pokemon.id}
                                             pokemon={pokemon} />
