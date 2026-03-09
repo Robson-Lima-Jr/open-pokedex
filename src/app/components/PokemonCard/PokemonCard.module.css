@@ -33,6 +33,7 @@
 
 /* area imagem/ nº dex */
 .sprite_area {
+    width: 10rem;
     height: 100px;
     padding-left: -(var(--esp-pequeno));
     display: flex;
@@ -42,10 +43,9 @@
     object-fit: contain;
 }
 
-
 .image {
-    width: 11rem;
-    height: auto;
+    width: 96px;
+    height: 96px;
 }
 
 .dex_num {
@@ -130,12 +130,16 @@
 
 @media screen and (min-width: 400px) {
     .card_container {
-        width: 100%;
-        max-width: 270px;
+        width: 270px;
     }
 
     .sprite_area {
         width: 9rem;
+    }
+
+    .image {
+        width: 88px;
+        height: 88px;
     }
 
     .stats_area {

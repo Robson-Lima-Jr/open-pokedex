@@ -9,9 +9,11 @@ import { IconePokeball, IconeSeta } from "../icons/Icons";
 type Props = {
     isOpen: boolean;
     closeAside: () => void;
+    search: string;
+    setSearch: (value: string) => void;
 };
 
-export default function PokedexAside({ isOpen, closeAside }: Props) {
+export default function PokedexAside({ isOpen, closeAside, search, setSearch}: Props) {
     // configurar botôes - abrir lista
     type AsideSection = "tipos" | "regioes" | null;
 
@@ -41,6 +43,8 @@ export default function PokedexAside({ isOpen, closeAside }: Props) {
                     id="busca"
                     placeholder="Nome ou número"
                     className={styles.input_busca}
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
                 />
             </div>
 
