@@ -23,6 +23,8 @@ export default function Pokedex() {
     const [loadingMore, setLoadingMore] = useState(false);
     // busca no aside
     const [search, setSearch] = useState("");
+    // busca via tipo
+    const [selectedType, setSelectedType] = useState<string | null>(null);
 
     function toggleAside() {
         setAsideOpen(prev => !prev);
@@ -114,21 +116,31 @@ export default function Pokedex() {
         return () => observer.disconnect();
     }, [loadingMore]);
 
-    // filtrar pokemons, nome/numero
+    // filtrar pokemons, nome/numero/tipo
     const filteredPokemons = useMemo(() => {
         return pokemonsBase.filter((pokemon) =>
             pokemon.name.toLowerCase().includes(search.toLowerCase()) ||
             pokemon.id.toString().includes(search)
-        );
-    }, [pokemonsBase, search]);
+        )
+        .filter((pokemon) => {
+            if (!selectedType) return true;
+
+            return pokemon.types.some(
+                (t: any) => t.type.name === selectedType
+            );
+        });
+    }, [pokemonsBase, search, selectedType]);
 
     return (
         <main >
             <div className={styles.layout_pokedex}>
-                <PokedexAside isOpen={asideOpen}
+                <PokedexAside 
+                    isOpen={asideOpen}
                     closeAside={closeAside}
                     search={search}
                     setSearch={setSearch}
+                    selectedType={selectedType}
+                    setSelectedType={setSelectedType}
                 />
 
                 {/* criar o fundo clicavel pro apos o aside abrir no mobile */}
