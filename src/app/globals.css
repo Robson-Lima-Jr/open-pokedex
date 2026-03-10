@@ -183,7 +183,7 @@ body.dark_mode {
     --accent-hover: #9c153c;
     --accent-overlay: #f2235050;
     --accent-soft: rgba(225, 29, 71, 0.35);
-    --accent-text: rgb(255, 255, 255);
+    --accent-text: var(--text-1-dark);
     --accent-list: #c71038a4;
 }
 
@@ -193,7 +193,7 @@ body.dark_mode {
     --accent-hover: #1442c3;
     --accent-overlay: #2564eb50;
     --accent-soft: rgba(37, 99, 235, 0.35);
-    --accent-text: rgb(255, 255, 255);
+    --accent-text: var(--text-1-dark);
     --accent-list: #306ae8a4;
 }
 
@@ -207,7 +207,33 @@ body.dark_mode {
     --accent-list: #eab308a4;
 }
 
+/* tema pokémon green */
+.pallete_green {
+    --accent: #15c068;
+    --accent-hover: #148b4d;
+    --accent-overlay: #1acd7050;
+    --accent-soft: rgba(26, 205, 112, 0.35);
+    --accent-text: var(--text-1-dark);
+    --accent-list: #1acd70a4;
+}
+
 /* ---------> configurações das paginas <--------- */
+#red_id {
+    color: #f22350;
+}
+
+#blue_id {
+    color: #306ae8;
+}
+
+#yellow_id {
+    color: #eab308;
+}
+
+#green_id {
+    color: #15c068;
+}
+
 /* configurações basicas da página */
 .container_base {
     width: 100%;

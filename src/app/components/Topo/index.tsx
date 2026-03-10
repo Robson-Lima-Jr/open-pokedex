@@ -52,7 +52,7 @@ export default function Topo() {
                          <span className={styles.texto_nav}>POKéDEX</span>
                     </Link>
 
-                    <Link href="/games" className={styles.link_nav} onClick={closeMenu}>
+                    <Link href="/jogos" className={styles.link_nav} onClick={closeMenu}>
                         <span className={styles.icone_wrap}>
                             <IconeSeta className={styles.icone_seta} />
                         </span>
@@ -71,6 +71,7 @@ export default function Topo() {
                         <option value="red">Red</option>
                         <option value="blue">Blue</option>
                         <option value="yellow">Yellow</option>
+                        <option value="green">Green</option>
                     </select>
                 </div>
 
