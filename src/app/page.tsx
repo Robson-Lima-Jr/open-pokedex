@@ -32,12 +32,17 @@ export default function Home() {
 
           <p className="texto_p">O objetivo principal é testar alguns dos conceitos que venho aprendendo e também aplicar algumas ideias próprias para ver como ficam na prática, tentando manter sempre um estilo o mais próximo possível do <strong>profissional.</strong></p>
 
-          <p className="texto_p">O motivo de escolher <Link href="https://www.pokemon.com/br" target="_blank" className="link_main">Pokémon</Link> como tema é bem simples: eu gosto muito da franquia e jogo desde os anos 2000. Além disso, já existem mais de <strong>1000 Pokémon</strong>, o que ajuda bastante na hora de criar os cards e trabalhar com consumo de API.</p>
+          <p className="texto_p">O motivo de escolher <Link href="https://www.pokemon.com/br" target="_blank" className="link_main">Pokémon</Link> como tema é bem simples: eu gosto muito da franquia e jogo desde os anos 2000. Além disso, já existem mais de <strong>1000 Pokémon</strong>, o que ajuda bastante na hora de criar os cards e trabalhar com consumo de API. Além também da franquia estar completando <strong>30 anos</strong> em 2026.</p>
 
           <Image src="/img-page/bidoof-2.png" alt="Bidoof programando" width={300} height={300} title="Bidoof tendo problemas pra programar" className={styles.main_imagens} />
 
-          <p className="texto_p">A ideia do projeto é aplicar conceitos como <strong>Mobile First</strong>, <strong>Dark/Light Mode</strong> e também paletas de cores inspiradas nos três primeiros jogos lançados no ocidente: <strong>Red, Blue e Yellow</strong> (o Yellow um pouco depois).
-            Teremos ainda mais duas páginas: a <Link href="/pokedex" className="link_main">Pokédex</Link> e a de <Link href="/Games" className="link_main">Games</Link>, onde explicarei melhor os detalhes de cada uma.</p>
+          <p className="texto_p">A ideia do projeto é aplicar conceitos como <strong>Mobile First</strong>, <strong>Dark/Light Mode</strong> e também paletas de cores inspiradas nos primeiros jogos lançados ( green não saiu no Ocidente ): <strong id="red_id">Red</strong>, <strong id="blue_id">Blue</strong>, <strong id="green_id">Green</strong> e <strong id="yellow_id">Yellow</strong>.
+            Tendo ainda mais duas páginas: a <Link href="/pokedex" className="link_main">Pokédex</Link> e a de <Link href="/Jogos" className="link_main">Jogos</Link>.</p>
+
+          <p className="texto_p"><strong>Pokédex</strong> traz a lista de pokémons em <strong>2 versões</strong>, <em>Cards</em> ( tentei criar inspirado no modelo dos jogos da gen 1 ) e <em>Lista</em>; sendo possivel escolher qual será visualizado no momento. Também possui filtros de busca via nome, número, tipos e por região.</p>
+
+          <p className="texto_p"><strong>Jogos</strong> serão adicionados depois, com o foco de colocar um pequeno historicos de todos os jogos ja lançados, com a idéia de colocar filtros de busca por geração</p>
+
           <p className="texto_p">O objetivo do projeto é apenas para estudo e prática, sem qualquer objetivo comercial ou monetário.</p>
         </section>
 
@@ -81,7 +86,7 @@ export default function Home() {
               <div className="icone_wrap">
                 <IconePokeball className="icone_li" />
               </div>
-             
+
               <span className="texto_li">React</span>
             </li>
 
@@ -89,7 +94,7 @@ export default function Home() {
               <div className="icone_wrap">
                 <IconePokeball className="icone_li" />
               </div>
-             
+
               <span className="texto_li">Context API</span>
             </li>
 
@@ -97,7 +102,7 @@ export default function Home() {
               <div className="icone_wrap">
                 <IconePokeball className="icone_li" />
               </div>
-             
+
               <span className="texto_li">TypeScript</span>
             </li>
 
@@ -105,7 +110,7 @@ export default function Home() {
               <div className="icone_wrap">
                 <IconePokeball className="icone_li" />
               </div>
-             
+
               <span className="texto_li">CSS Modules</span>
             </li>
 
@@ -113,7 +118,7 @@ export default function Home() {
               <div className="icone_wrap">
                 <IconePokeball className="icone_li" />
               </div>
-             
+
               <span className="texto_li">Mobile First</span>
             </li>
 
@@ -121,7 +126,7 @@ export default function Home() {
               <div className="icone_wrap">
                 <IconePokeball className="icone_li" />
               </div>
-             
+
               <span className="texto_li">Dark / Light Theme</span>
             </li>
 
@@ -129,7 +134,7 @@ export default function Home() {
               <div className="icone_wrap">
                 <IconePokeball className="icone_li" />
               </div>
-             
+
               <span className="texto_li">Paleta dinâmica (Red / Blue / Yellow)</span>
             </li>
 
@@ -137,7 +142,7 @@ export default function Home() {
               <div className="icone_wrap">
                 <IconePokeball className="icone_li" />
               </div>
-             
+
               <span className="texto_li">Consumo de API externa (PokéAPI)</span>
             </li>
 
@@ -145,7 +150,7 @@ export default function Home() {
               <div className="icone_wrap">
                 <IconePokeball className="icone_li" />
               </div>
-             
+
               <span className="texto_li">Imagens em WebP quando possível</span>
             </li>
 
@@ -153,7 +158,7 @@ export default function Home() {
               <div className="icone_wrap">
                 <IconePokeball className="icone_li" />
               </div>
-             
+
               <span className="texto_li">Fonte temática customizada</span>
             </li>
           </ul>
