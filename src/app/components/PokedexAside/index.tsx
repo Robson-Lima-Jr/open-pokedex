@@ -11,9 +11,11 @@ type Props = {
     closeAside: () => void;
     search: string;
     setSearch: (value: string) => void;
+    selectedType: string | null;
+    setSelectedType: (value: string | null) => void;
 };
 
-export default function PokedexAside({ isOpen, closeAside, search, setSearch}: Props) {
+export default function PokedexAside({ isOpen, closeAside, search, setSearch, selectedType, setSelectedType }: Props) {
     // configurar botôes - abrir lista
     type AsideSection = "tipos" | "regioes" | null;
 
@@ -26,12 +28,12 @@ export default function PokedexAside({ isOpen, closeAside, search, setSearch}: P
     return (
         <aside className={`${styles.container_aside} ${isOpen ? styles.aside_aberto : ""}`}>
             <button className={styles.fechar_aside}
-                    aria-label="Fechar filtros"
-                    onClick={closeAside}>
+                aria-label="Fechar filtros"
+                onClick={closeAside}>
                 X
             </button>
 
-            <h2 className={styles.h2_aside}><IconePokeball className={styles.icone_h2}/> Filtros</h2>
+            <h2 className={styles.h2_aside}><IconePokeball className={styles.icone_h2} /> Filtros</h2>
 
             {/* Busca por texto */}
             <div className={styles.aside_bloco}>
@@ -51,13 +53,16 @@ export default function PokedexAside({ isOpen, closeAside, search, setSearch}: P
             {/* tipos */}
             <div className={styles.aside_bloco}>
                 <button className={` ${styles.aside_botao} ${openSection === "tipos" ? styles.botao_ativado : ""}`} onClick={() => toggleSection("tipos")}>
-                    <IconePokeball className={styles.icone_area}/> Tipos
+                    <IconePokeball className={styles.icone_area} /> Tipos
                 </button>
 
                 <ul className={`${styles.aside_ul} ${openSection === "tipos" ? styles.lista_aberta : ""}`}>
                     {pokemonTypes.map((type) => (
-                        <li key={type.id} className={styles.aside_li}>
-                            <IconeSeta className={styles.seta_icone}/> {type.nameEn} ({type.namePt})
+                        <li key={type.id}
+                            className={styles.aside_li}
+                            onClick={() => setSelectedType(type.nameEn)}
+                        >
+                            <IconeSeta className={styles.seta_icone} /> {type.nameEn} ({type.namePt})
                         </li>
                     ))}
                 </ul>
@@ -66,13 +71,13 @@ export default function PokedexAside({ isOpen, closeAside, search, setSearch}: P
             {/* Região */}
             <div className={styles.aside_bloco}>
                 <button className={` ${styles.aside_botao} ${openSection === "regioes" ? styles.botao_ativado : ""}`} onClick={() => toggleSection("regioes")}>
-                    <IconePokeball className={styles.icone_area}/> Regiões
+                    <IconePokeball className={styles.icone_area} /> Regiões
                 </button>
 
                 <ul className={`${styles.aside_ul} ${openSection === "regioes" ? styles.lista_aberta : ""}`}>
                     {regions.map((region) => (
                         <li key={region.id} className={styles.aside_li}>
-                            <IconeSeta className={styles.seta_icone}/> {region.namePt}
+                            <IconeSeta className={styles.seta_icone} /> {region.namePt}
                         </li>
                     ))}
                 </ul>
