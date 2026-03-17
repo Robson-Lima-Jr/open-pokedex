@@ -92,7 +92,7 @@ export default function PokedexAside({ isOpen, closeAside, search, setSearch, se
 
                     {regions.map((region) => (
                         <li key={region.id} className={`${styles.aside_li} ${selectedRegion === region.id ? styles.selecionado: ""}`}
-                            onClick={() => setSelectedRegion(region.namePt)}
+                            onClick={() => setSelectedRegion(region.id)}
                         >
                             <IconeSeta className={styles.seta_icone} /> {region.namePt}
                         </li>
