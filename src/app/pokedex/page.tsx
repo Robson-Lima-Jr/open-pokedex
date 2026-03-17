@@ -25,6 +25,8 @@ export default function Pokedex() {
     const [search, setSearch] = useState("");
     // busca via tipo
     const [selectedType, setSelectedType] = useState<string | null>(null);
+    // busca por região
+    const [selectedRegion, setSelectedRegion] = useState<number | null> (null);
 
     function toggleAside() {
         setAsideOpen(prev => !prev);
@@ -33,6 +35,14 @@ export default function Pokedex() {
     function closeAside() {
         setAsideOpen(false);
     }
+
+    // quando fizer uma busca, volta pro topo da pagina
+    useEffect(() => {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+    }, [search, selectedType]);
 
     // travar a tela quando o overlay estiver ativo
     useEffect(() => {
@@ -122,25 +132,27 @@ export default function Pokedex() {
             pokemon.name.toLowerCase().includes(search.toLowerCase()) ||
             pokemon.id.toString().includes(search)
         )
-        .filter((pokemon) => {
-            if (!selectedType) return true;
+            .filter((pokemon) => {
+                if (!selectedType) return true;
 
-            return pokemon.types.some(
-                (t: any) => t.type.name === selectedType
-            );
-        });
+                return pokemon.types.some(
+                    (t: any) => t.type.name === selectedType
+                );
+            });
     }, [pokemonsBase, search, selectedType]);
 
     return (
         <main >
             <div className={styles.layout_pokedex}>
-                <PokedexAside 
+                <PokedexAside
                     isOpen={asideOpen}
                     closeAside={closeAside}
                     search={search}
                     setSearch={setSearch}
                     selectedType={selectedType}
                     setSelectedType={setSelectedType}
+                    selectedRegion={selectedRegion}
+                    setSelectedRegion={setSelectedRegion}
                 />
 
                 {/* criar o fundo clicavel pro apos o aside abrir no mobile */}

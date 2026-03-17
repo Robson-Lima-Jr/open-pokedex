@@ -166,6 +166,16 @@
     color: var(--text-secondary);
 }
 
+.selecionado {
+    color: var(--accent);
+    transition: var(--tr-rapida);
+    font-weight: 700;
+}
+
+.selecionado .seta_icone{
+    color: var(--accent-hover);
+}
+
 .seta_icone {
     width: 15px;
     height: auto;
