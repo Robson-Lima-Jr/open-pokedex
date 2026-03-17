@@ -13,9 +13,11 @@ type Props = {
     setSearch: (value: string) => void;
     selectedType: string | null;
     setSelectedType: (value: string | null) => void;
+    selectedRegion: number | null;
+    setSelectedRegion: (value: number | null) => void;
 };
 
-export default function PokedexAside({ isOpen, closeAside, search, setSearch, selectedType, setSelectedType }: Props) {
+export default function PokedexAside({ isOpen, closeAside, search, setSearch, selectedType, setSelectedType, selectedRegion, setSelectedRegion }: Props) {
     // configurar botôes - abrir lista
     type AsideSection = "tipos" | "regioes" | null;
 
@@ -57,9 +59,16 @@ export default function PokedexAside({ isOpen, closeAside, search, setSearch, se
                 </button>
 
                 <ul className={`${styles.aside_ul} ${openSection === "tipos" ? styles.lista_aberta : ""}`}>
+                    <li className={`${styles.aside_li} ${selectedType === null ? styles.selecionado : ""}`}
+                        onClick={() => setSelectedType(null)}
+                    >
+                        <IconeSeta className={styles.seta_icone} />Todos
+                    </li>
+
                     {pokemonTypes.map((type) => (
                         <li key={type.id}
-                            className={styles.aside_li}
+                            className={`${styles.aside_li} ${selectedType === type.nameEn ? styles.selecionado : ""
+                                }`}
                             onClick={() => setSelectedType(type.nameEn)}
                         >
                             <IconeSeta className={styles.seta_icone} /> {type.nameEn} ({type.namePt})
@@ -75,8 +84,16 @@ export default function PokedexAside({ isOpen, closeAside, search, setSearch, se
                 </button>
 
                 <ul className={`${styles.aside_ul} ${openSection === "regioes" ? styles.lista_aberta : ""}`}>
+                    <li className={`${styles.aside_li} ${selectedRegion === null ? styles.selecionado : ""}`}
+                        onClick={() => setSelectedRegion(null)}
+                        >
+                       <IconeSeta className={styles.seta_icone} />Todas
+                    </li>
+
                     {regions.map((region) => (
-                        <li key={region.id} className={styles.aside_li}>
+                        <li key={region.id} className={`${styles.aside_li} ${selectedRegion === region.id ? styles.selecionado: ""}`}
+                            onClick={() => setSelectedRegion(region.id)}
+                        >
                             <IconeSeta className={styles.seta_icone} /> {region.namePt}
                         </li>
                     ))}
