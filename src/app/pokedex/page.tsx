@@ -4,6 +4,7 @@ import styles from "./pokedex.module.css";
 import PokedexAside from "../components/PokedexAside";
 import PokemonCard from "../components/PokemonCard";
 import PokemonLista from "../components/PokemonLista";
+import regions from "@/app/data/regions"
 import { IconeFiltro, IconePokeball, IconeSeta, IconeCard, IconeLista } from "../components/icons/Icons";
 
 export default function Pokedex() {
@@ -42,7 +43,7 @@ export default function Pokedex() {
             top: 0,
             behavior: "smooth"
         });
-    }, [search, selectedType]);
+    }, [search, selectedType, selectedRegion]);
 
     // travar a tela quando o overlay estiver ativo
     useEffect(() => {
@@ -132,14 +133,26 @@ export default function Pokedex() {
             pokemon.name.toLowerCase().includes(search.toLowerCase()) ||
             pokemon.id.toString().includes(search)
         )
+        // por tipo
             .filter((pokemon) => {
                 if (!selectedType) return true;
 
                 return pokemon.types.some(
                     (t: any) => t.type.name === selectedType
                 );
-            });
-    }, [pokemonsBase, search, selectedType]);
+            })
+
+        // por região
+            .filter((pokemon) => {
+                if(!selectedRegion) return true;
+
+                const region = regions.find(r => r.id === selectedRegion);
+
+                if (!region) return true; 
+
+                return pokemon.id >= region.min && pokemon.id <= region.max
+            })
+    }, [pokemonsBase, search, selectedType, selectedRegion]);
 
     return (
         <main >
