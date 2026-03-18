@@ -167,13 +167,14 @@
 }
 
 .selecionado {
-    color: var(--accent);
-    transition: var(--tr-rapida);
     font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 5px;
+    color: var(--accent);
 }
 
-.selecionado .seta_icone{
-    color: var(--accent-hover);
+.selecionado .seta_icone {
+    color: var(--accent);
 }
 
 .seta_icone {
