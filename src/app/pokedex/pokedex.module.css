@@ -83,6 +83,42 @@
     height: auto;
 }
 
+/* filtro ativo */
+.filtro_escolhido {
+    padding: 0 var(--esp-micro);
+    display: flex;
+    gap: var(--gap);
+}
+
+.filtro_chip {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+
+    text-transform: uppercase;
+    font-size: var(--fs-normal);
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.filtro_chip button {
+    cursor: pointer;
+    padding: 0.5rem 0.8rem;
+
+    background-color: var(--border);
+    border: none;
+    color: var(--text);
+    font-size: var(--fs-normal);
+    font-weight: 600;
+    border-radius: var(--radius-p);
+}
+
+.filtro_chip button:hover {
+    background-color: var(--text-secondary);
+    color: var(--bg);
+    transition: var(--tr-rapida);
+}
+
 .container_pokedex {
     width: 100%;
 }

@@ -154,6 +154,11 @@ export default function Pokedex() {
             })
     }, [pokemonsBase, search, selectedType, selectedRegion]);
 
+    // h2 referente a regiao selecionada no filtro
+    const region = regions.find(r => r.id === selectedRegion);
+
+    const regionH2 = region ? `${region.namePt} Dex` : "Nacional Dex"; 
+
     return (
         <main >
             <div className={styles.layout_pokedex}>
@@ -206,7 +211,7 @@ export default function Pokedex() {
                                 <IconeSeta className="h2_icone" />
                             </div>
 
-                            <span className="texto_titulo">Nacional Dex</span>
+                            <span className="texto_titulo">{regionH2}</span>
                         </h2>
 
                         {/* botoes de exibição da dex */}
@@ -222,6 +227,22 @@ export default function Pokedex() {
                             >
                                 <IconeLista className={styles.icone_botao} />Lista
                             </button>
+                        </div>
+
+                        <div className={styles.filtro_escolhido}>
+                            {selectedType && (
+                                <div className={styles.filtro_chip}>
+                                    {selectedType}
+                                    <button onClick={() => setSelectedType(null)}>X</button>
+                                </div>
+                            )}
+
+                            {selectedRegion && (
+                                <div className={styles.filtro_chip}>
+                                    {regions.find(r => r.id === selectedRegion) ?.namePt}
+                                    <button onClick={() => setSelectedRegion(null)}>X</button>
+                                </div>
+                            )}
                         </div>
 
                         {/* exibição card/lista */}
