@@ -17,7 +17,7 @@
     text-transform: uppercase;
     border-right: 5px solid var(--accent);
 
-    overflow-y: hidden;
+    overflow-y: auto;
     -webkit-overflow-scrolling: touch;
     /* melhorar o scroll no chrome android */
 
@@ -30,6 +30,11 @@
 
     /* antigos */
     -ms-overflow-style: none;
+}
+
+.container_aside::-webkit-scrollbar {
+    display: none;
+    /* outros navegadores recentes */
 }
 
 .fechar_aside {
@@ -57,15 +62,6 @@
 
 .aside_aberto {
     transform: translateX(0);
-}
-
-.container_aside:hover {
-    overflow-y: auto;
-}
-
-.container_aside::-webkit-scrollbar {
-    display: none;
-    /* outros navegadores recentes */
 }
 
 /* titulo aside */
