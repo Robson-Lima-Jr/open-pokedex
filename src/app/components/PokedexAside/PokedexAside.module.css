@@ -1,7 +1,7 @@
 .container_aside {
     width: var(--container-aside);
     height: calc(100vh - var(--altura-topo));
-    padding: var(--esp-pequeno) var(--esp-medio);
+    padding: var(--esp-pequeno) var(--esp-medio) var(--esp-grande);
 
     position: fixed;
     top: var(--altura-topo);
@@ -18,6 +18,8 @@
     border-right: 5px solid var(--accent);
 
     overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    /* melhorar o scroll no chrome android */
 
     /* esconder no mobile */
     transform: translateX(-100%);
