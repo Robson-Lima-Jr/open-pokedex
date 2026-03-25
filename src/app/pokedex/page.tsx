@@ -30,6 +30,8 @@ export default function Pokedex() {
     const [selectedRegion, setSelectedRegion] = useState<number | null>(null);
     // trava de resultados na busca
     const [noMoreResults, setNoMoreResults] = useState(false);
+    // se esta buscando pokemon
+    const [isFiltering, setIsFiltering] = useState(false);
 
     function toggleAside() {
         setAsideOpen(prev => !prev);
@@ -162,33 +164,46 @@ export default function Pokedex() {
     useEffect(() => {
         if (
             filteredPokemons.length === 0 &&
-            !loading && !loadingMore && pokemonsBase.length > 0 && pokemonsBase.length < 1026 && !noMoreResults
+            !loading &&
+            !loadingMore &&
+            pokemonsBase.length > 0 &&
+            pokemonsBase.length < 1026 &&
+            !noMoreResults
         ) {
             loadMore();
         }
 
-        // chegou no limite mas nao achou nada
         if (
             filteredPokemons.length === 0 &&
-            !loading && !loadingMore && pokemonsBase.length >= 1026
+            !loading &&
+            !loadingMore &&
+            pokemonsBase.length >= 1026
         ) {
             setNoMoreResults(true);
         }
-    }, [filteredPokemons]);
+    }, [filteredPokemons, loading, loadingMore, pokemonsBase.length, noMoreResults]);
 
     // reset quando os filtros mudam
     useEffect(() => {
         setNoMoreResults(false);
     }, [search, selectedType, selectedRegion])
 
+    // quando filtros mudam
+    useEffect(() => {
+        setIsFiltering(true);
+    }, [search, selectedType, selectedRegion]);
+
+    useEffect(() => {
+        if (!loadingMore && filteredPokemons.length > 0 || noMoreResults) {
+            setIsFiltering(false);
+        }
+    }, [loadingMore, filteredPokemons, noMoreResults]);
+    
+
     // h2 referente a regiao selecionada no filtro
     const region = regions.find(r => r.id === selectedRegion);
 
     const regionH2 = region ? `${region.namePt} Dex` : "Nacional Dex";
-
-    // checar se esta buscando
-    const isSearching = filteredPokemons.length === 0 &&
-        !loading && loadingMore;
 
     return (
         <main >
@@ -282,7 +297,7 @@ export default function Pokedex() {
                                 <div className={styles.card_dex}>
                                     {loading ? (
                                         <p className={styles.loading}>Carregando...</p>
-                                    ) : isSearching ? (
+                                    ) : isFiltering ? (
                                         <p className={styles.loading}>Buscando Pokémon(s)...</p>
                                     ) : filteredPokemons.length === 0 ? (
                                         <p className={styles.loading}>Nenhum Pokémon encontrado</p>
@@ -302,7 +317,7 @@ export default function Pokedex() {
                             <div className={styles.lista_dex}>
                                 {loading ? (
                                     <p className={styles.loading}>Carregando...</p>
-                                ) : isSearching ? (
+                                ) : isFiltering ? (
                                     <p className={styles.loading}>Buscando Pokémon(s)...</p>
                                 ) : filteredPokemons.length === 0 ? (
                                     <p className={styles.loading}>Nenhum Pokémon encontrado</p>
