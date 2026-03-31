@@ -30,6 +30,8 @@ export default function Pokedex() {
     const [selectedRegion, setSelectedRegion] = useState<number | null>(null);
     // trava de resultados na busca
     const [noMoreResults, setNoMoreResults] = useState(false);
+    // se esta buscando pokemon
+    const [isFiltering, setIsFiltering] = useState(false);
 
     function toggleAside() {
         setAsideOpen(prev => !prev);
@@ -132,6 +134,8 @@ export default function Pokedex() {
     }, [loadingMore]);
 
     // filtrar pokemons, nome/numero/tipo
+    const selectedRegionData = regions.find(r => r.id === selectedRegion);
+
     const filteredPokemons = useMemo(() => {
         return pokemonsBase.filter((pokemon) =>
             pokemon.name.toLowerCase().includes(search.toLowerCase()) ||
@@ -148,47 +152,62 @@ export default function Pokedex() {
 
             // por região
             .filter((pokemon) => {
-                if (!selectedRegion) return true;
+                if (!selectedRegionData) return true;
 
-                const region = regions.find(r => r.id === selectedRegion);
-
-                if (!region) return true;
-
-                return pokemon.id >= region.min && pokemon.id <= region.max
+                return (
+                    pokemon.id >= selectedRegionData.min && 
+                    pokemon.id <= selectedRegionData.max)
             })
     }, [pokemonsBase, search, selectedType, selectedRegion]);
 
     // melhora na busca dos filtros, caso busque um numero muito acima do carregado atual
     useEffect(() => {
-        if (
-            filteredPokemons.length === 0 &&
-            !loading && !loadingMore && pokemonsBase.length > 0 && pokemonsBase.length < 1026 && !noMoreResults
-        ) {
+        const shouldLoadMore = !loadMore && !loadingMore && pokemonsBase.length < 1026;
+
+        if (shouldLoadMore) {
             loadMore();
         }
 
-        // chegou no limite mas nao achou nada
         if (
-            filteredPokemons.length === 0 &&
-            !loading && !loadingMore && pokemonsBase.length >= 1026
+            !loading && !loadingMore && pokemonsBase.length >= 1026 && filteredPokemons.length === 0
         ) {
             setNoMoreResults(true);
         }
-    }, [filteredPokemons]);
+    }, [filteredPokemons, loading, loadingMore, pokemonsBase.length])
 
     // reset quando os filtros mudam
     useEffect(() => {
         setNoMoreResults(false);
     }, [search, selectedType, selectedRegion])
 
+    // quando filtros mudam
+    useEffect(() => {
+        if(search || selectedType || selectedRegion){
+        setIsFiltering(true);
+    }}, [search, selectedType, selectedRegion]);
+
+    useEffect(() => {
+        if (!loadingMore && (filteredPokemons.length > 0 || noMoreResults)) {
+            setIsFiltering(false);
+        }
+    }, [loadingMore, filteredPokemons, noMoreResults]);
+
+
     // h2 referente a regiao selecionada no filtro
     const region = regions.find(r => r.id === selectedRegion);
 
     const regionH2 = region ? `${region.namePt} Dex` : "Nacional Dex";
 
-    // checar se esta buscando
-    const isSearching = filteredPokemons.length === 0 &&
-        !loading && loadingMore;
+    // variavel de controle de card e lista (reaprovaitavel, pra deixar o codigo mais limpo)
+    let content;
+
+    if(loading) {
+        content = <p className={styles.loading}>Carregando...</p>;
+    } else if (isFiltering) {
+        content = <p className={styles.loading}>Buscando Pokémon...</p>;
+    } else if (filteredPokemons.length === 0) {
+        content = <p className={styles.loading}>Nenhum Pokémon Encontrado...</p>;
+    }
 
     return (
         <main >
@@ -280,40 +299,22 @@ export default function Pokedex() {
                         {viewMode === "card" ? (
                             <div className={styles.container_card}>
                                 <div className={styles.card_dex}>
-                                    {loading ? (
-                                        <p className={styles.loading}>Carregando...</p>
-                                    ) : isSearching ? (
-                                        <p className={styles.loading}>Buscando Pokémon(s)...</p>
-                                    ) : filteredPokemons.length === 0 ? (
-                                        <p className={styles.loading}>Nenhum Pokémon encontrado</p>
-                                    ) : (
-                                        filteredPokemons.map((pokemon) => (
-                                            <PokemonCard
-                                                key={pokemon.id}
-                                                pokemon={pokemon}
-                                            />
-                                        ))
-                                    )}
+                                    {content 
+                                        ? content 
+                                        : filteredPokemons.map((pokemon) => (
+                                            <PokemonCard key={pokemon.id} pokemon={pokemon}/>
+                                        ))}
                                 </div>
                             </div>
 
                         ) : (
 
                             <div className={styles.lista_dex}>
-                                {loading ? (
-                                    <p className={styles.loading}>Carregando...</p>
-                                ) : isSearching ? (
-                                    <p className={styles.loading}>Buscando Pokémon(s)...</p>
-                                ) : filteredPokemons.length === 0 ? (
-                                    <p className={styles.loading}>Nenhum Pokémon encontrado</p>
-                                ) : (
-                                    filteredPokemons.map((pokemon) => (
-                                        <PokemonLista
-                                            key={pokemon.id}
-                                            pokemon={pokemon}
-                                        />
-                                    ))
-                                )}
+                                    {content 
+                                        ? content 
+                                        : filteredPokemons.map((pokemon) => (
+                                            <PokemonLista key={pokemon.id} pokemon={pokemon}/>
+                                        ))}
                             </div>
                         )}
 
