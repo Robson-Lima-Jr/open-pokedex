@@ -75,10 +75,10 @@ export function usePokemonList() {
 
     // loadMore seguro e estável
     const loadMore = useCallback(() => {
-        if (!loadingMore && !isFetchingRef.current && offset < 1025) {
+        if (!loadingMore && !isFetchingRef.current && pokemons.length < 1025) {
             setOffset(prev => prev + limit);
         }
-    }, [loadingMore, offset]);
+    }, [loadingMore, pokemons.length]);
 
     return {
         pokemons,
