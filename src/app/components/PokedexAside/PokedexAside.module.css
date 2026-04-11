@@ -1,6 +1,8 @@
 .container_aside {
     width: var(--container-aside);
+    /* deixa o navegador escolher qual usar */
     height: calc(100vh - var(--altura-topo));
+    height: calc(100dvh - var(--altura-topo));
     padding: var(--esp-pequeno) var(--esp-medio) var(--esp-grande);
 
     position: fixed;

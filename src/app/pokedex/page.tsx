@@ -205,12 +205,12 @@ export default function Pokedex() {
         content = <p className={styles.loading}>Carregando...</p>;
     }
 
-    // 🔥 buscando (mas NÃO impossível)
+    // buscando (mas NÃO impossível)
     else if (isSearching && !hasFinishedSearch) {
         content = <p className={styles.loading}>Buscando Pokémon(s)...</p>;
     }
 
-    // 🔥 impossível OU terminou sem resultado
+    // impossível OU terminou sem resultado
     else if (hasFinishedSearch && filteredPokemons.length === 0) {
         content = <p className={styles.loading}>Nenhum Pokémon Encontrado...</p>;
     }
