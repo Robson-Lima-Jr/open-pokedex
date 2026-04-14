@@ -1,8 +1,10 @@
 .container_aside {
     width: var(--container-aside);
+
     /* deixa o navegador escolher qual usar */
     height: calc(100vh - var(--altura-topo));
     height: calc(100dvh - var(--altura-topo));
+    
     padding: var(--esp-pequeno) var(--esp-medio) var(--esp-grande);
 
     position: fixed;
@@ -188,12 +190,12 @@
     color: var(--text);
 }
 
+/* media-query */
 @media (max-width: 949px) {
     .container_aside {
         position: fixed;
         top: var(--altura-topo);
         left: 0;
-        height: calc(100vh - var(--altura-topo));
 
         transform: translateX(-100%);
         transition: var(--tr-aside);
