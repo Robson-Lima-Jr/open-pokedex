@@ -1,14 +1,10 @@
 .container_aside {
     width: var(--container-aside);
-
-    /* deixa o navegador escolher qual usar */
-    height: calc(100vh - var(--altura-topo));
-    height: calc(100dvh - var(--altura-topo));
-    
     padding: var(--esp-pequeno) var(--esp-medio) var(--esp-grande);
 
     position: fixed;
     top: var(--altura-topo);
+    bottom: 0;
     left: 0;
     z-index: 100;
 
@@ -195,6 +191,7 @@
     .container_aside {
         position: fixed;
         top: var(--altura-topo);
+        bottom: 0;
         left: 0;
 
         transform: translateX(-100%);
@@ -210,8 +207,17 @@
 @media (min-width: 950px) {
     .container_aside {
         position: sticky;
+
+        top: var(--altura-topo);
+
+        bottom: auto;          
+        height: fit-content;   
+        max-height: calc(100vh - var(--altura-topo));
+        
         transform: none;
+        overflow-y: auto;
     }
+
 
     .fechar_aside {
         display: none;
