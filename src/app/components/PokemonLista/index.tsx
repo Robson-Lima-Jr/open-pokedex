@@ -1,5 +1,7 @@
 import { IconePokeball } from "../icons/Icons";
 import styles from "./PokemonLista.module.css";
+import { formatPokemonName } from "@/app/utils/formatPokemonName";
+
 interface PokemonCardProps {
     pokemon: {
         id: number;
@@ -28,7 +30,7 @@ export default function PokemonLista({ pokemon }: PokemonCardProps) {
                     <img src={pokemon.sprites.front_default} width={96} height={96} alt={pokemon.name} className={styles.image} loading="lazy"/>
                 </div>
 
-                <p className={styles.lista_nome}>{pokemon.name}</p>
+                <p className={styles.lista_nome}>{formatPokemonName(pokemon.name)}</p>
 
                 <div className={styles.tipos_area}>
                     {pokemon.types.map((typeInfo) => (
