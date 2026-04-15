@@ -1,4 +1,5 @@
 import styles from "./PokemonCard.module.css";
+import { formatPokemonName } from "@/app/utils/formatPokemonName";
 
 interface PokemonCardProps {
     pokemon: {
@@ -43,7 +44,7 @@ export default function PokemonCard({ pokemon }: PokemonCardProps) {
 
                 {/* nome e tipos */}
                 <div className={styles.header_poke}>
-                    <h2 className={styles.nome}>{pokemon.name}</h2>
+                    <h2 className={styles.nome}>{formatPokemonName(pokemon.name)}</h2>
 
                     {pokemon.types.map((typeInfo, index) => (
                         <div

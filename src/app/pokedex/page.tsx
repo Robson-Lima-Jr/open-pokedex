@@ -59,7 +59,7 @@ export default function Pokedex() {
         };
     }, [asideOpen]);
 
-    // chamar observer (🔥 BLOQUEADO durante busca)
+    // chamar observer (Block durante busca)
     useEffect(() => {
         const trigger = document.querySelector("#scroll-trigger");
 
@@ -108,7 +108,7 @@ export default function Pokedex() {
             })
     }, [pokemons, search, selectedType, selectedRegionData]);
 
-    // 🔥 controle inteligente de busca (sem loop infinito)
+    // controle de busca (sem loop infinito)
     useEffect(() => {
         if (!isSearching) return;
 
