@@ -1,6 +1,6 @@
 .container_aside {
     width: var(--container-aside);
-    padding: var(--esp-pequeno) var(--esp-medio) var(--esp-grande);
+    padding: var(--esp-pequeno) var(--esp-medio);
 
     position: fixed;
     top: var(--altura-topo);
