@@ -4,6 +4,7 @@ import styles from "./pokedex.module.css";
 import PokedexAside from "../components/PokedexAside";
 import PokemonCard from "../components/PokemonCard";
 import PokemonLista from "../components/PokemonLista";
+import BotaoFly from "../components/BotaoFly";
 import regions from "@/app/data/regions"
 import { IconeFiltro, IconePokeball, IconeSeta, IconeCard, IconeLista } from "../components/icons/Icons";
 import { usePokemonList } from "../hooks/usePokemonList";
@@ -263,6 +264,9 @@ export default function Pokedex() {
                             <IconeFiltro className={styles.icone_filtro} />
                         </button>
                     </div>
+
+                    {/* botao pra voltar ao topo */}
+                    <BotaoFly/>
 
                     {/* subtitulo */}
                     <section className={`section_main ${styles.container_pokedex}`}>

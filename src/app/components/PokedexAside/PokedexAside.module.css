@@ -1,6 +1,6 @@
 .container_aside {
     width: var(--container-aside);
-    padding: var(--esp-pequeno) var(--esp-medio) var(--esp-grande);
+    padding: var(--esp-pequeno) var(--esp-medio);
 
     position: fixed;
     top: var(--altura-topo);
@@ -210,8 +210,7 @@
 
         top: var(--altura-topo);
 
-        bottom: auto;          
-        height: fit-content;   
+        bottom: auto;           
         max-height: calc(100vh - var(--altura-topo));
         
         transform: none;

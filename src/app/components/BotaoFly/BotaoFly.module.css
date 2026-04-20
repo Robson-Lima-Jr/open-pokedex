@@ -1,0 +1,27 @@
+.fly_pokemon {
+    position: fixed;
+    top: 250px;
+    right: 20px;
+    z-index: 30;
+
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.sprite_fly {
+    width: 50px;
+    height: auto;
+
+    transition: var(--tr-rapida);
+}
+
+.fly_pokemon:hover .sprite_fly {
+    content: url("/botao_fly/pidgey_fly.gif");
+}
+
+@media screen and (max-width: 680px){
+    .fly_pokemon {
+        display: none;
+    }
+}
