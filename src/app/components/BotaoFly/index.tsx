@@ -7,7 +7,7 @@ export default function BotaoFly() {
 
     useEffect(() => {
         const handleScroll = () => {
-            setVisible(true);
+            setVisible(window.scrollY > 100);
         };
 
         window.addEventListener("scroll", handleScroll);
@@ -25,7 +25,7 @@ export default function BotaoFly() {
 
     return(
         <button onClick={scrollToTop} className={styles.fly_pokemon}>
-            <img src={"/botao_fly/pidgey.png"} alt="Clique para Voar ao topo" title="Clique para voar ao topo" className={styles.sprite_fly}/>
+            <img src={"/botao_fly/pidgey.png"} alt="Clique para Voar ao topo" className={styles.sprite_fly}/>
         </button>
     );
 }
