@@ -1,24 +1,17 @@
 import { useEffect, useState, useCallback, useRef } from "react";
 
 export function usePokemonList() {
-    // pokemons
     const [pokemons, setPokemons] = useState<any[]>([]);
-    // loading
-    const [loading, setLoading] = useState(true);
-    // loading pra cada chamada
-    const [loadingMore, setLoadingMore] = useState(false);
-    // offset
+    const [isInitialLoading, setIsInitialLoading] = useState(true);
+    const [isFetchingMore, setIsFetchingMore] = useState(false);
     const [offset, setOffset] = useState(0);
-    // erro
     const [error, setError] = useState<string | null>(null);
 
-    // limite de chamadas por vez na pokedex, pra nao carregar tudo de uma vez...
-    const limit = 30
-
-    //evitar varias chamadas simultaneas
+    const limit = 30;
     const isFetchingRef = useRef(false);
+    const hasLoadedOnce = pokemons.length > 0;
+    const hasMore = pokemons.length < 1026;
 
-    // funçao que busca detalhes
     const fetchDetails = async (results: { url: string }[]) => {
         return Promise.all(
             results.map(async (pokemon) => {
@@ -28,14 +21,19 @@ export function usePokemonList() {
         );
     };
 
-    // função principal de fetch
     const fetchPokemons = useCallback(async () => {
         if (isFetchingRef.current) return;
 
         try {
             isFetchingRef.current = true;
-            setLoadingMore(true);
             setError(null);
+
+            // define qual loading ativar
+            if (offset === 0) {
+                setIsInitialLoading(true);
+            } else {
+                setIsFetchingMore(true);
+            }
 
             const response = await fetch(
                 `https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`
@@ -46,25 +44,23 @@ export function usePokemonList() {
             }
 
             const data = await response.json();
-
             const detailed = await fetchDetails(data.results);
 
-            setPokemons(prev => {
+            setPokemons((prev) => {
                 const novos = detailed.filter(
                     (p: any) =>
                         p.id <= 1025 &&
-                        !prev.some(existing => existing.id === p.id)
+                        !prev.some((existing) => existing.id === p.id)
                 );
 
                 return [...prev, ...novos];
             });
-
         } catch (err) {
             console.error(err);
             setError("Erro ao carregar Pokémon");
         } finally {
-            setLoading(false);
-            setLoadingMore(false);
+            setIsInitialLoading(false);
+            setIsFetchingMore(false);
             isFetchingRef.current = false;
         }
     }, [offset]);
@@ -73,18 +69,19 @@ export function usePokemonList() {
         fetchPokemons();
     }, [fetchPokemons]);
 
-    // loadMore seguro e estável
     const loadMore = useCallback(() => {
-        if (!loadingMore && !isFetchingRef.current && pokemons.length < 1025) {
-            setOffset(prev => prev + limit);
+        if (!isFetchingRef.current && pokemons.length < 1025) {
+            setOffset((prev) => prev + limit);
         }
-    }, [loadingMore, pokemons.length]);
+    }, [pokemons.length]);
 
     return {
         pokemons,
-        loading,
-        loadingMore,
+        isInitialLoading,
+        isFetchingMore,
         error,
+        hasLoadedOnce,
+        hasMore,
         loadMore
     };
 }

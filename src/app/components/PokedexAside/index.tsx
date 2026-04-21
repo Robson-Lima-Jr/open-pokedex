@@ -48,7 +48,7 @@ export default function PokedexAside({ isOpen, closeAside, search, setSearch, se
 
                 <input type="text"
                     id="busca"
-                    placeholder="Nome ou número"
+                    placeholder="Nome do Pokémon"
                     className={styles.input_busca}
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
