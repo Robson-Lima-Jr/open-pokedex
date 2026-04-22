@@ -8,6 +8,7 @@ import BotaoFly from "../components/BotaoFly";
 import regions from "@/app/data/regions"
 import { IconeFiltro, IconePokeball, IconeSeta, IconeCard, IconeLista } from "../components/icons/Icons";
 import { usePokemonList } from "../hooks/usePokemonList";
+import { usePokemonSearch } from "../hooks/usePokemonSearch";
 
 export default function Pokedex() {
     // variaveis importadas de hooks, pra conexao com api
@@ -23,6 +24,13 @@ export default function Pokedex() {
     const [selectedType, setSelectedType] = useState<string | null>(null);
     // busca por região
     const [selectedRegion, setSelectedRegion] = useState<number | null>(null);
+
+    // hook de busca
+    const searchData = usePokemonSearch({
+        search,
+        selectedType,
+        selectedRegion
+    });
 
     function toggleAside() {
         setAsideOpen(prev => !prev);
@@ -53,7 +61,8 @@ export default function Pokedex() {
         };
     }, [asideOpen]);
 
-    // chamar observer (Block durante busca)
+    // observer do infinite scroll
+    // BLOQUEADO durante busca 
     useEffect(() => {
         const trigger = document.querySelector("#scroll-trigger");
 
@@ -61,7 +70,12 @@ export default function Pokedex() {
 
         const observer = new IntersectionObserver(
             (entries) => {
-                if (entries[0].isIntersecting && !isFetchingMore && hasMore) {
+                if (
+                    entries[0].isIntersecting &&
+                    !isFetchingMore &&
+                    hasMore &&
+                    !searchData.isActive
+                ) {
                     loadMore();
                 }
             },
@@ -73,18 +87,16 @@ export default function Pokedex() {
         observer.observe(trigger);
 
         return () => observer.disconnect();
-    }, [isFetchingMore, hasMore, loadMore]);
+    }, [isFetchingMore, hasMore, loadMore, searchData.isActive]);
 
-    // filtrar pokemons (nome digitado, tipos/ regiões selecionados via clique)
+    // filtrar pokemons (somente para modo "dex normal")
     const selectedRegionData = regions.find(r => r.id === selectedRegion);
 
     const filteredPokemons = useMemo(() => {
         return pokemons
-            // busca por nome (sem numero agora)
             .filter((pokemon) =>
                 pokemon.name.toLowerCase().includes(search.toLowerCase())
             )
-            // filtro por tipo
             .filter((pokemon) => {
                 if (!selectedType) return true;
 
@@ -92,7 +104,6 @@ export default function Pokedex() {
                     (t: any) => t.type.name === selectedType
                 );
             })
-            // filtro por região
             .filter((pokemon) => {
                 if (!selectedRegionData) return true;
 
@@ -103,30 +114,30 @@ export default function Pokedex() {
             })
     }, [pokemons, search, selectedType, selectedRegionData]);
 
+    // define de onde vem os pokemons
+    const displayPokemons = searchData.isActive
+        ? searchData.results
+        : filteredPokemons;
 
     // h2 referente a regiao selecionada no filtro
     const region = regions.find(r => r.id === selectedRegion);
-
     const regionH2 = region ? `${region.namePt} Dex` : "Nacional Dex";
 
     // mensagem exibida do momento em que esta a dex
     let content;
 
-    // loading inicial
-    if (isInitialLoading && !hasLoadedOnce) {
+    if (searchData.isActive && searchData.isSearching) {
         content = <p className={styles.loading}>Procurando Pokémon(s)...</p>;
     }
 
-    // nenhum encontrado (SÓ quando já terminou tudo)
-    else if (
-        filteredPokemons.length === 0 &&
-        !hasMore &&
-        hasLoadedOnce
-    ) {
-        content = <p className={styles.loading}>Nenhum Pokémon encontrado...</p>;
+    else if (searchData.isActive && searchData.notFound) {
+        content = <p className={styles.loading}>Nenhum Pokémon encontrado!!!</p>;
     }
 
-    // erro
+    else if (isInitialLoading && !hasLoadedOnce) {
+        content = <p className={styles.loading}>Carregando Pokédex...</p>;
+    }
+
     if (error) {
         content = <p className={styles.loading}>Erro ao carregar Pokémon.</p>;
     }
@@ -145,7 +156,6 @@ export default function Pokedex() {
                     setSelectedRegion={setSelectedRegion}
                 />
 
-                {/* criar o fundo clicavel pro apos o aside abrir no mobile */}
                 {asideOpen && (
                     <div className={styles.overlay}
                         onClick={closeAside}
@@ -154,7 +164,6 @@ export default function Pokedex() {
                 )}
 
                 <div className={`container_base ${styles.conteudo_dex}`}>
-                    {/* h1 */}
                     <div className={`titulo_area ${styles.config_area}`}>
                         <div>
                             <h1 className="titulo_h1">
@@ -168,7 +177,6 @@ export default function Pokedex() {
                             <p className="paragrafo_h1">Database</p>
                         </div>
 
-                        {/* botao filtro */}
                         <button onClick={toggleAside}
                             className={styles.botao_filtro}
                             aria-label="Abrir Filtro">
@@ -176,10 +184,8 @@ export default function Pokedex() {
                         </button>
                     </div>
 
-                    {/* botao pra voltar ao topo */}
                     <BotaoFly />
 
-                    {/* subtitulo */}
                     <section className={`section_main ${styles.container_pokedex}`}>
                         <h2 className="subtitulo_h2">
                             <div className="icone_wrap">
@@ -189,7 +195,6 @@ export default function Pokedex() {
                             <span className="texto_titulo">{regionH2}</span>
                         </h2>
 
-                        {/* botoes de exibição da dex */}
                         <div className={styles.view_toggle}>
                             <button onClick={() => setViewMode("card")}
                                 className={viewMode === "card" ? styles.ativo : ""}
@@ -220,13 +225,12 @@ export default function Pokedex() {
                             )}
                         </div>
 
-                        {/* exibição card/lista */}
                         {viewMode === "card" ? (
                             <div className={styles.container_card}>
                                 <div className={styles.card_dex}>
                                     {content
                                         ? content
-                                        : filteredPokemons.map((pokemon) => (
+                                        : displayPokemons.map((pokemon) => (
                                             <PokemonCard key={pokemon.id} pokemon={pokemon} />
                                         ))}
                                 </div>
@@ -237,7 +241,7 @@ export default function Pokedex() {
                             <div className={styles.lista_dex}>
                                 {content
                                     ? content
-                                    : filteredPokemons.map((pokemon) => (
+                                    : displayPokemons.map((pokemon) => (
                                         <PokemonLista key={pokemon.id} pokemon={pokemon} />
                                     ))}
                             </div>
