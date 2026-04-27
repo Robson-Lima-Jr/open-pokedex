@@ -95,13 +95,40 @@
 
 .input_busca {
     padding: var(--esp-micro) var(--esp-pequeno);
-
+    
     font-size: var(--fs-pequeno);
     border-radius: var(--radius-p);
     background-color: var(--bg);
     border: 2px solid var(--accent-hover);
     color: var(--text);
     outline: none;
+}
+
+.sugestoes {
+    padding: var(--esp-micro);
+
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+.sugestoes_item {
+    width: 100%;
+    padding: var(--esp-micro) var(--esp-pequeno);
+
+    font-family: var(--font-pokemon);
+    color: var(--text);
+    border-bottom: 2px solid var(--accent);
+
+    cursor: pointer;
+}
+
+.sugestoes_item:hover {
+    background-color: var(--accent);
+    color: var(--accent-text);
+
+    border-bottom-color: var(--text);
+    transition: var(--tr-rapida);
 }
 
 /* botoes */

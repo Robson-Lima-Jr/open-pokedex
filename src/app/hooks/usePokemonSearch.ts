@@ -15,7 +15,6 @@ export function usePokemonSearch({ search, selectedType, selectedRegion }: Props
     useEffect(() => {
         const hasFilter = search || selectedType || selectedRegion;
 
-        // se não tem filtro, limpa tudo
         if (!hasFilter) {
             setResults([]);
             setIsSearching(false);
@@ -28,21 +27,10 @@ export function usePokemonSearch({ search, selectedType, selectedRegion }: Props
                 setIsSearching(true);
                 setNotFound(false);
 
-                let finalResults: any[] = [];
+                let baseResults: any[] = [];
 
-                // base inicial
-                if (search) {
-                    const ids = Array.from({ length: 1025 }, (_, i) => i + 1);
-
-                    const promises = ids.map((id) =>
-                        fetch(`https://pokeapi.co/api/v2/pokemon/${id}`)
-                            .then(res => res.json())
-                    );
-
-                    finalResults = await Promise.all(promises);
-                }
-
-                else if (selectedType) {
+                // busca por tipo (base principal)
+                if (selectedType) {
                     const res = await fetch(`https://pokeapi.co/api/v2/type/${selectedType}`);
 
                     if (!res.ok) throw new Error();
@@ -53,11 +41,22 @@ export function usePokemonSearch({ search, selectedType, selectedRegion }: Props
                         fetch(p.pokemon.url).then(res => res.json())
                     );
 
-                    finalResults = await Promise.all(promises);
+                    baseResults = await Promise.all(promises);
                 }
 
+                // busca direta por nome (apenas 1)
+                else if (search && !selectedType && !selectedRegion) {
+                    const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${search.toLowerCase()}`);
+
+                    if (!res.ok) throw new Error();
+
+                    const data = await res.json();
+
+                    baseResults = [data];
+                }
+
+                // fallback região ou geral
                 else {
-                    // base = TODOS (região ou fallback)
                     const regionData = pokemonRegions.find(r => r.id === selectedRegion);
 
                     const ids = regionData
@@ -65,27 +64,20 @@ export function usePokemonSearch({ search, selectedType, selectedRegion }: Props
                             { length: regionData.max - regionData.min + 1 },
                             (_, i) => regionData.min + i
                         )
-                        : Array.from({ length: 1025 }, (_, i) => i + 1);
+                        : [];
 
                     const promises = ids.map((id) =>
                         fetch(`https://pokeapi.co/api/v2/pokemon/${id}`)
                             .then(res => res.json())
                     );
 
-                    finalResults = await Promise.all(promises);
+                    baseResults = await Promise.all(promises);
                 }
 
                 // filtro por nome parcial
                 if (search) {
-                    finalResults = finalResults.filter((p) =>
+                    baseResults = baseResults.filter((p) =>
                         p.name.toLowerCase().includes(search.toLowerCase())
-                    );
-                }
-
-                // filtro por tipo
-                if (selectedType) {
-                    finalResults = finalResults.filter((p) =>
-                        p.types.some((t: any) => t.type.name === selectedType)
                     );
                 }
 
@@ -93,14 +85,19 @@ export function usePokemonSearch({ search, selectedType, selectedRegion }: Props
                 if (selectedRegion) {
                     const regionData = pokemonRegions.find(r => r.id === selectedRegion);
 
-                    finalResults = finalResults.filter((p) =>
+                    baseResults = baseResults.filter((p) =>
                         p.id >= regionData!.min &&
                         p.id <= regionData!.max
                     );
                 }
 
-                setResults(finalResults);
-            } catch (err) {
+                setResults(baseResults);
+
+                if (baseResults.length === 0) {
+                    setNotFound(true);
+                }
+
+            } catch {
                 setResults([]);
                 setNotFound(true);
             } finally {
