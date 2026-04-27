@@ -42,6 +42,7 @@
     font-family: var(--font-pokemon);
     font-size: var(--fs-normal);
     color: var(--text);
+    text-align: center;
 }
 
 .conteudo_dex {
