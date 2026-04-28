@@ -95,8 +95,10 @@
 
 .input_busca {
     padding: var(--esp-micro) var(--esp-pequeno);
-    
-    font-size: var(--fs-pequeno);
+
+    font-family: var(--font-pokemon);
+    font-size: 10px;
+    text-transform: uppercase;
     border-radius: var(--radius-p);
     background-color: var(--bg);
     border: 2px solid var(--accent-hover);
@@ -105,11 +107,15 @@
 }
 
 .sugestoes {
+    max-height: 200px;
+    overflow-y: auto;
     padding: var(--esp-micro);
 
     display: flex;
     flex-direction: column;
-    flex-wrap: wrap;
+    background-color: var(--bg);
+    border: 2px solid var(--accent-hover);
+    border-radius: var(--radius-p);
 }
 
 .sugestoes_item {
@@ -118,7 +124,6 @@
 
     font-family: var(--font-pokemon);
     color: var(--text);
-    border-bottom: 2px solid var(--accent);
 
     cursor: pointer;
 }
@@ -129,6 +134,15 @@
 
     border-bottom-color: var(--text);
     transition: var(--tr-rapida);
+}
+
+.resposta_vazia {
+    padding: var(--esp-pequeno);
+
+    font-family: var(--font-pokemon);
+    color: var(--text);
+    background-color: var(--bg);
+    border-radius: var(--radius-p);
 }
 
 /* botoes */
@@ -237,9 +251,9 @@
 
         top: var(--altura-topo);
 
-        bottom: auto;           
+        bottom: auto;
         max-height: calc(100vh - var(--altura-topo));
-        
+
         transform: none;
         overflow-y: auto;
     }
