@@ -50,7 +50,7 @@ export default function PokedexAside({
         .filter(name =>
             name.toLowerCase().includes(search.toLowerCase())
         )
-        .slice(0, 8);
+        .slice(0, 20);
 
     return (
         <aside className={`${styles.container_aside} ${isOpen ? styles.aside_aberto : ""}`}>
@@ -81,10 +81,12 @@ export default function PokedexAside({
                     onChange={(e) => {
                         setSearch(e.target.value);
                         setSelectedSearch("");
+                        setSelectedType(null);
+                        setSelectedRegion(null);
                     }}
                 />
 
-                {search && !selectedSearch && (
+                {search && !selectedSearch && searchResults.length > 0 && (
                     <div className={styles.sugestoes}>
                         {searchResults.map((name) => (
                             <div
@@ -93,11 +95,18 @@ export default function PokedexAside({
                                 onClick={() => {
                                     setSearch(name);
                                     setSelectedSearch(name);
+                                    closeAside();
                                 }}
                             >
                                 {name}
                             </div>
                         ))}
+                    </div>
+                )}
+
+                {search && !selectedSearch && searchResults.length === 0 && (
+                    <div className={styles.resposta_vazia}>
+                        Nenhum Resultado!
                     </div>
                 )}
             </div>
@@ -123,7 +132,11 @@ export default function PokedexAside({
                         <li
                             key={type.id}
                             className={`${styles.aside_li} ${selectedType === type.nameEn ? styles.selecionado : ""}`}
-                            onClick={() => setSelectedType(type.nameEn)}
+                            onClick={() => {
+                                setSelectedType(type.nameEn);
+                                setSearch("");
+                                setSelectedSearch("");
+                            }}
                         >
                             <IconeSeta className={styles.seta_icone} /> {type.nameEn} ({type.namePt})
                         </li>
@@ -152,7 +165,11 @@ export default function PokedexAside({
                         <li
                             key={region.id}
                             className={`${styles.aside_li} ${selectedRegion === region.id ? styles.selecionado : ""}`}
-                            onClick={() => setSelectedRegion(region.id)}
+                            onClick={() => {
+                                setSelectedRegion(region.id);
+                                setSearch("");
+                                setSelectedSearch("");
+                            }}
                         >
                             <IconeSeta className={styles.seta_icone} /> {region.namePt}
                         </li>

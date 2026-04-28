@@ -21,7 +21,7 @@ export default function Pokedex() {
 
     // busca no aside
     const [search, setSearch] = useState("");
-    const [selectedSearch, setSelectedSearch] = useState(""); // 🔥 novo controle
+    const [selectedSearch, setSelectedSearch] = useState(""); 
 
     // busca via tipo
     const [selectedType, setSelectedType] = useState<string | null>(null);

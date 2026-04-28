@@ -42,6 +42,8 @@ export function usePokemonSearch({ search, selectedType, selectedRegion }: Props
                     );
 
                     baseResults = await Promise.all(promises);
+
+                    baseResults = baseResults.filter(p => p.id <= 1025);
                 }
 
                 // busca direta por nome (apenas 1)
