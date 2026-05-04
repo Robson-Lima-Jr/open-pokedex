@@ -145,7 +145,7 @@
 .lista_dex {
     width: 100%;
     padding: var(--esp-padrao) 0;
-    max-width: 310px;
+    max-width: 315px;
     display: flex;
     flex-direction: column;
     gap: 0.8rem;
@@ -168,6 +168,10 @@
         display: none;
     }
 
+    .lista_dex {
+        max-width: 800px;
+    }
+
     .card_dex {
         max-width: calc(270px * 3 + var(--gap) * 2);
     }
@@ -179,15 +183,11 @@
     }
 
     .lista_dex {
-        max-width: 550px;
+        max-width: 530px;
     }
 }
 
-@media screen and (min-width: 480px) and (max-width: 589px){
-    .lista_dex {
-        max-width: 430px;
-    }
-
+@media screen and (min-width: 480px) and (max-width: 589px) {
     .card_dex {
         max-width: calc(270px * 1 + var(--gap));
     }
@@ -195,6 +195,6 @@
 
 @media screen and (max-width: 479px) {
     .card_dex {
-        max-width: 270px;
+        max-width: 275px;
     }
 }

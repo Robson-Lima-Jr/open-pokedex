@@ -114,14 +114,7 @@
     }
 }
 
-@media screen and (min-width: 480px) and (max-width: 599px) {
-    .tipos_area {
-        display: flex;
-        min-width: 130px;
-    }
-}
-
-@media screen and (min-width: 600px) {
+@media screen and (min-width: 590px) {
     .tipos_area {
         min-width: 190px;
         display: flex;
