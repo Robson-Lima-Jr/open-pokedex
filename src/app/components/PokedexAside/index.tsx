@@ -32,18 +32,6 @@ export default function PokedexAside({
     setSelectedRegion
 }: Props) {
 
-    const [openSection, setOpenSection] = useState({
-        tipos: true,
-        regioes: true
-    });
-
-    function toggleSection(section: "tipos" | "regioes") {
-        setOpenSection(prev => ({
-            ...prev,
-            [section]: !prev[section]
-        }));
-    }
-
     const { names } = usePokemonsNames();
 
     const searchResults = names
@@ -112,15 +100,14 @@ export default function PokedexAside({
             </div>
 
             {/* tipos */}
-            <div className={styles.aside_bloco}>
-                <button
-                    className={`${styles.aside_botao} ${openSection.tipos ? styles.botao_ativado : ""}`}
-                    onClick={() => toggleSection("tipos")}
-                >
-                    <IconePokeball className={styles.icone_area} /> Tipos
-                </button>
+            <div className={styles.aside_bloco_lista}>
+                <span
+                    className={styles.aside_item_desc}>
 
-                <ul className={`${styles.aside_ul} ${openSection.tipos ? styles.lista_aberta : ""}`}>
+                    <IconePokeball className={styles.icone_area} /> Tipos
+                </span>
+
+                <ul className={styles.aside_ul}>
                     <li
                         className={`${styles.aside_li} ${selectedType === null ? styles.selecionado : ""}`}
                         onClick={() => setSelectedType(null)}
@@ -145,15 +132,14 @@ export default function PokedexAside({
             </div>
 
             {/* Região */}
-            <div className={styles.aside_bloco}>
-                <button
-                    className={`${styles.aside_botao} ${openSection.regioes ? styles.botao_ativado : ""}`}
-                    onClick={() => toggleSection("regioes")}
-                >
-                    <IconePokeball className={styles.icone_area} /> Regiões
-                </button>
+            <div className={styles.aside_bloco_lista}>
+                <span
+                    className={styles.aside_item_desc}>
 
-                <ul className={`${styles.aside_ul} ${openSection.regioes ? styles.lista_aberta : ""}`}>
+                    <IconePokeball className={styles.icone_area} /> Regiões
+                </span>
+
+                <ul className={styles.aside_ul}>
                     <li
                         className={`${styles.aside_li} ${selectedRegion === null ? styles.selecionado : ""}`}
                         onClick={() => setSelectedRegion(null)}
