@@ -133,10 +133,13 @@
 .card_dex {
     width: 100%;
     padding: var(--esp-padrao) 0;
+
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     gap: var(--gap);
     flex-wrap: wrap;
+
+    margin: 0 auto;
 }
 
 .lista_dex {
@@ -156,7 +159,7 @@
 }
 
 /* media-query */
-@media screen and (min-width: 950px) {
+@media screen and (min-width: 1145px) {
     .overlay {
         display: none;
     }
@@ -164,16 +167,34 @@
     .botao_filtro {
         display: none;
     }
-}
 
-@media screen and (min-width: 480px) and  (max-width: 599px){
-    .lista_dex {
-        max-width: 430px;
+    .card_dex {
+        max-width: calc(270px * 3 + var(--gap) * 2);
     }
 }
 
-@media screen and (min-width: 600px) {
+@media screen and (min-width: 590px) and (max-width: 1144px) {
+    .card_dex {
+        max-width: calc(270px * 2 + var(--gap));
+    }
+
     .lista_dex {
         max-width: 550px;
+    }
+}
+
+@media screen and (min-width: 480px) and (max-width: 589px){
+    .lista_dex {
+        max-width: 430px;
+    }
+
+    .card_dex {
+        max-width: calc(270px * 1 + var(--gap));
+    }
+}
+
+@media screen and (max-width: 479px) {
+    .card_dex {
+        max-width: 270px;
     }
 }

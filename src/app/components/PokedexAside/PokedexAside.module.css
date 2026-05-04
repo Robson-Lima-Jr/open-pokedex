@@ -87,6 +87,12 @@
     gap: var(--gap);
 }
 
+.aside_bloco_lista {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
 /* label e input */
 .label_busca {
     font-size: var(--fs-pequeno);
@@ -94,7 +100,7 @@
 }
 
 .input_busca {
-    padding: var(--esp-micro) var(--esp-pequeno);
+    padding: var(--esp-pequeno);
 
     font-family: var(--font-pokemon);
     font-size: 10px;
@@ -146,9 +152,8 @@
 }
 
 /* botoes */
-.aside_botao {
-    all: unset;
-    cursor: pointer;
+.aside_item_desc {
+    width: 14rem;
     padding: var(--esp-micro);
 
     display: flex;
@@ -156,10 +161,10 @@
 
     gap: 0.5rem;
     font-size: var(--fs-pequeno);
-    background-color: transparent;
-    color: var(--text);
+    background-color: var(--accent-hover);
+    color: var(--accent-text);
     font-weight: 600;
-    border: 2px solid transparent;
+    border: 2px solid var(--text);
     border-radius: var(--radius-p);
 }
 
@@ -180,15 +185,11 @@
 
 /* listas */
 .aside_ul {
-    display: none;
+    display: flex;
     flex-direction: column;
-    gap: 0.3rem;
+    gap: 0.4rem;
     list-style-type: none;
 
-}
-
-.lista_aberta {
-    display: flex;
 }
 
 .aside_li {
