@@ -333,6 +333,19 @@
     color: var(--accent);
 }
 
+.obs {
+    padding-top: var(--esp-pequeno);
+    text-align: justify;
+    color: var(--text-secondary);
+    letter-spacing: 1px;
+    font-size: var(--fs-pequeno);
+    font-style: italic;
+}
+
+.obs strong {
+    color: var(--accent);
+}
+
 /* media-query */
 @media screen and (min-width: 600px) and (max-width: 849px) {
     .imagem_area {
