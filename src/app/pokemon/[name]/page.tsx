@@ -64,6 +64,23 @@ interface PokemonSpecies {
     gender_rate: number;
 }
 
+// interface para os titulos
+interface TypeData {
+    damage_relations: {
+        double_damage_from: {
+            name: string;
+        }[];
+
+        half_damage_from: {
+            name: string;
+        }[];
+
+        no_damage_from: {
+            name: string;
+        }[];
+    }
+}
+
 export default async function PokemonPage({
     params,
 }: {
@@ -93,6 +110,38 @@ export default async function PokemonPage({
 
     const species: PokemonSpecies = await speciesResponse.json();
 
+    // busca de fraquezas/ resistencias
+    const typeResponses = await Promise.all(
+        pokemon.types.map((type) =>
+            fetch(`https://pokeapi.co/api/v2/type/${type.type.name}`)
+        )
+    );
+
+    const typeData: TypeData[] = await Promise.all(typeResponses.map((response) => response.json()));
+
+    const typeMatchups: Record<string, number> = {};
+
+    typeData.forEach((type) => {
+        type.damage_relations.double_damage_from.forEach((damageType) => {
+            const currentValue = typeMatchups[damageType.name] || 1;
+
+            typeMatchups[damageType.name] = currentValue * 2;
+        });
+
+        type.damage_relations.half_damage_from.forEach((damageType) => {
+            const currentValue = typeMatchups[damageType.name] || 1;
+
+            typeMatchups[damageType.name] = currentValue * 0.5;
+        });
+
+        type.damage_relations.no_damage_from.forEach((damageType) => {
+            typeMatchups[damageType.name] = 0;
+        });
+    });
+
+    const matchups = Object.entries(typeMatchups)
+        .filter(([, value]) => value !== 1);
+
     // conversao para portugues
     const flavorText =
         species.flavor_text_entries.find(
@@ -114,6 +163,19 @@ export default async function PokemonPage({
         species.genera.find(
             (genus) => genus.language.name === "en"
         );
+
+    // genero dos pokemons
+    let gender = "";
+
+    if (species.gender_rate === -1) {
+        gender = "No gender";
+    } else if (species.gender_rate === 0) {
+        gender = "Male only";
+    } else if (species.gender_rate === 8) {
+        gender = "Female only";
+    } else {
+        gender = "Male / Female";
+    }
 
     const stats = {
         hp: pokemon.stats.find((stat) => stat.stat.name === "hp")?.base_stat || 0,
@@ -172,7 +234,7 @@ export default async function PokemonPage({
 
                             <p className={styles.item_dados}>Peso: <span className={styles.valores_dados}>{weight} kg</span></p>
 
-                            <p className={styles.item_dados}>Gênero: <span className={styles.valores_dados}></span></p>
+                            <p className={styles.item_dados}>Gênero: <span className={styles.valores_dados}>{gender}</span></p>
 
                             <p className={styles.item_dados}>Categoria: <span className={styles.valores_dados}>{genus?.genus}</span></p>
 
@@ -218,28 +280,24 @@ export default async function PokemonPage({
                         ))}
                     </div>
 
-                    {/* fraquezas */}
-                    <h2 className={styles.h2_descricao}>Fraquezas</h2>
+                    <h2 className={styles.h2_descricao}>
+                        Matchups
+                    </h2>
 
                     <div className={styles.container_tipos}>
-                        <span className={styles.tipo_pokemon} data-type="electric">Electric</span>
+                        {matchups.map(([typeName, multiplier]) => (
+                            <span
+                                key={typeName}
+                                className={styles.tipo_pokemon}
+                                data-type={typeName}
+                            >
+                                {typeName}
 
-                        <span className={styles.tipo_pokemon} data-type="ice">Ice</span>
+                                {" "}
 
-                        <span className={styles.tipo_pokemon} data-type="rock">Rock</span>
-                    </div>
-
-                    {/* resistencias */}
-                    <h2 className={styles.h2_descricao}>Resistências</h2>
-
-                    <div className={styles.container_tipos}>
-                        <span className={styles.tipo_pokemon} data-type="grass">Grass</span>
-
-                        <span className={styles.tipo_pokemon} data-type="bug">Bug</span>
-
-                        <span className={styles.tipo_pokemon} data-type="ground">Ground</span>
-
-                        <span className={styles.tipo_pokemon} data-type="ghost">Ghost</span>
+                                x{multiplier}
+                            </span>
+                        ))}
                     </div>
 
                 </div>
