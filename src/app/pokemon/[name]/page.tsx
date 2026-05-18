@@ -123,15 +123,19 @@ export default async function PokemonPage({
 
     typeData.forEach((type) => {
         type.damage_relations.double_damage_from.forEach((damageType) => {
-            const currentValue = typeMatchups[damageType.name] || 1;
+            const currentValue = typeMatchups[damageType.name];
 
-            typeMatchups[damageType.name] = currentValue * 2;
+            if (currentValue !== 0) {
+                typeMatchups[damageType.name] = (currentValue || 1) * 2;
+            }
         });
 
         type.damage_relations.half_damage_from.forEach((damageType) => {
-            const currentValue = typeMatchups[damageType.name] || 1;
+            const currentValue = typeMatchups[damageType.name];
 
-            typeMatchups[damageType.name] = currentValue * 0.5;
+            if (currentValue !== 0) {
+                typeMatchups[damageType.name] = (currentValue || 1) * 0.5;
+            }
         });
 
         type.damage_relations.no_damage_from.forEach((damageType) => {
@@ -139,10 +143,31 @@ export default async function PokemonPage({
         });
     });
 
-    const matchups = Object.entries(typeMatchups)
-        .filter(([, value]) => value !== 1);
+    const formatMultiplier = (multiplier: number) => {
+        if (multiplier === 4) return "x4";
 
-    // conversao para portugues
+        if (multiplier === 2) return "x2";
+
+        if (multiplier === 0.5) return "÷2";
+
+        if (multiplier === 0.25) return "÷4";
+
+        if (multiplier === 0) return "0";
+
+        return `x${multiplier}`;
+    };
+
+    const matchups = Object.entries(typeMatchups).filter(([, value]) => value !== 1);
+
+    const weakness = matchups
+        .filter(([_, multiplier]) => multiplier > 1)
+        .sort((a, b) => b[1] - a[1]);
+
+    const resistances = matchups
+        .filter(([_, multiplier]) => multiplier < 1)
+        .sort((a, b) => a[1] - b[1]);
+
+    // conversao para portugues, mas não funciona entao ficou em ingles mesmo
     const flavorText =
         species.flavor_text_entries.find(
             (entry) => entry.language.name === "pt-BR"
@@ -280,23 +305,47 @@ export default async function PokemonPage({
                         ))}
                     </div>
 
-                    <h2 className={styles.h2_descricao}>
-                        Matchups
-                    </h2>
+                    <h2 className={styles.h2_descricao}>Fraquezas</h2>
 
                     <div className={styles.container_tipos}>
-                        {matchups.map(([typeName, multiplier]) => (
-                            <span
+                        {weakness.map(([typeName, multiplier]) => (
+                            <div
                                 key={typeName}
-                                className={styles.tipo_pokemon}
-                                data-type={typeName}
+                                className={styles.item_tipos}
                             >
-                                {typeName}
+                                <span
+                                    className={styles.tipo_pokemon}
+                                    data-type={typeName}
+                                >
+                                    {typeName}
+                                </span>
 
-                                {" "}
+                                <span className={styles.icone_fraqueza} data-multiplier={multiplier}>
+                                    {formatMultiplier(multiplier)}
+                                </span>
+                            </div>
+                        ))}
+                    </div>
 
-                                x{multiplier}
-                            </span>
+                    <h2 className={styles.h2_descricao}>Resistências</h2>
+
+                    <div className={styles.container_tipos}>
+                        {resistances.map(([typeName, multiplier]) => (
+                            <div
+                                key={typeName}
+                                className={styles.item_tipos}
+                            >
+                                <span
+                                    className={styles.tipo_pokemon}
+                                    data-type={typeName}
+                                >
+                                    {typeName}
+                                </span>
+
+                                <span className={styles.icone_resistencia} data-multiplier={multiplier}>
+                                    {formatMultiplier(multiplier)}
+                                </span>
+                            </div>
                         ))}
                     </div>
 

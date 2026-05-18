@@ -143,6 +143,12 @@
 }
 
 /* tipos */
+.item_tipos {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
 .container_tipos {
     display: flex;
     flex-wrap: wrap;
@@ -262,7 +268,47 @@
 
 .tipo_pokemon[data-type="fairy"] {
     background: #ec448d;
-    color: white;
+    color: #ffffff;
+}
+
+/* icones das fraquezas/ resistencias */
+.icone_fraqueza,
+.icone_resistencia {
+    width: 35px;
+    height: 35px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 3px solid var(--text-secondary);
+    color: var(--text);
+    border-radius: 50%;
+    font-size: var(--fs-pequeno);
+    font-weight: 600;
+}
+
+/* cor dos das fraquezas/ resistencias */
+.icone_fraqueza[data-multiplier="4"] {
+    background-color: #c71038a4;
+}
+
+.icone_fraqueza[data-multiplier="2"] {
+    background-color: #f2235050;
+}
+
+.icone_resistencia[data-multiplier="0.25"] {
+    background-color: #306ae8a4;
+}
+
+.icone_resistencia[data-multiplier="0.5"] {
+    background-color: #2564eb50;
+}
+
+.icone_resistencia[data-multiplier="0"] {
+    background-color: var(--text-secondary);
+    color: var(--bg);
+    border-color: var(--text);
 }
 
 /* stats */
