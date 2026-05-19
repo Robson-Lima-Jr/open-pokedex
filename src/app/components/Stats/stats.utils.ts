@@ -1,4 +1,4 @@
-export const MAX_STATS = 255;
+export const MAX_STATS = 200;
 
 export function getStatColor(value: number): string {
     if (value < 30) return "#f34444";

@@ -175,12 +175,6 @@
     border: 2px solid rgba(0, 0, 0, 0.259);
 }
 
-.tipo_pokemon:hover {
-    filter: brightness(1.25);
-    cursor: pointer;
-    transition: var(--tr-rapida);
-}
-
 .tipo_pokemon[data-type="normal"] {
     background: #d0ccc0;
     color: #333;

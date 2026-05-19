@@ -221,6 +221,13 @@ export default async function PokemonPage({
         hidden: ability.is_hidden,
     }));
 
+    // conversão de ids pros links, para chamarmos pelo nome
+    const previousResponse = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon.id - 1}`);
+    const nextResponse = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon.id + 1}`);
+
+    const previousPokemon = await previousResponse.json();
+    const nextPokemon = await nextResponse.json();
+
     return (
         <div className={styles.center}>
             <main className={styles.container_pokemon}>
@@ -228,13 +235,13 @@ export default async function PokemonPage({
                 {/* cabeçalho pokémon */}
                 <section className={styles.header_pokemon}>
                     <div className={styles.nav_pokemon}>
-                        <Link href="#" className={styles.link_pokemon}>
+                        <Link href={`/pokemon/${previousPokemon.name}`} className={styles.link_pokemon}>
                             <IconeLink className={styles.link_icon} />
-                            <span>#{pokemon.id - 1}</span> {pokemon.name}
+                            <span>#{pokemon.id - 1} {previousPokemon.name}</span>
                         </Link>
 
-                        <Link href="#" className={styles.link_pokemon}>
-                            <span>#{pokemon.id + 1}</span> {pokemon.name}
+                        <Link href={`/pokemon/${nextPokemon.name}`} className={styles.link_pokemon}>
+                            <span>#{pokemon.id + 1} {nextPokemon.name}</span>
                             <IconeSeta className={styles.link_icon} />
                         </Link>
                     </div>
