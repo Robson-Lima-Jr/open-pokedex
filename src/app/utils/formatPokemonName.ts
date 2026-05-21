@@ -29,7 +29,14 @@ export function formatPokemonName(name: string): string {
         "chien-pao",
         "chi-yu",
         "wo-chien",
-        "ting-lu"
+        "ting-lu",
+        "ho-oh",
+        "porygon-z",
+        "jangmo-o",
+        "hakamo-o",
+        "kommo-o",
+        "mr-mime",
+        "mime-jr"
     ];
 
     let result = "";

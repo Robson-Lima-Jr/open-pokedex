@@ -2,6 +2,7 @@ import styles from "./page.module.css";
 import Link from "next/link";
 import { IconeSeta, IconeLink, IconeBaixo } from "../../components/icons/Icons";
 import { StatsGroup } from "@/app/components/Stats/StatsGroup";
+import { formatFullPokemonName } from "@/app/utils/formatFullPokemonNames";
 import Image from "next/image";
 
 // Interface de pokemon data 
@@ -99,9 +100,11 @@ export default async function PokemonPage({
 
     const pokemon: PokemonData = await response.json();
 
+    const speciesName = name.toLowerCase().split("-")[0];
+
     // busca em species
     const speciesResponse = await fetch(
-        `https://pokeapi.co/api/v2/pokemon-species/${name.toLowerCase()}`
+        `https://pokeapi.co/api/v2/pokemon-species/${speciesName}`
     );
 
     if (!speciesResponse.ok) {
@@ -237,16 +240,16 @@ export default async function PokemonPage({
                     <div className={styles.nav_pokemon}>
                         <Link href={`/pokemon/${previousPokemon.name}`} className={styles.link_pokemon}>
                             <IconeLink className={styles.link_icon} />
-                            <span>#{pokemon.id - 1} {previousPokemon.name}</span>
+                            <span>#{pokemon.id - 1} {formatFullPokemonName(previousPokemon.name)}</span>
                         </Link>
 
                         <Link href={`/pokemon/${nextPokemon.name}`} className={styles.link_pokemon}>
-                            <span>#{pokemon.id + 1} {nextPokemon.name}</span>
+                            <span>#{pokemon.id + 1} {formatFullPokemonName(nextPokemon.name)}</span>
                             <IconeSeta className={styles.link_icon} />
                         </Link>
                     </div>
 
-                    <h1 className={styles.h1_pokemon}>{pokemon.name}</h1>
+                    <h1 className={styles.h1_pokemon}>{formatFullPokemonName(pokemon.name)}</h1>
                 </section>
 
                 {/* imagem do pokemon */}
@@ -373,59 +376,12 @@ export default async function PokemonPage({
                     <div className={styles.container_evolucao}>
                         <div className={styles.divisoria_evo}>
                             <div className={styles.borda_evo}>
-                                <Image src="/016.png" width={200} height={200} alt="Pokémon" className={styles.evo_pokemon}></Image>
+                                
                             </div>
 
-                            <div>
-                                <p className={styles.poke_nome}>Pidgey</p>
 
-                                <p className={styles.poke_num}>#0016</p>
-                            </div>
 
                             <div className={styles.tipo_evo}>
-                                <span className={styles.tipo_pokemon} data-type="normal">Normal</span>
-
-                                <span className={styles.tipo_pokemon} data-type="flying">Flying</span>
-                            </div>
-                        </div>
-
-                        <IconeBaixo className={styles.icone_evo} />
-
-                        <div className={styles.divisoria_evo}>
-                            <div className={styles.borda_evo}>
-                                <Image src="/017.png" width={200} height={200} alt="Pokémon" className={styles.evo_pokemon}></Image>
-                            </div>
-
-                            <div>
-                                <p className={styles.poke_nome}>Pidgeotto</p>
-
-                                <p className={styles.poke_num}>#0017</p>
-                            </div>
-
-                            <div className={styles.tipo_evo}>
-                                <span className={styles.tipo_pokemon} data-type="normal">Normal</span>
-
-                                <span className={styles.tipo_pokemon} data-type="flying">Flying</span>
-                            </div>
-                        </div>
-
-                        <IconeBaixo className={styles.icone_evo} />
-
-                        <div className={styles.divisoria_evo}>
-                            <div className={styles.borda_evo}>
-                                <Image src="/018.png" width={200} height={200} alt="Pokémon" className={styles.evo_pokemon}></Image>
-                            </div>
-
-                            <div>
-                                <p className={styles.poke_nome}>Pidgeot</p>
-
-                                <p className={styles.poke_num}>#0018</p>
-                            </div>
-
-                            <div className={styles.tipo_evo}>
-                                <span className={styles.tipo_pokemon} data-type="normal">Normal</span>
-
-                                <span className={styles.tipo_pokemon} data-type="flying">Flying</span>
                             </div>
                         </div>
                     </div>
