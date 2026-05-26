@@ -4,6 +4,7 @@ import { IconeSeta, IconeLink, IconeBaixo } from "../../components/icons/Icons";
 import { StatsGroup } from "@/app/components/Stats/StatsGroup";
 import { formatFullPokemonName } from "@/app/utils/formatFullPokemonNames";
 import Image from "next/image";
+import React from "react";
 
 // Interface de pokemon data 
 interface PokemonData {
@@ -63,6 +64,10 @@ interface PokemonSpecies {
     }[];
 
     gender_rate: number;
+
+    evolution_chain: {
+        url: string;
+    }
 }
 
 // interface para os titulos
@@ -80,6 +85,39 @@ interface TypeData {
             name: string;
         }[];
     }
+}
+
+// interfaces de linha evolutiva
+interface EvolutionPokemon {
+    id: number;
+
+    name: string;
+
+    sprites: {
+        other: {
+            "official-artwork": {
+                front_default: string;
+            };
+        };
+    };
+
+    types: {
+        type: {
+            name: string;
+        };
+    }[];
+}
+interface EvolutionChain {
+    chain: EvolutionLink;
+}
+
+interface EvolutionLink {
+    species: {
+        name: string;
+        url: string;
+    };
+
+    evolves_to: EvolutionLink[];
 }
 
 export default async function PokemonPage({
@@ -112,6 +150,32 @@ export default async function PokemonPage({
     }
 
     const species: PokemonSpecies = await speciesResponse.json();
+
+    // chamada evolução
+    const evolutionResponse = await fetch(species.evolution_chain.url);
+
+    const evolutionData: EvolutionChain = await evolutionResponse.json();
+
+    // funçao evolução
+    const evolutionNames: string[] = [];
+
+    const getEvolutionChain = (chain: EvolutionLink) => {
+        evolutionNames.push(chain.species.name);
+
+        chain.evolves_to.forEach((evolution) => {
+            getEvolutionChain(evolution);
+        });
+    };
+
+    getEvolutionChain(evolutionData.chain);
+
+    const evolutionPokemonData: EvolutionPokemon[] = await Promise.all(
+        evolutionNames.map(async (pokemonName) => {
+            const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`);
+
+            return response.json();
+        })
+    )
 
     // busca de fraquezas/ resistencias
     const typeResponses = await Promise.all(
@@ -374,18 +438,52 @@ export default async function PokemonPage({
                     <h2 className={styles.h2_descricao}>Linha Evolutiva</h2>
 
                     <div className={styles.container_evolucao}>
-                        <div className={styles.divisoria_evo}>
-                            <div className={styles.borda_evo}>
-                                
-                            </div>
-
-
-
-                            <div className={styles.tipo_evo}>
-                            </div>
+                        <div className={styles.linha_evolucao}>
+                            {evolutionPokemonData.map((evolution, index) => (
+                                <React.Fragment key={evolution.id}>
+                                    <div
+                                        className={styles.divisoria_evo}
+                                    >
+                                        <div className={styles.borda_evo}>
+                                            <Image
+                                                src={
+                                                    evolution.sprites.other["official-artwork"]
+                                                        .front_default
+                                                }
+                                                width={200}
+                                                height={200}
+                                                alt={evolution.name}
+                                                className={styles.evo_pokemon}
+                                            />
+                                        </div>
+                                        <div>
+                                            <p className={styles.poke_nome}>
+                                                {formatFullPokemonName(evolution.name)}
+                                            </p>
+                                            <p className={styles.poke_num}>
+                                                #{evolution.id}
+                                            </p>
+                                        </div>
+                                        <div className={styles.tipo_evo}>
+                                            {evolution.types.map((type) => (
+                                                <span
+                                                    key={type.type.name}
+                                                    className={styles.tipo_pokemon}
+                                                    data-type={type.type.name}
+                                                >
+                                                    {type.type.name}
+                                                </span>
+                                            ))}
+                                        </div>
+                                    </div>
+                                    {index < evolutionPokemonData.length - 1 && (
+                                        <IconeBaixo className={styles.icone_evo} />
+                                    )}
+                                </React.Fragment>
+                            ))}
                         </div>
                     </div>
-
+                    
                     <p className={styles.obs}><strong>Observação:</strong> Os dados da API pokédex vem com suporte completo em inglês. Como português não esta completo e pra evitar inconsistência na dex, mantive os dados em inglês.</p>
                 </section>
             </main>
