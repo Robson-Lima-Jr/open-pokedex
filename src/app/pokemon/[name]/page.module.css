@@ -336,6 +336,20 @@
     gap: var(--gap);
 }
 
+.children_container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--gap);
+}
+
+.children_list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--gap-grande);
+}
+
 .divisoria_evo {
     min-width: 180px;
 
@@ -422,6 +436,7 @@
 }
 
 @media screen and (min-width: 850px) {
+
     .container_pokemon {
         padding: var(--esp-grande);
         display: grid;
@@ -462,16 +477,40 @@
         grid-column: 1 / -1;
     }
 
-    /* area evolução */
-    .linha_evolucao {
-        flex-direction: row;
-        justify-content: center;
+    /* evolução desktop */
+
+    .container_evolucao {
         align-items: center;
-        flex-wrap: wrap;
+    }
+
+    .branch_evolucao {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: var(--gap);
+    }
+
+    .children_container {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: var(--gap);
+    }
+
+    .children_list {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: var(--gap-grande);
+    }
+
+    .children_list>.branch_evolucao:first-child {
+        margin-bottom: 0;
     }
 
     .icone_evo {
         transform: rotate(-90deg);
+        margin: 0;
     }
 }
 

@@ -120,6 +120,13 @@ interface EvolutionLink {
     evolves_to: EvolutionLink[];
 }
 
+// interface pra pokemons com multiplas evoluçoes (arrumar o css pra ficar melhor)
+interface EvolutionNode {
+    name: string;
+    children: EvolutionNode[];
+};
+
+
 export default async function PokemonPage({
     params,
 }: {
@@ -168,6 +175,16 @@ export default async function PokemonPage({
     };
 
     getEvolutionChain(evolutionData.chain);
+
+    // arvore de evolução pra pokemons como eevee ou slowpoke que tem mais de 1 evo
+    function buildEvolutionTree(chain: any): EvolutionNode {
+        return {
+            name: chain.species.name,
+            children: chain.evolves_to.map(buildEvolutionTree)
+        };
+    };
+
+    const evolutionTree = buildEvolutionTree(evolutionData.chain);
 
     const evolutionPokemonData: EvolutionPokemon[] = await Promise.all(
         evolutionNames.map(async (pokemonName) => {
@@ -294,6 +311,75 @@ export default async function PokemonPage({
 
     const previousPokemon = await previousResponse.json();
     const nextPokemon = await nextResponse.json();
+
+    // função pra separar pokemons com mais de 1 evolução como slowpoke ou eevee e configurar visualmente melhor
+    function renderEvolutionTree(node: EvolutionNode): React.ReactNode {
+
+        const pokemonData = evolutionPokemonData.find(
+            (pokemon) => pokemon.name === node.name
+        );
+
+        if (!pokemonData) return null;
+
+        return (
+            <div className={styles.branch_evolucao}>
+
+                <div className={styles.divisoria_evo}>
+                    <div className={styles.borda_evo}>
+                        <Image
+                            src={
+                                pokemonData.sprites.other["official-artwork"]
+                                    .front_default
+                            }
+                            width={200}
+                            height={200}
+                            alt={pokemonData.name}
+                            className={styles.evo_pokemon}
+                        />
+                    </div>
+
+                    <div>
+                        <p className={styles.poke_nome}>
+                            {formatFullPokemonName(pokemonData.name)}
+                        </p>
+
+                        <p className={styles.poke_num}>
+                            #{pokemonData.id}
+                        </p>
+                    </div>
+
+                    <div className={styles.tipo_evo}>
+                        {pokemonData.types.map((type) => (
+                            <span
+                                key={type.type.name}
+                                className={styles.tipo_pokemon}
+                                data-type={type.type.name}
+                            >
+                                {type.type.name}
+                            </span>
+                        ))}
+                    </div>
+                </div>
+
+                {node.children.length > 0 && (
+                    <div className={styles.children_container}>
+
+                        <IconeBaixo className={styles.icone_evo} />
+
+                        <div className={styles.children_list}>
+                            {node.children.map((child) => (
+                                <React.Fragment key={child.name}>
+                                    {renderEvolutionTree(child)}
+                                </React.Fragment>
+                            ))}
+                        </div>
+
+                    </div>
+                )}
+
+            </div>
+        );
+    }
 
     return (
         <div className={styles.center}>
@@ -438,52 +524,9 @@ export default async function PokemonPage({
                     <h2 className={styles.h2_descricao}>Linha Evolutiva</h2>
 
                     <div className={styles.container_evolucao}>
-                        <div className={styles.linha_evolucao}>
-                            {evolutionPokemonData.map((evolution, index) => (
-                                <React.Fragment key={evolution.id}>
-                                    <div
-                                        className={styles.divisoria_evo}
-                                    >
-                                        <div className={styles.borda_evo}>
-                                            <Image
-                                                src={
-                                                    evolution.sprites.other["official-artwork"]
-                                                        .front_default
-                                                }
-                                                width={200}
-                                                height={200}
-                                                alt={evolution.name}
-                                                className={styles.evo_pokemon}
-                                            />
-                                        </div>
-                                        <div>
-                                            <p className={styles.poke_nome}>
-                                                {formatFullPokemonName(evolution.name)}
-                                            </p>
-                                            <p className={styles.poke_num}>
-                                                #{evolution.id}
-                                            </p>
-                                        </div>
-                                        <div className={styles.tipo_evo}>
-                                            {evolution.types.map((type) => (
-                                                <span
-                                                    key={type.type.name}
-                                                    className={styles.tipo_pokemon}
-                                                    data-type={type.type.name}
-                                                >
-                                                    {type.type.name}
-                                                </span>
-                                            ))}
-                                        </div>
-                                    </div>
-                                    {index < evolutionPokemonData.length - 1 && (
-                                        <IconeBaixo className={styles.icone_evo} />
-                                    )}
-                                </React.Fragment>
-                            ))}
-                        </div>
+                        {renderEvolutionTree(evolutionTree)}
                     </div>
-                    
+
                     <p className={styles.obs}><strong>Observação:</strong> Os dados da API pokédex vem com suporte completo em inglês. Como português não esta completo e pra evitar inconsistência na dex, mantive os dados em inglês.</p>
                 </section>
             </main>
