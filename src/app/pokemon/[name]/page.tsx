@@ -3,128 +3,9 @@ import Link from "next/link";
 import { IconeSeta, IconeLink, IconeBaixo } from "../../components/icons/Icons";
 import { StatsGroup } from "@/app/components/Stats/StatsGroup";
 import { formatFullPokemonName } from "@/app/utils/formatFullPokemonNames";
+import { PokemonData, PokemonSpecies, TypeData, EvolutionPokemon, EvolutionChain, EvolutionLink, EvolutionNode } from "@/types/pokemon";
 import Image from "next/image";
 import React from "react";
-
-// Interface de pokemon data 
-interface PokemonData {
-    id: number;
-    name: string;
-
-    height: number;
-    weight: number;
-
-    sprites: {
-        other: {
-            "official-artwork": {
-                front_default: string;
-            };
-        };
-    };
-
-    types: {
-        type: {
-            name: string;
-        };
-    }[];
-
-    abilities: {
-        ability: {
-            name: string;
-        };
-
-        is_hidden: boolean;
-    }[];
-
-    stats: {
-        base_stat: number;
-
-        stat: {
-            name: string;
-        };
-    }[];
-}
-
-// interface de species, serve pra dados como descrição e genero
-interface PokemonSpecies {
-    flavor_text_entries: {
-        flavor_text: string;
-
-        language: {
-            name: string;
-        };
-    }[];
-
-    genera: {
-        genus: string;
-
-        language: {
-            name: string;
-        };
-    }[];
-
-    gender_rate: number;
-
-    evolution_chain: {
-        url: string;
-    }
-}
-
-// interface para os titulos
-interface TypeData {
-    damage_relations: {
-        double_damage_from: {
-            name: string;
-        }[];
-
-        half_damage_from: {
-            name: string;
-        }[];
-
-        no_damage_from: {
-            name: string;
-        }[];
-    }
-}
-
-// interfaces de linha evolutiva
-interface EvolutionPokemon {
-    id: number;
-
-    name: string;
-
-    sprites: {
-        other: {
-            "official-artwork": {
-                front_default: string;
-            };
-        };
-    };
-
-    types: {
-        type: {
-            name: string;
-        };
-    }[];
-}
-interface EvolutionChain {
-    chain: EvolutionLink;
-}
-
-interface EvolutionLink {
-    species: {
-        name: string;
-        url: string;
-    };
-
-    evolves_to: EvolutionLink[];
-}
-
-// interface pra pokemons com multiplas evoluçoes (arrumar o css pra ficar melhor)
-interface EvolutionNode {
-    name: string;
-    children: EvolutionNode[];
-};
 
 
 export default async function PokemonPage({
@@ -324,48 +205,47 @@ export default async function PokemonPage({
         return (
             <div className={styles.branch_evolucao}>
 
-                <div className={styles.divisoria_evo}>
-                    <div className={styles.borda_evo}>
-                        <Image
-                            src={
-                                pokemonData.sprites.other["official-artwork"]
-                                    .front_default
-                            }
-                            width={200}
-                            height={200}
-                            alt={pokemonData.name}
-                            className={styles.evo_pokemon}
-                        />
-                    </div>
+                <Link href={`/pokemon/${pokemonData.name}`} className={styles.link_evolucao}>
+                    <div className={styles.divisoria_evo}>
+                        <div className={styles.borda_evo}>
+                            <Image
+                                src={
+                                    pokemonData.sprites.other["official-artwork"]
+                                        .front_default
+                                }
+                                width={200}
+                                height={200}
+                                alt={pokemonData.name}
+                                className={styles.evo_pokemon}
+                            />
+                        </div>
 
-                    <div>
-                        <p className={styles.poke_nome}>
-                            {formatFullPokemonName(pokemonData.name)}
-                        </p>
+                        <div>
+                            <p className={styles.poke_nome}>
+                                {formatFullPokemonName(pokemonData.name)}
+                            </p>
+                            <p className={styles.poke_num}>
+                                #{pokemonData.id}
+                            </p>
+                        </div>
 
-                        <p className={styles.poke_num}>
-                            #{pokemonData.id}
-                        </p>
+                        <div className={styles.tipo_evo}>
+                            {pokemonData.types.map((type) => (
+                                <span
+                                    key={type.type.name}
+                                    className={styles.tipo_pokemon}
+                                    data-type={type.type.name}
+                                >
+                                    {type.type.name}
+                                </span>
+                            ))}
+                        </div>
                     </div>
-
-                    <div className={styles.tipo_evo}>
-                        {pokemonData.types.map((type) => (
-                            <span
-                                key={type.type.name}
-                                className={styles.tipo_pokemon}
-                                data-type={type.type.name}
-                            >
-                                {type.type.name}
-                            </span>
-                        ))}
-                    </div>
-                </div>
+                </Link >
 
                 {node.children.length > 0 && (
                     <div className={styles.children_container}>
-
                         <IconeBaixo className={styles.icone_evo} />
-
                         <div className={styles.children_list}>
                             {node.children.map((child) => (
                                 <React.Fragment key={child.name}>
@@ -373,10 +253,8 @@ export default async function PokemonPage({
                                 </React.Fragment>
                             ))}
                         </div>
-
                     </div>
                 )}
-
             </div>
         );
     }
