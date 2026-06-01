@@ -40,7 +40,7 @@
 }
 
 .link_pokemon {
-    padding: var(--esp-micro);
+    padding: var(--esp-pequeno) var(--esp-micro);
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -51,7 +51,8 @@
     letter-spacing: 1px;
     font-size: var(--fs-pequeno);
 
-    border-radius: var(--radius-p);
+    border-radius: var(--radius-g);
+    border: 3px solid var(--text);
 }
 
 .link_pokemon:hover {
@@ -405,8 +406,7 @@
 }
 
 .link_evolucao:hover .poke_nome {
-    color: var(--accent);
-    transition: var(--tr-rapida);
+    font-weight: bold;
 }
 
 .poke_num {
@@ -415,6 +415,11 @@
     text-align: center;
     color: var(--text-secondary);
 }
+
+.link_evolucao:hover .poke_num {
+    color: var(--text);
+}
+
 
 .icone_evo {
     width: 40px;
