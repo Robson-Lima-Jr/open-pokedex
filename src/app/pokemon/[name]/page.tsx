@@ -1,130 +1,13 @@
 import styles from "./page.module.css";
 import Link from "next/link";
-import { IconeSeta, IconeLink, IconeBaixo } from "../../components/icons/Icons";
+import { IconeSeta, IconeLink } from "../../components/icons/Icons";
 import { StatsGroup } from "@/app/components/Stats/StatsGroup";
-import { formatFullPokemonName } from "@/app/utils/formatFullPokemonNames";
+import { formatFullPokemonName, keepName, paradoxList } from "@/app/utils/formatFullPokemonNames";
+import { PokemonData, PokemonSpecies, TypeData, EvolutionPokemon, EvolutionChain, EvolutionLink, EvolutionNode } from "@/types/pokemon";
 import Image from "next/image";
+import { ArvoreEvolucao } from "@/app/components/ArvoreEvolucao";
 import React from "react";
-
-// Interface de pokemon data 
-interface PokemonData {
-    id: number;
-    name: string;
-
-    height: number;
-    weight: number;
-
-    sprites: {
-        other: {
-            "official-artwork": {
-                front_default: string;
-            };
-        };
-    };
-
-    types: {
-        type: {
-            name: string;
-        };
-    }[];
-
-    abilities: {
-        ability: {
-            name: string;
-        };
-
-        is_hidden: boolean;
-    }[];
-
-    stats: {
-        base_stat: number;
-
-        stat: {
-            name: string;
-        };
-    }[];
-}
-
-// interface de species, serve pra dados como descrição e genero
-interface PokemonSpecies {
-    flavor_text_entries: {
-        flavor_text: string;
-
-        language: {
-            name: string;
-        };
-    }[];
-
-    genera: {
-        genus: string;
-
-        language: {
-            name: string;
-        };
-    }[];
-
-    gender_rate: number;
-
-    evolution_chain: {
-        url: string;
-    }
-}
-
-// interface para os titulos
-interface TypeData {
-    damage_relations: {
-        double_damage_from: {
-            name: string;
-        }[];
-
-        half_damage_from: {
-            name: string;
-        }[];
-
-        no_damage_from: {
-            name: string;
-        }[];
-    }
-}
-
-// interfaces de linha evolutiva
-interface EvolutionPokemon {
-    id: number;
-
-    name: string;
-
-    sprites: {
-        other: {
-            "official-artwork": {
-                front_default: string;
-            };
-        };
-    };
-
-    types: {
-        type: {
-            name: string;
-        };
-    }[];
-}
-interface EvolutionChain {
-    chain: EvolutionLink;
-}
-
-interface EvolutionLink {
-    species: {
-        name: string;
-        url: string;
-    };
-
-    evolves_to: EvolutionLink[];
-}
-
-// interface pra pokemons com multiplas evoluçoes (arrumar o css pra ficar melhor)
-interface EvolutionNode {
-    name: string;
-    children: EvolutionNode[];
-};
+import { normalizeEvolutionPokemonName } from "@/app/utils/normalizeEvolutionPokemonName";
 
 
 export default async function PokemonPage({
@@ -145,7 +28,15 @@ export default async function PokemonPage({
 
     const pokemon: PokemonData = await response.json();
 
-    const speciesName = name.toLowerCase().split("-")[0];
+    // const speciesName = name.toLowerCase().split("-")[0];
+
+    const lowerName = name.toLowerCase();
+
+    const speciesName =
+        keepName.includes(lowerName) ||
+            paradoxList.includes(lowerName)
+            ? lowerName
+            : lowerName.split("-")[0];
 
     // busca em species
     const speciesResponse = await fetch(
@@ -186,13 +77,27 @@ export default async function PokemonPage({
 
     const evolutionTree = buildEvolutionTree(evolutionData.chain);
 
-    const evolutionPokemonData: EvolutionPokemon[] = await Promise.all(
-        evolutionNames.map(async (pokemonName) => {
-            const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`);
+    const evolutionPokemonData: EvolutionPokemon[] = (
+        await Promise.all(
+            evolutionNames.map(async (pokemonName) => {
+                const apiName = normalizeEvolutionPokemonName(pokemonName);
 
-            return response.json();
-        })
-    )
+                const response = await fetch(
+                    `https://pokeapi.co/api/v2/pokemon/${apiName}`
+                );
+
+                if (!response.ok) {
+                    console.log(
+                        `Erro ao buscar evolução: ${pokemonName}`
+                    );
+
+                    return null;
+                }
+
+                return response.json();
+            })
+        )
+    ).filter(Boolean) as EvolutionPokemon[];
 
     // busca de fraquezas/ resistencias
     const typeResponses = await Promise.all(
@@ -306,80 +211,21 @@ export default async function PokemonPage({
     }));
 
     // conversão de ids pros links, para chamarmos pelo nome
+    let previousPokemon = null;
+    let nextPokemon = null;
+
     const previousResponse = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon.id - 1}`);
+
+    if (previousResponse.ok) {
+        previousPokemon = await previousResponse.json();
+    }
+
     const nextResponse = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon.id + 1}`);
 
-    const previousPokemon = await previousResponse.json();
-    const nextPokemon = await nextResponse.json();
-
-    // função pra separar pokemons com mais de 1 evolução como slowpoke ou eevee e configurar visualmente melhor
-    function renderEvolutionTree(node: EvolutionNode): React.ReactNode {
-
-        const pokemonData = evolutionPokemonData.find(
-            (pokemon) => pokemon.name === node.name
-        );
-
-        if (!pokemonData) return null;
-
-        return (
-            <div className={styles.branch_evolucao}>
-
-                <div className={styles.divisoria_evo}>
-                    <div className={styles.borda_evo}>
-                        <Image
-                            src={
-                                pokemonData.sprites.other["official-artwork"]
-                                    .front_default
-                            }
-                            width={200}
-                            height={200}
-                            alt={pokemonData.name}
-                            className={styles.evo_pokemon}
-                        />
-                    </div>
-
-                    <div>
-                        <p className={styles.poke_nome}>
-                            {formatFullPokemonName(pokemonData.name)}
-                        </p>
-
-                        <p className={styles.poke_num}>
-                            #{pokemonData.id}
-                        </p>
-                    </div>
-
-                    <div className={styles.tipo_evo}>
-                        {pokemonData.types.map((type) => (
-                            <span
-                                key={type.type.name}
-                                className={styles.tipo_pokemon}
-                                data-type={type.type.name}
-                            >
-                                {type.type.name}
-                            </span>
-                        ))}
-                    </div>
-                </div>
-
-                {node.children.length > 0 && (
-                    <div className={styles.children_container}>
-
-                        <IconeBaixo className={styles.icone_evo} />
-
-                        <div className={styles.children_list}>
-                            {node.children.map((child) => (
-                                <React.Fragment key={child.name}>
-                                    {renderEvolutionTree(child)}
-                                </React.Fragment>
-                            ))}
-                        </div>
-
-                    </div>
-                )}
-
-            </div>
-        );
+    if (nextResponse.ok) {
+        nextPokemon = await nextResponse.json();
     }
+
 
     return (
         <div className={styles.center}>
@@ -388,15 +234,21 @@ export default async function PokemonPage({
                 {/* cabeçalho pokémon */}
                 <section className={styles.header_pokemon}>
                     <div className={styles.nav_pokemon}>
-                        <Link href={`/pokemon/${previousPokemon.name}`} className={styles.link_pokemon}>
-                            <IconeLink className={styles.link_icon} />
-                            <span>#{pokemon.id - 1} {formatFullPokemonName(previousPokemon.name)}</span>
-                        </Link>
+                        {previousPokemon ? (
+                            <Link href={`/pokemon/${previousPokemon.name}`} className={styles.link_pokemon}>
+                                <IconeLink className={styles.link_icon} />
+                                <span>#{pokemon.id - 1} {formatFullPokemonName(previousPokemon.name)}</span>
+                            </Link>
+                        ) : (
+                            <div></div>
+                        )}
 
-                        <Link href={`/pokemon/${nextPokemon.name}`} className={styles.link_pokemon}>
-                            <span>#{pokemon.id + 1} {formatFullPokemonName(nextPokemon.name)}</span>
-                            <IconeSeta className={styles.link_icon} />
-                        </Link>
+                        {nextPokemon && (
+                            <Link href={`/pokemon/${nextPokemon.name}`} className={styles.link_pokemon}>
+                                <span>#{pokemon.id + 1} {formatFullPokemonName(nextPokemon.name)}</span>
+                                <IconeSeta className={styles.link_icon} />
+                            </Link>
+                        )}
                     </div>
 
                     <h1 className={styles.h1_pokemon}>{formatFullPokemonName(pokemon.name)}</h1>
@@ -524,7 +376,10 @@ export default async function PokemonPage({
                     <h2 className={styles.h2_descricao}>Linha Evolutiva</h2>
 
                     <div className={styles.container_evolucao}>
-                        {renderEvolutionTree(evolutionTree)}
+                        <ArvoreEvolucao
+                            evolutionTree={evolutionTree}
+                            evolutionPokemonData={evolutionPokemonData}
+                        />
                     </div>
 
                     <p className={styles.obs}><strong>Observação:</strong> Os dados da API pokédex vem com suporte completo em inglês. Como português não esta completo e pra evitar inconsistência na dex, mantive os dados em inglês.</p>
