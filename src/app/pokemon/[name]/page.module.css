@@ -143,6 +143,23 @@
     color: var(--text-secondary);
 }
 
+.habilidades {
+    display: flex;
+}
+
+.item_habilidade {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.habilidades .valores_dados {
+    display: flex;
+    flex-direction: column;
+    padding: 0 var(--esp-micro);
+}
+
 /* tipos */
 .item_tipos {
     display: flex;

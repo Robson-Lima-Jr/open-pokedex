@@ -6,8 +6,8 @@ import { formatFullPokemonName, keepName, paradoxList } from "@/app/utils/format
 import { PokemonData, PokemonSpecies, TypeData, EvolutionPokemon, EvolutionChain, EvolutionLink, EvolutionNode } from "@/types/pokemon";
 import Image from "next/image";
 import { ArvoreEvolucao } from "@/app/components/ArvoreEvolucao";
-import React from "react";
 import { normalizeEvolutionPokemonName } from "@/app/utils/normalizeEvolutionPokemonName";
+import { defaultFormBySpecies } from "@/app/data/defaultFomBySpecies";
 
 
 export default async function PokemonPage({
@@ -18,8 +18,12 @@ export default async function PokemonPage({
 
     const { name } = await params;
 
+    const lowerName = name.toLowerCase();
+
+    const pokemonApiName = defaultFormBySpecies[lowerName] || lowerName;
+
     const response = await fetch(
-        `https://pokeapi.co/api/v2/pokemon/${name.toLowerCase()}`
+        `https://pokeapi.co/api/v2/pokemon/${pokemonApiName}`
     );
 
     if (!response.ok) {
@@ -27,10 +31,6 @@ export default async function PokemonPage({
     }
 
     const pokemon: PokemonData = await response.json();
-
-    // const speciesName = name.toLowerCase().split("-")[0];
-
-    const lowerName = name.toLowerCase();
 
     const speciesName =
         keepName.includes(lowerName) ||
@@ -265,7 +265,7 @@ export default async function PokemonPage({
 
                     <div>
                         <div className={styles.fundo_dados}>
-                            <p className={styles.item_dados}>Nº Pokédex: <span className={styles.valores_dados}>#{pokemon.id}</span></p>
+                            <p className={styles.item_dados}>Nº Pokédex: <span className={styles.valores_dados}>{pokemon.id}</span></p>
 
                             <p className={styles.item_dados}>Altura: <span className={styles.valores_dados}>{height} m</span></p>
 
@@ -275,23 +275,23 @@ export default async function PokemonPage({
 
                             <p className={styles.item_dados}>Categoria: <span className={styles.valores_dados}>{genus?.genus}</span></p>
 
-                            <p className={styles.item_dados}>
-                                Habilidades:
+                            <p className={`${styles.item_dados} ${styles.habilidades}`}>
+                                <span className={styles.item_habilidade}>Habilidades:</span>
 
-                                {abilities.map((ability, index) => (
-                                    <span
-                                        key={ability.name}
-                                        className={styles.valores_dados}
-                                    >
-                                        <>
-                                            {index > 0 && " / "}
-
-                                            {ability.name}
-
-                                            {ability.hidden && " (Hidden)"}
-                                        </>
-                                    </span>
-                                ))}
+                                <span>
+                                    {abilities.map((ability, index) => (
+                                        <span
+                                            key={ability.name}
+                                            className={styles.valores_dados}
+                                        >
+                                            <>
+                                                {index > 0}
+                                                {ability.name}
+                                                {ability.hidden && " (Hidden)"}
+                                            </>
+                                        </span>
+                                    ))}
+                                </span>
                             </p>
                         </div>
 
