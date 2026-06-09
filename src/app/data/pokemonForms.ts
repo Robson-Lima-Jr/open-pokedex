@@ -8,25 +8,29 @@ export const pokemonForms: Record<string, PokemonFormsData> = {
                 slug: "normal",
                 shortLabel: "Normal",
                 fullLabel: "Deoxys Normal Form",
-                category: "base"
+                category: "base",
+                isDefault: true
             },
             {
                 slug: "attack",
                 shortLabel: "Attack",
                 fullLabel: "Deoxys Attack Form",
-                category: "form"
+                category: "form",
+                isDefault: false
             },
             {
                 slug: "defense",
                 shortLabel: "Defense",
                 fullLabel: "Deoxys Defense Form",
-                category: "form"
+                category: "form",
+                isDefault: false
             },
             {
                 slug: "speed",
                 shortLabel: "Speed",
                 fullLabel: "Deoxys Speed Form",
-                category: "form"
+                category: "form",
+                isDefault: false
             }
         ]
     },
@@ -38,13 +42,15 @@ export const pokemonForms: Record<string, PokemonFormsData> = {
                 slug: "altered",
                 shortLabel: "Altered",
                 fullLabel: "Giratina Altered Form",
-                category: "base"
+                category: "base",
+                isDefault: true
             },
             {
                 slug: "origin",
                 shortLabel: "Origin",
                 fullLabel: "Giratina Origin Form",
-                category: "form"
+                category: "form",
+                isDefault: false
             }
         ]
     },
@@ -56,13 +62,15 @@ export const pokemonForms: Record<string, PokemonFormsData> = {
                 slug: "base",
                 shortLabel: "Base",
                 fullLabel: "Raichu",
-                category: "base"
+                category: "base",
+                isDefault: true
             },
             {
                 slug: "alola",
                 shortLabel: "Alola",
                 fullLabel: "Alolan Raichu",
-                category: "regional"
+                category: "regional",
+                isDefault: false
             }
         ]
     },
@@ -74,19 +82,22 @@ export const pokemonForms: Record<string, PokemonFormsData> = {
                 slug: "base",
                 shortLabel: "Base",
                 fullLabel: "Charizard",
-                category: "base"
+                category: "base",
+                isDefault: true
             },
             {
                 slug: "mega-x",
                 shortLabel: "Mega X",
                 fullLabel: "Mega Charizard X",
-                category: "mega"
+                category: "mega",
+                isDefault: false
             },
             {
                 slug: "mega-y",
                 shortLabel: "Mega Y",
                 fullLabel: "Mega Charizard Y",
-                category: "mega"
+                category: "mega",
+                isDefault: false
             }
         ]
     }

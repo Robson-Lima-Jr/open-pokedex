@@ -8,6 +8,8 @@ import Image from "next/image";
 import { ArvoreEvolucao } from "@/app/components/ArvoreEvolucao";
 import { normalizeEvolutionPokemonName } from "@/app/utils/normalizeEvolutionPokemonName";
 import { defaultFormBySpecies } from "@/app/data/defaultFomBySpecies";
+import { pokemonForms } from "@/app/data/pokemonForms";
+import { PokemonMudarFormas } from "../../components/PokemonMudarFormas"
 
 
 export default async function PokemonPage({
@@ -48,6 +50,11 @@ export default async function PokemonPage({
     }
 
     const species: PokemonSpecies = await speciesResponse.json();
+
+    // chamada de formas pokemon
+    const currentPokemonForms = pokemonForms[speciesName];
+
+    const defaultForm = currentPokemonForms?.forms.find((form) => form.isDefault);
 
     // chamada evolução
     const evolutionResponse = await fetch(species.evolution_chain.url);
@@ -252,6 +259,12 @@ export default async function PokemonPage({
                     </div>
 
                     <h1 className={styles.h1_pokemon}>{formatFullPokemonName(pokemon.name)}</h1>
+
+                    {currentPokemonForms && (
+                        <PokemonMudarFormas
+                            forms={currentPokemonForms.forms}
+                        />
+                    )}
                 </section>
 
                 {/* imagem do pokemon */}

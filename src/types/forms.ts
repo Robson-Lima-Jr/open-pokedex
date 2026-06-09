@@ -5,6 +5,7 @@ export interface PokemonForm {
     shortLabel: string;
     fullLabel: string;
     category: FormCategory;
+    isDefault: boolean;
 }
 
 export interface PokemonFormsData {
