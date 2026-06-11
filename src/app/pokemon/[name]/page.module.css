@@ -77,6 +77,14 @@
     color: var(--text);
 }
 
+.formas_area {
+    padding-top: var(--esp-pequeno);
+    width: 100%;
+
+    display: flex;
+    justify-content: flex-start;
+}
+
 /* imagem */
 .imagem_area {
     width: 280px;

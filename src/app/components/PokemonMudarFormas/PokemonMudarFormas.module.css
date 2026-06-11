@@ -1,0 +1,26 @@
+.container_botoes {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.botao_ativo, .botao_desativado{
+    width: 150px;
+    padding: var(--esp-pequeno);
+    border: none;
+
+    font-family: var(--font-pokemon);
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.botao_ativo {
+    background-color: var(--text);
+    color: var(--surface);
+    border-bottom: 5px solid var(--accent);
+}
+
+.botao_desativado {
+    background-color: var(--text-secondary);
+    color: var(--bg);
+}

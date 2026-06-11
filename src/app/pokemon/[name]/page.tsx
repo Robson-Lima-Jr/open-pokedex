@@ -260,11 +260,13 @@ export default async function PokemonPage({
 
                     <h1 className={styles.h1_pokemon}>{formatFullPokemonName(pokemon.name)}</h1>
 
-                    {currentPokemonForms && (
-                        <PokemonMudarFormas
-                            forms={currentPokemonForms.forms}
-                        />
-                    )}
+                    <div className={styles.formas_area}>
+                        {currentPokemonForms && (
+                            <PokemonMudarFormas
+                                forms={currentPokemonForms.forms}
+                            />
+                        )}
+                    </div>
                 </section>
 
                 {/* imagem do pokemon */}
