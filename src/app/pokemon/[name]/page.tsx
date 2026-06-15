@@ -9,7 +9,8 @@ import { ArvoreEvolucao } from "@/app/components/ArvoreEvolucao";
 import { normalizeEvolutionPokemonName } from "@/app/utils/normalizeEvolutionPokemonName";
 import { defaultFormBySpecies } from "@/app/data/defaultFomBySpecies";
 import { pokemonForms } from "@/app/data/pokemonForms";
-import { PokemonMudarFormas } from "../../components/PokemonMudarFormas"
+import { PokemonDetalhesFormas } from "@/app/components/PokemonDetalhesFormas";
+import { getFormPokemonApiName } from "@/app/utils/getFormPokemonApiName";
 
 
 export default async function PokemonPage({
@@ -54,7 +55,33 @@ export default async function PokemonPage({
     // chamada de formas pokemon
     const currentPokemonForms = pokemonForms[speciesName];
 
-    const defaultForm = currentPokemonForms?.forms.find((form) => form.isDefault);
+    const formsApiNames = currentPokemonForms?.forms.map((form) =>
+        getFormPokemonApiName(
+            currentPokemonForms.pokemonName,
+            form
+        )
+    );
+
+    const formsData = formsApiNames
+        ? await Promise.all(
+            formsApiNames.map(async (formName) => {
+                const response = await fetch(
+                    `https://pokeapi.co/api/v2/pokemon/${formName}`
+                );
+
+                return response.json();
+            })
+        )
+        : [];
+
+    const formsDataMap = currentPokemonForms
+        ? Object.fromEntries(
+            currentPokemonForms.forms.map((form, index) => [
+                form.slug,
+                formsData[index]
+            ])
+        )
+        : {};
 
     // chamada evolução
     const evolutionResponse = await fetch(species.evolution_chain.url);
@@ -233,7 +260,6 @@ export default async function PokemonPage({
         nextPokemon = await nextResponse.json();
     }
 
-
     return (
         <div className={styles.center}>
             <main className={styles.container_pokemon}>
@@ -262,8 +288,9 @@ export default async function PokemonPage({
 
                     <div className={styles.formas_area}>
                         {currentPokemonForms && (
-                            <PokemonMudarFormas
-                                forms={currentPokemonForms.forms}
+                            <PokemonDetalhesFormas
+                                formsData={currentPokemonForms}
+                                formsDataMap={formsDataMap}
                             />
                         )}
                     </div>
