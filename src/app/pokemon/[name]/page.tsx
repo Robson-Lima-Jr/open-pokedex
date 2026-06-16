@@ -1,17 +1,25 @@
 import styles from "./page.module.css";
 import Link from "next/link";
-import { IconeSeta, IconeLink } from "../../components/icons/Icons";
-import { StatsGroup } from "@/app/components/Stats/StatsGroup";
-import { formatFullPokemonName, keepName, paradoxList } from "@/app/utils/formatFullPokemonNames";
-import { PokemonData, PokemonSpecies, TypeData, EvolutionPokemon, EvolutionChain, EvolutionLink, EvolutionNode } from "@/types/pokemon";
 import Image from "next/image";
-import { ArvoreEvolucao } from "@/app/components/ArvoreEvolucao";
-import { normalizeEvolutionPokemonName } from "@/app/utils/normalizeEvolutionPokemonName";
+
+// types
+import { PokemonData, PokemonSpecies, TypeData, EvolutionPokemon, EvolutionChain, EvolutionLink, EvolutionNode } from "@/types/pokemon";
+
+// data
 import { defaultFormBySpecies } from "@/app/data/defaultFomBySpecies";
 import { pokemonForms } from "@/app/data/pokemonForms";
-import { PokemonDetalhesFormas } from "@/app/components/PokemonDetalhesFormas";
-import { getFormPokemonApiName } from "@/app/utils/getFormPokemonApiName";
 
+// utils
+import { getFormPokemonApiName } from "@/app/utils/getFormPokemonApiName";
+import { normalizeEvolutionPokemonName } from "@/app/utils/normalizeEvolutionPokemonName";
+import { formatFullPokemonName, keepName, paradoxList } from "@/app/utils/formatFullPokemonNames";
+
+// componentes
+import { PokemonDetalhesFormas } from "@/app/components/PokemonDetalhesFormas";
+import { IconeSeta, IconeLink } from "../../components/icons/Icons";
+import { StatsGroup } from "@/app/components/Stats/StatsGroup";
+import { ArvoreEvolucao } from "@/app/components/ArvoreEvolucao";
+import { PokemonVisualizacao } from "@/app/components/PokemonVisualizacao";
 
 export default async function PokemonPage({
     params,
@@ -285,63 +293,13 @@ export default async function PokemonPage({
                     </div>
 
                     <h1 className={styles.h1_pokemon}>{formatFullPokemonName(pokemon.name)}</h1>
-
-                    <div className={styles.formas_area}>
-                        {currentPokemonForms && (
-                            <PokemonDetalhesFormas
-                                formsData={currentPokemonForms}
-                                formsDataMap={formsDataMap}
-                            />
-                        )}
-                    </div>
                 </section>
 
-                {/* imagem do pokemon */}
-                <section className={styles.imagem_area}>
-                    <Image src={pokemon.sprites.other["official-artwork"].front_default} width={400} height={400} alt="Pokémon" className={styles.imagem_pokemon}></Image>
-                </section>
-
-                {/* dados pokemon */}
-                <section className={`${styles.section_pokemon} ${styles.section_dados}`}>
-                    <h2 className={styles.h2_descricao}>Dados na Pokédex</h2>
-
-                    <div>
-                        <div className={styles.fundo_dados}>
-                            <p className={styles.item_dados}>Nº Pokédex: <span className={styles.valores_dados}>{pokemon.id}</span></p>
-
-                            <p className={styles.item_dados}>Altura: <span className={styles.valores_dados}>{height} m</span></p>
-
-                            <p className={styles.item_dados}>Peso: <span className={styles.valores_dados}>{weight} kg</span></p>
-
-                            <p className={styles.item_dados}>Gênero: <span className={styles.valores_dados}>{gender}</span></p>
-
-                            <p className={styles.item_dados}>Categoria: <span className={styles.valores_dados}>{genus?.genus}</span></p>
-
-                            <p className={`${styles.item_dados} ${styles.habilidades}`}>
-                                <span className={styles.item_habilidade}>Habilidades:</span>
-
-                                <span>
-                                    {abilities.map((ability, index) => (
-                                        <span
-                                            key={ability.name}
-                                            className={styles.valores_dados}
-                                        >
-                                            <>
-                                                {index > 0}
-                                                {ability.name}
-                                                {ability.hidden && " (Hidden)"}
-                                            </>
-                                        </span>
-                                    ))}
-                                </span>
-                            </p>
-                        </div>
-
-                        <div className={`${styles.fundo_dados} ${styles.descricao_dados}`}>
-                            <p className={styles.item_dados}>Descrição: <span className={styles.valores_dados}>{cleanFlavorText}</span></p>
-                        </div>
-                    </div>
-                </section>
+                <PokemonVisualizacao
+                    pokemon={pokemon}
+                    formsData={currentPokemonForms}
+                    formsDataMap={formsDataMap}
+                />
 
                 {/* tipagem */}
                 <div className={`${styles.section_pokemon} ${styles.section_tipos}`}>
