@@ -1,17 +1,23 @@
 .container_botoes {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    flex-direction: column;
 }
 
-.botao_ativo, .botao_desativado{
-    width: 150px;
+.botao_ativo,
+.botao_desativado {
+    width: 200px;
     padding: var(--esp-pequeno);
     border: none;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     font-family: var(--font-pokemon);
     text-transform: uppercase;
     cursor: pointer;
+    border-bottom: 5px solid transparent;
 }
 
 .botao_ativo {
@@ -23,4 +29,16 @@
 .botao_desativado {
     background-color: var(--text-secondary);
     color: var(--bg);
+}
+
+@media screen and (min-width: 400px) {
+    .botao_ativo,
+    .botao_desativado {
+        width: 150px;
+    }
+
+    .container_botoes {
+        flex-direction: row;
+        justify-content: center;
+    }
 }

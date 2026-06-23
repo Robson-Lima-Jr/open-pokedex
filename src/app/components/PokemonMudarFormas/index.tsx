@@ -2,6 +2,7 @@
 import React from "react";
 import styles from "./PokemonMudarFormas.module.css";
 import { PokemonForm } from "@/types/forms";
+import Image from "next/image";
 
 interface PokemonChangeFormsProps {
     forms: PokemonForm[];

@@ -9,14 +9,32 @@ import { PokemonData } from "@/types/pokemon";
 
 // componentes
 import { PokemonMudarFormas } from "../PokemonMudarFormas";
+import { StatsGroup } from "../Stats/StatsGroup";
 
 interface PokemonVisualizacaoProps {
     pokemon: PokemonData;
     formsData?: PokemonFormsData;
     formsDataMap: Record<string, PokemonData>;
+
+    weakness: [string, number][];
+    resistances: [string, number][];
 };
 
-export function PokemonVisualizacao({ pokemon, formsData, formsDataMap, }: PokemonVisualizacaoProps) {
+const formatMultiplier = (multiplier: number) => {
+    if (multiplier === 4) return "x4";
+
+    if (multiplier === 2) return "x2";
+
+    if (multiplier === 0.5) return "÷2";
+
+    if (multiplier === 0.25) return "÷4";
+
+    if (multiplier === 0) return "0";
+
+    return `x${multiplier}`;
+};
+
+export function PokemonVisualizacao({ pokemon, formsData, formsDataMap, weakness, resistances }: PokemonVisualizacaoProps) {
     const defaultForm = formsData?.forms.find(
         (form) => form.isDefault
     );
@@ -30,26 +48,58 @@ export function PokemonVisualizacao({ pokemon, formsData, formsDataMap, }: Pokem
             ? formsDataMap[selectedForm]
             : pokemon;
 
+
+    //peso/altura 
     const height = currentFormData.height / 10;
 
     const weight = currentFormData.weight / 10;
 
+    // abilidades
     const abilities = currentFormData.abilities.map((ability) => ({
         name: ability.ability.name,
         hidden: ability.is_hidden,
     }));
 
+    // stats
+    const stats = {
+        hp: currentFormData.stats.find(
+            (stat) => stat.stat.name === "hp"
+        )?.base_stat || 0,
+
+        atk: currentFormData.stats.find(
+            (stat) => stat.stat.name === "attack"
+        )?.base_stat || 0,
+
+        def: currentFormData.stats.find(
+            (stat) => stat.stat.name === "defense"
+        )?.base_stat || 0,
+
+        spa: currentFormData.stats.find(
+            (stat) => stat.stat.name === "special-attack"
+        )?.base_stat || 0,
+
+        spd: currentFormData.stats.find(
+            (stat) => stat.stat.name === "special-defense"
+        )?.base_stat || 0,
+
+        spe: currentFormData.stats.find(
+            (stat) => stat.stat.name === "speed"
+        )?.base_stat || 0
+    };
+
     return (
         <>
-            <div className={styles.formas_area}>
-                {formsData && (
-                    <PokemonMudarFormas
-                        forms={formsData.forms}
-                        selectedForm={selectedForm}
-                        setSelectedForm={setSelectedForm}
-                    />
-                )}
-            </div>
+            <section className={styles.header_pokemon}>
+                <div className={styles.formas_area}>
+                    {formsData && (
+                        <PokemonMudarFormas
+                            forms={formsData.forms}
+                            selectedForm={selectedForm}
+                            setSelectedForm={setSelectedForm}
+                        />
+                    )}
+                </div>
+            </section>
 
             {/* imagem do pokemon */}
             <section className={styles.imagem_area}>
@@ -67,7 +117,7 @@ export function PokemonVisualizacao({ pokemon, formsData, formsDataMap, }: Pokem
                         <p className={styles.item_dados}>Altura: <span className={styles.valores_dados}>{height} m</span></p>
 
                         <p className={styles.item_dados}>Peso: <span className={styles.valores_dados}>{weight} kg</span></p>
-{/* 
+                        {/* 
                         <p className={styles.item_dados}>Gênero: <span className={styles.valores_dados}>{gender}</span></p>
 
                         <p className={styles.item_dados}>Categoria: <span className={styles.valores_dados}>{genus?.genus}</span></p> */}
@@ -96,6 +146,75 @@ export function PokemonVisualizacao({ pokemon, formsData, formsDataMap, }: Pokem
                         <p className={styles.item_dados}>Descrição: <span className={styles.valores_dados}>{cleanFlavorText}</span></p>
                     </div> */}
                 </div>
+            </section>
+
+            {/* tipagem */}
+            <div className={`${styles.section_pokemon} ${styles.section_tipos}`}>
+                <h2 className={styles.h2_descricao}>Tipo</h2>
+
+                <div className={styles.container_tipos}>
+                    {pokemon.types.map((type) => (
+                        <span
+                            key={type.type.name}
+                            className={styles.tipo_pokemon}
+                            data-type={type.type.name}
+                        >
+                            {type.type.name}
+                        </span>
+                    ))}
+                </div>
+
+                <h2 className={styles.h2_descricao}>Fraquezas</h2>
+
+                <div className={styles.container_tipos}>
+                    {weakness.map(([typeName, multiplier]) => (
+                        <div
+                            key={typeName}
+                            className={styles.item_tipos}
+                        >
+                            <span
+                                className={styles.tipo_pokemon}
+                                data-type={typeName}
+                            >
+                                {typeName}
+                            </span>
+
+                            <span className={styles.icone_fraqueza} data-multiplier={multiplier}>
+                                {formatMultiplier(multiplier)}
+                            </span>
+                        </div>
+                    ))}
+                </div>
+
+                <h2 className={styles.h2_descricao}>Resistências</h2>
+
+                <div className={styles.container_tipos}>
+                    {resistances.map(([typeName, multiplier]) => (
+                        <div
+                            key={typeName}
+                            className={styles.item_tipos}
+                        >
+                            <span
+                                className={styles.tipo_pokemon}
+                                data-type={typeName}
+                            >
+                                {typeName}
+                            </span>
+
+                            <span className={styles.icone_resistencia} data-multiplier={multiplier}>
+                                {formatMultiplier(multiplier)}
+                            </span>
+                        </div>
+                    ))}
+                </div>
+            </div>
+
+            {/* stats */}
+            <section className={`${styles.section_pokemon} ${styles.section_stats}`}>
+                <h2 className={styles.h2_descricao}>Stats</h2>
+
+
+                <StatsGroup stats={stats} />
             </section>
         </>
     );

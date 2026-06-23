@@ -78,11 +78,9 @@
 }
 
 .formas_area {
-    padding-top: var(--esp-pequeno);
     width: 100%;
-
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
 }
 
 /* imagem */
@@ -506,6 +504,10 @@
 
     .header_pokemon {
         grid-column: 1 / -1;
+    }
+
+    .formas_area {
+        justify-content: flex-start;
     }
 
     .imagem_area {

@@ -1,6 +1,5 @@
 import styles from "./page.module.css";
 import Link from "next/link";
-import Image from "next/image";
 
 // types
 import { PokemonData, PokemonSpecies, TypeData, EvolutionPokemon, EvolutionChain, EvolutionLink, EvolutionNode } from "@/types/pokemon";
@@ -15,9 +14,7 @@ import { normalizeEvolutionPokemonName } from "@/app/utils/normalizeEvolutionPok
 import { formatFullPokemonName, keepName, paradoxList } from "@/app/utils/formatFullPokemonNames";
 
 // componentes
-import { PokemonDetalhesFormas } from "@/app/components/PokemonDetalhesFormas";
 import { IconeSeta, IconeLink } from "../../components/icons/Icons";
-import { StatsGroup } from "@/app/components/Stats/StatsGroup";
 import { ArvoreEvolucao } from "@/app/components/ArvoreEvolucao";
 import { PokemonVisualizacao } from "@/app/components/PokemonVisualizacao";
 
@@ -174,20 +171,6 @@ export default async function PokemonPage({
         });
     });
 
-    const formatMultiplier = (multiplier: number) => {
-        if (multiplier === 4) return "x4";
-
-        if (multiplier === 2) return "x2";
-
-        if (multiplier === 0.5) return "÷2";
-
-        if (multiplier === 0.25) return "÷4";
-
-        if (multiplier === 0) return "0";
-
-        return `x${multiplier}`;
-    };
-
     const matchups = Object.entries(typeMatchups).filter(([, value]) => value !== 1);
 
     const weakness = matchups
@@ -232,25 +215,6 @@ export default async function PokemonPage({
     } else {
         gender = "Male / Female";
     }
-
-    const stats = {
-        hp: pokemon.stats.find((stat) => stat.stat.name === "hp")?.base_stat || 0,
-        atk: pokemon.stats.find((stat) => stat.stat.name === "attack")?.base_stat || 0,
-        def: pokemon.stats.find((stat) => stat.stat.name === "defense")?.base_stat || 0,
-        spa: pokemon.stats.find((stat) => stat.stat.name === "special-attack")?.base_stat || 0,
-        spd: pokemon.stats.find((stat) => stat.stat.name === "special-defense")?.base_stat || 0,
-        spe: pokemon.stats.find((stat) => stat.stat.name === "speed")?.base_stat || 0
-    }
-
-    // conversor de peso/altura
-    const height = pokemon.height / 10;
-    const weight = pokemon.weight / 10;
-
-    // conversor de habilidades, ser pra melhorar o render
-    const abilities = pokemon.abilities.map((ability) => ({
-        name: ability.ability.name,
-        hidden: ability.is_hidden,
-    }));
 
     // conversão de ids pros links, para chamarmos pelo nome
     let previousPokemon = null;
@@ -299,77 +263,9 @@ export default async function PokemonPage({
                     pokemon={pokemon}
                     formsData={currentPokemonForms}
                     formsDataMap={formsDataMap}
+                    weakness={weakness}
+                    resistances={resistances}
                 />
-
-                {/* tipagem */}
-                <div className={`${styles.section_pokemon} ${styles.section_tipos}`}>
-                    <h2 className={styles.h2_descricao}>Tipo</h2>
-
-                    <div className={styles.container_tipos}>
-                        {pokemon.types.map((type) => (
-                            <span
-                                key={type.type.name}
-                                className={styles.tipo_pokemon}
-                                data-type={type.type.name}
-                            >
-                                {type.type.name}
-                            </span>
-                        ))}
-                    </div>
-
-                    <h2 className={styles.h2_descricao}>Fraquezas</h2>
-
-                    <div className={styles.container_tipos}>
-                        {weakness.map(([typeName, multiplier]) => (
-                            <div
-                                key={typeName}
-                                className={styles.item_tipos}
-                            >
-                                <span
-                                    className={styles.tipo_pokemon}
-                                    data-type={typeName}
-                                >
-                                    {typeName}
-                                </span>
-
-                                <span className={styles.icone_fraqueza} data-multiplier={multiplier}>
-                                    {formatMultiplier(multiplier)}
-                                </span>
-                            </div>
-                        ))}
-                    </div>
-
-                    <h2 className={styles.h2_descricao}>Resistências</h2>
-
-                    <div className={styles.container_tipos}>
-                        {resistances.map(([typeName, multiplier]) => (
-                            <div
-                                key={typeName}
-                                className={styles.item_tipos}
-                            >
-                                <span
-                                    className={styles.tipo_pokemon}
-                                    data-type={typeName}
-                                >
-                                    {typeName}
-                                </span>
-
-                                <span className={styles.icone_resistencia} data-multiplier={multiplier}>
-                                    {formatMultiplier(multiplier)}
-                                </span>
-                            </div>
-                        ))}
-                    </div>
-
-                </div>
-
-                {/* stats */}
-                <section className={`${styles.section_pokemon} ${styles.section_stats}`}>
-                    <h2 className={styles.h2_descricao}>Stats</h2>
-
-
-                    <StatsGroup stats={stats} />
-                </section>
 
                 {/* linha evolutiva */}
                 <section className={`${styles.section_pokemon} ${styles.section_evolucao}`}>
