@@ -147,40 +147,6 @@ export default async function PokemonPage({
 
     const typeData: TypeData[] = await Promise.all(typeResponses.map((response) => response.json()));
 
-    const typeMatchups: Record<string, number> = {};
-
-    typeData.forEach((type) => {
-        type.damage_relations.double_damage_from.forEach((damageType) => {
-            const currentValue = typeMatchups[damageType.name];
-
-            if (currentValue !== 0) {
-                typeMatchups[damageType.name] = (currentValue || 1) * 2;
-            }
-        });
-
-        type.damage_relations.half_damage_from.forEach((damageType) => {
-            const currentValue = typeMatchups[damageType.name];
-
-            if (currentValue !== 0) {
-                typeMatchups[damageType.name] = (currentValue || 1) * 0.5;
-            }
-        });
-
-        type.damage_relations.no_damage_from.forEach((damageType) => {
-            typeMatchups[damageType.name] = 0;
-        });
-    });
-
-    const matchups = Object.entries(typeMatchups).filter(([, value]) => value !== 1);
-
-    const weakness = matchups
-        .filter(([_, multiplier]) => multiplier > 1)
-        .sort((a, b) => b[1] - a[1]);
-
-    const resistances = matchups
-        .filter(([_, multiplier]) => multiplier < 1)
-        .sort((a, b) => a[1] - b[1]);
-
     // conversao para portugues, mas não funciona entao ficou em ingles mesmo
     const flavorText =
         species.flavor_text_entries.find(
@@ -196,22 +162,18 @@ export default async function PokemonPage({
         .replace(/\n/g, " ");
 
     const genus =
-        species.genera.find(
-            (genus) => genus.language.name === "pt-BR"
-        ) ||
-        species.genera.find(
-            (genus) => genus.language.name === "en"
-        );
+        species.genera.find((entry) => entry.language.name === "pt-BR")?.genus ??
+        species.genera.find((entry) => entry.language.name === "en")?.genus;
 
     // genero dos pokemons
     let gender = "";
 
     if (species.gender_rate === -1) {
-        gender = "No gender";
+        gender = "Unknown";
     } else if (species.gender_rate === 0) {
-        gender = "Male only";
+        gender = "Male";
     } else if (species.gender_rate === 8) {
-        gender = "Female only";
+        gender = "Female";
     } else {
         gender = "Male / Female";
     }
@@ -263,8 +225,10 @@ export default async function PokemonPage({
                     pokemon={pokemon}
                     formsData={currentPokemonForms}
                     formsDataMap={formsDataMap}
-                    weakness={weakness}
-                    resistances={resistances}
+                    typeData={typeData}
+                    gender={gender}
+                    genus={genus}
+                    flavorText={cleanFlavorText}
                 />
 
                 {/* linha evolutiva */}

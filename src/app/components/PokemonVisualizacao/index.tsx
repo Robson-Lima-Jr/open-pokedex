@@ -11,13 +11,19 @@ import { PokemonData } from "@/types/pokemon";
 import { PokemonMudarFormas } from "../PokemonMudarFormas";
 import { StatsGroup } from "../Stats/StatsGroup";
 
+// data
+import { TypeData } from "@/types/pokemon";
+
 interface PokemonVisualizacaoProps {
     pokemon: PokemonData;
     formsData?: PokemonFormsData;
     formsDataMap: Record<string, PokemonData>;
 
-    weakness: [string, number][];
-    resistances: [string, number][];
+    typeData: TypeData[];
+
+    gender: string;
+    genus?: string;
+    flavorText?: string;
 };
 
 const formatMultiplier = (multiplier: number) => {
@@ -34,7 +40,7 @@ const formatMultiplier = (multiplier: number) => {
     return `x${multiplier}`;
 };
 
-export function PokemonVisualizacao({ pokemon, formsData, formsDataMap, weakness, resistances }: PokemonVisualizacaoProps) {
+export function PokemonVisualizacao({ pokemon, formsData, formsDataMap, typeData, gender, genus, flavorText }: PokemonVisualizacaoProps) {
     const defaultForm = formsData?.forms.find(
         (form) => form.isDefault
     );
@@ -48,6 +54,40 @@ export function PokemonVisualizacao({ pokemon, formsData, formsDataMap, weakness
             ? formsDataMap[selectedForm]
             : pokemon;
 
+    // tipagem + fraqueza x resist            
+    const typeMatchups: Record<string, number> = {};
+
+    typeData.forEach((type) => {
+        type.damage_relations.double_damage_from.forEach((damageType) => {
+            const currentValue = typeMatchups[damageType.name];
+
+            if (currentValue !== 0) {
+                typeMatchups[damageType.name] = (currentValue || 1) * 2;
+            }
+        });
+
+        type.damage_relations.half_damage_from.forEach((damageType) => {
+            const currentValue = typeMatchups[damageType.name];
+
+            if (currentValue !== 0) {
+                typeMatchups[damageType.name] = (currentValue || 1) * 0.5;
+            }
+        });
+
+        type.damage_relations.no_damage_from.forEach((damageType) => {
+            typeMatchups[damageType.name] = 0;
+        });
+    });
+
+    const matchups = Object.entries(typeMatchups).filter(([, value]) => value !== 1);
+
+    const weakness = matchups
+        .filter(([_, multiplier]) => multiplier > 1)
+        .sort((a, b) => b[1] - a[1]);
+
+    const resistances = matchups
+        .filter(([_, multiplier]) => multiplier < 1)
+        .sort((a, b) => a[1] - b[1]);
 
     //peso/altura 
     const height = currentFormData.height / 10;
@@ -117,10 +157,10 @@ export function PokemonVisualizacao({ pokemon, formsData, formsDataMap, weakness
                         <p className={styles.item_dados}>Altura: <span className={styles.valores_dados}>{height} m</span></p>
 
                         <p className={styles.item_dados}>Peso: <span className={styles.valores_dados}>{weight} kg</span></p>
-                        {/* 
+                        
                         <p className={styles.item_dados}>Gênero: <span className={styles.valores_dados}>{gender}</span></p>
 
-                        <p className={styles.item_dados}>Categoria: <span className={styles.valores_dados}>{genus?.genus}</span></p> */}
+                        <p className={styles.item_dados}>Categoria: <span className={styles.valores_dados}>{genus}</span></p>
 
                         <p className={`${styles.item_dados} ${styles.habilidades}`}>
                             <span className={styles.item_habilidade}>Habilidades:</span>
@@ -142,9 +182,9 @@ export function PokemonVisualizacao({ pokemon, formsData, formsDataMap, weakness
                         </p>
                     </div>
 
-                    {/* <div className={`${styles.fundo_dados} ${styles.descricao_dados}`}>
-                        <p className={styles.item_dados}>Descrição: <span className={styles.valores_dados}>{cleanFlavorText}</span></p>
-                    </div> */}
+                    <div className={`${styles.fundo_dados} ${styles.descricao_dados}`}>
+                        <p className={styles.item_dados}>Descrição: <span className={styles.valores_dados}>{flavorText}</span></p>
+                    </div>
                 </div>
             </section>
 
@@ -153,7 +193,7 @@ export function PokemonVisualizacao({ pokemon, formsData, formsDataMap, weakness
                 <h2 className={styles.h2_descricao}>Tipo</h2>
 
                 <div className={styles.container_tipos}>
-                    {pokemon.types.map((type) => (
+                    {currentFormData.types.map((type) => (
                         <span
                             key={type.type.name}
                             className={styles.tipo_pokemon}
