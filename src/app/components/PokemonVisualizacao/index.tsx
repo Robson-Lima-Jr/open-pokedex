@@ -19,7 +19,7 @@ interface PokemonVisualizacaoProps {
     formsData?: PokemonFormsData;
     formsDataMap: Record<string, PokemonData>;
 
-    typeData: TypeData[];
+    typeDataMap: Record<string, TypeData[]>;
 
     gender: string;
     genus?: string;
@@ -40,7 +40,7 @@ const formatMultiplier = (multiplier: number) => {
     return `x${multiplier}`;
 };
 
-export function PokemonVisualizacao({ pokemon, formsData, formsDataMap, typeData, gender, genus, flavorText }: PokemonVisualizacaoProps) {
+export function PokemonVisualizacao({ pokemon, formsData, formsDataMap, typeDataMap, gender, genus, flavorText }: PokemonVisualizacaoProps) {
     const defaultForm = formsData?.forms.find(
         (form) => form.isDefault
     );
@@ -54,10 +54,15 @@ export function PokemonVisualizacao({ pokemon, formsData, formsDataMap, typeData
             ? formsDataMap[selectedForm]
             : pokemon;
 
+    const currentTypeData = 
+        selectedForm
+            ? typeDataMap[selectedForm]
+            : typeDataMap.default;
+
     // tipagem + fraqueza x resist            
     const typeMatchups: Record<string, number> = {};
 
-    typeData.forEach((type) => {
+    currentTypeData.forEach((type) => {
         type.damage_relations.double_damage_from.forEach((damageType) => {
             const currentValue = typeMatchups[damageType.name];
 

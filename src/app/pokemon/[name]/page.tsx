@@ -67,7 +67,7 @@ export default async function PokemonPage({
         )
     );
 
-    const formsData = formsApiNames
+    const formsData: PokemonData[] = formsApiNames
         ? await Promise.all(
             formsApiNames.map(async (formName) => {
                 const response = await fetch(
@@ -87,6 +87,43 @@ export default async function PokemonPage({
             ])
         )
         : {};
+
+    const typeDataMap: Record<string, TypeData[]> = {};
+
+    if (currentPokemonForms) {
+        await Promise.all(
+            currentPokemonForms.forms.map(async (form, index) => {
+                const formPokemon = formsData[index];
+
+                const typeResponses = await Promise.all(
+                    formPokemon.types.map((type) =>
+                        fetch(
+                            `https://pokeapi.co/api/v2/type/${type.type.name}`
+                        )
+                    )
+                );
+
+                const typeData: TypeData[] = await Promise.all(
+                    typeResponses.map((response) => response.json())
+                );
+
+                typeDataMap[form.slug] = typeData;
+            })
+        );
+    } else {
+        const typeResponses = await Promise.all(
+            pokemon.types.map((type) =>
+                fetch(
+                    `https://pokeapi.co/api/v2/type/${type.type.name}`
+                )
+            )
+        );
+
+        typeDataMap.default = await Promise.all(
+            typeResponses.map((response) => response.json())
+        );
+    }
+
 
     // chamada evolução
     const evolutionResponse = await fetch(species.evolution_chain.url);
@@ -137,15 +174,6 @@ export default async function PokemonPage({
             })
         )
     ).filter(Boolean) as EvolutionPokemon[];
-
-    // busca de fraquezas/ resistencias
-    const typeResponses = await Promise.all(
-        pokemon.types.map((type) =>
-            fetch(`https://pokeapi.co/api/v2/type/${type.type.name}`)
-        )
-    );
-
-    const typeData: TypeData[] = await Promise.all(typeResponses.map((response) => response.json()));
 
     // conversao para portugues, mas não funciona entao ficou em ingles mesmo
     const flavorText =
@@ -225,7 +253,7 @@ export default async function PokemonPage({
                     pokemon={pokemon}
                     formsData={currentPokemonForms}
                     formsDataMap={formsDataMap}
-                    typeData={typeData}
+                    typeDataMap={typeDataMap}
                     gender={gender}
                     genus={genus}
                     flavorText={cleanFlavorText}
