@@ -77,6 +77,12 @@
     color: var(--text);
 }
 
+.formas_area {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
 /* imagem */
 .imagem_area {
     width: 280px;
@@ -308,6 +314,73 @@
 
 /* stats */
 
+/* habilidades */
+.lista_habilidades {
+    display: flex;
+    flex-direction: column;
+    gap: var(--esp-padrao);
+}
+
+.botao_habilidade {
+    padding: var(--esp-micro);
+
+    display: inline-flex;
+    gap: var(--esp-micro);
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+    border-radius: var(--radius-m);
+
+    background-color: transparent;
+    color: var(--text-secondary);
+
+    line-height: 1;
+    cursor: pointer;
+}
+
+.botao_habilidade:focus {
+    background-color: var(--accent);
+}
+
+.habilidade_nome {
+    font-size: var(--fs-grande);
+    border-bottom: 2px solid transparent;
+    line-height: 1;
+}
+
+.habilidade_nome:hover {
+    color: var(--accent);
+    border-bottom: 2px solid var(--accent);
+    transition: var(--tr-rapida);
+}
+
+.botao_habilidade:focus .habilidade_nome {
+   color: var(--accent-text);
+}
+
+.icone_habilidade {
+    width: 18px;
+    height: auto;
+    color: var(--accent);
+}
+
+.botao_habilidade:focus .icone_habilidade {
+   color: var(--accent-text);
+}
+
+.descricao_habilidade {
+    padding: var(--esp-pequeno);
+    margin-top: var(--esp-micro);
+    margin-left: var(--esp-micro);
+
+    border-radius: var(--radius-m);
+    line-height: var(--lh-texto);
+    font-size: var(--fs-pequeno);
+    color: var(--surface);
+    background-color: var(--text-secondary);
+}
+
 /* evolução area */
 .container_evolucao {
     width: 100%;
@@ -483,6 +556,10 @@
         grid-column: 1 / -1;
     }
 
+    .formas_area {
+        justify-content: flex-start;
+    }
+
     .imagem_area {
         grid-column: 1;
         height: 100%;
@@ -498,6 +575,10 @@
 
     .section_stats {
         grid-column: 2;
+    }
+
+    .section_habilidades {
+        grid-column: 1/ -1;
     }
 
     .section_evolucao {

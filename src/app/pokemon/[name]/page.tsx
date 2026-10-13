@@ -1,14 +1,22 @@
 import styles from "./page.module.css";
 import Link from "next/link";
-import { IconeSeta, IconeLink } from "../../components/icons/Icons";
-import { StatsGroup } from "@/app/components/Stats/StatsGroup";
-import { formatFullPokemonName, keepName, paradoxList } from "@/app/utils/formatFullPokemonNames";
-import { PokemonData, PokemonSpecies, TypeData, EvolutionPokemon, EvolutionChain, EvolutionLink, EvolutionNode } from "@/types/pokemon";
-import Image from "next/image";
-import { ArvoreEvolucao } from "@/app/components/ArvoreEvolucao";
-import React from "react";
-import { normalizeEvolutionPokemonName } from "@/app/utils/normalizeEvolutionPokemonName";
 
+// types
+import { PokemonData, PokemonSpecies, TypeData, EvolutionPokemon, EvolutionChain, EvolutionLink, EvolutionNode, AbilityData } from "@/types/pokemon";
+
+// data
+import { defaultFormBySpecies } from "@/app/data/defaultFomBySpecies";
+import { pokemonForms } from "@/app/data/pokemonForms";
+
+// utils
+import { getFormPokemonApiName } from "@/app/utils/getFormPokemonApiName";
+import { normalizeEvolutionPokemonName } from "@/app/utils/normalizeEvolutionPokemonName";
+import { formatFullPokemonName, keepName, paradoxList } from "@/app/utils/formatFullPokemonNames";
+
+// componentes
+import { IconeSeta, IconeLink } from "../../components/icons/Icons";
+import { ArvoreEvolucao } from "@/app/components/ArvoreEvolucao";
+import { PokemonVisualizacao } from "@/app/components/PokemonVisualizacao";
 
 export default async function PokemonPage({
     params,
@@ -18,8 +26,12 @@ export default async function PokemonPage({
 
     const { name } = await params;
 
+    const lowerName = name.toLowerCase();
+
+    const pokemonApiName = defaultFormBySpecies[lowerName] || lowerName;
+
     const response = await fetch(
-        `https://pokeapi.co/api/v2/pokemon/${name.toLowerCase()}`
+        `https://pokeapi.co/api/v2/pokemon/${pokemonApiName}`
     );
 
     if (!response.ok) {
@@ -27,10 +39,6 @@ export default async function PokemonPage({
     }
 
     const pokemon: PokemonData = await response.json();
-
-    // const speciesName = name.toLowerCase().split("-")[0];
-
-    const lowerName = name.toLowerCase();
 
     const speciesName =
         keepName.includes(lowerName) ||
@@ -48,6 +56,111 @@ export default async function PokemonPage({
     }
 
     const species: PokemonSpecies = await speciesResponse.json();
+
+    // chamada de formas pokemon
+    const currentPokemonForms = pokemonForms[speciesName];
+
+    const formsApiNames = currentPokemonForms?.forms.map((form) =>
+        getFormPokemonApiName(
+            currentPokemonForms.pokemonName,
+            form
+        )
+    );
+
+    const formsData: PokemonData[] = formsApiNames
+        ? await Promise.all(
+            formsApiNames.map(async (formName) => {
+                const response = await fetch(
+                    `https://pokeapi.co/api/v2/pokemon/${formName}`
+                );
+
+                return response.json();
+            })
+        )
+        : [];
+
+    const formsDataMap = currentPokemonForms
+        ? Object.fromEntries(
+            currentPokemonForms.forms.map((form, index) => [
+                form.slug,
+                formsData[index]
+            ])
+        )
+        : {};
+
+    // referente aos tipos pokemon
+    const typeDataMap: Record<string, TypeData[]> = {};
+
+    if (currentPokemonForms) {
+        await Promise.all(
+            currentPokemonForms.forms.map(async (form, index) => {
+                const formPokemon = formsData[index];
+
+                const typeResponses = await Promise.all(
+                    formPokemon.types.map((type) =>
+                        fetch(
+                            `https://pokeapi.co/api/v2/type/${type.type.name}`
+                        )
+                    )
+                );
+
+                const typeData: TypeData[] = await Promise.all(
+                    typeResponses.map((response) => response.json())
+                );
+
+                typeDataMap[form.slug] = typeData;
+            })
+        );
+    } else {
+        const typeResponses = await Promise.all(
+            pokemon.types.map((type) =>
+                fetch(
+                    `https://pokeapi.co/api/v2/type/${type.type.name}`
+                )
+            )
+        );
+
+        typeDataMap.default = await Promise.all(
+            typeResponses.map((response) => response.json())
+        );
+    }
+
+    // referente a habilidades
+    const abilityDataMap: Record<string, AbilityData[]> = {};
+
+    if (currentPokemonForms) {
+        await Promise.all(
+            currentPokemonForms.forms.map(async (form, index) => {
+                const formPokemon = formsData[index];
+
+                const abilityResponses = await Promise.all(
+                    formPokemon.abilities.map((ability) =>
+                        fetch(ability.ability.url)
+                    )
+                );
+
+                const abilityData: AbilityData[] = await Promise.all(
+                    abilityResponses.map((response) => response.json())
+                );
+
+                abilityDataMap[form.slug] = abilityData;
+            })
+        );
+    } else {
+        const abilityResponses = await Promise.all(
+            pokemon.abilities.map((ability) =>
+                fetch(ability.ability.url)
+            )
+        );
+
+        abilityDataMap.default = await Promise.all(
+            abilityResponses.map(
+                (response): Promise<AbilityData> => response.json()
+            )
+        );
+    }
+
+
 
     // chamada evolução
     const evolutionResponse = await fetch(species.evolution_chain.url);
@@ -99,63 +212,6 @@ export default async function PokemonPage({
         )
     ).filter(Boolean) as EvolutionPokemon[];
 
-    // busca de fraquezas/ resistencias
-    const typeResponses = await Promise.all(
-        pokemon.types.map((type) =>
-            fetch(`https://pokeapi.co/api/v2/type/${type.type.name}`)
-        )
-    );
-
-    const typeData: TypeData[] = await Promise.all(typeResponses.map((response) => response.json()));
-
-    const typeMatchups: Record<string, number> = {};
-
-    typeData.forEach((type) => {
-        type.damage_relations.double_damage_from.forEach((damageType) => {
-            const currentValue = typeMatchups[damageType.name];
-
-            if (currentValue !== 0) {
-                typeMatchups[damageType.name] = (currentValue || 1) * 2;
-            }
-        });
-
-        type.damage_relations.half_damage_from.forEach((damageType) => {
-            const currentValue = typeMatchups[damageType.name];
-
-            if (currentValue !== 0) {
-                typeMatchups[damageType.name] = (currentValue || 1) * 0.5;
-            }
-        });
-
-        type.damage_relations.no_damage_from.forEach((damageType) => {
-            typeMatchups[damageType.name] = 0;
-        });
-    });
-
-    const formatMultiplier = (multiplier: number) => {
-        if (multiplier === 4) return "x4";
-
-        if (multiplier === 2) return "x2";
-
-        if (multiplier === 0.5) return "÷2";
-
-        if (multiplier === 0.25) return "÷4";
-
-        if (multiplier === 0) return "0";
-
-        return `x${multiplier}`;
-    };
-
-    const matchups = Object.entries(typeMatchups).filter(([, value]) => value !== 1);
-
-    const weakness = matchups
-        .filter(([_, multiplier]) => multiplier > 1)
-        .sort((a, b) => b[1] - a[1]);
-
-    const resistances = matchups
-        .filter(([_, multiplier]) => multiplier < 1)
-        .sort((a, b) => a[1] - b[1]);
-
     // conversao para portugues, mas não funciona entao ficou em ingles mesmo
     const flavorText =
         species.flavor_text_entries.find(
@@ -171,44 +227,21 @@ export default async function PokemonPage({
         .replace(/\n/g, " ");
 
     const genus =
-        species.genera.find(
-            (genus) => genus.language.name === "pt-BR"
-        ) ||
-        species.genera.find(
-            (genus) => genus.language.name === "en"
-        );
+        species.genera.find((entry) => entry.language.name === "pt-BR")?.genus ??
+        species.genera.find((entry) => entry.language.name === "en")?.genus;
 
     // genero dos pokemons
     let gender = "";
 
     if (species.gender_rate === -1) {
-        gender = "No gender";
+        gender = "Unknown";
     } else if (species.gender_rate === 0) {
-        gender = "Male only";
+        gender = "Male";
     } else if (species.gender_rate === 8) {
-        gender = "Female only";
+        gender = "Female";
     } else {
         gender = "Male / Female";
     }
-
-    const stats = {
-        hp: pokemon.stats.find((stat) => stat.stat.name === "hp")?.base_stat || 0,
-        atk: pokemon.stats.find((stat) => stat.stat.name === "attack")?.base_stat || 0,
-        def: pokemon.stats.find((stat) => stat.stat.name === "defense")?.base_stat || 0,
-        spa: pokemon.stats.find((stat) => stat.stat.name === "special-attack")?.base_stat || 0,
-        spd: pokemon.stats.find((stat) => stat.stat.name === "special-defense")?.base_stat || 0,
-        spe: pokemon.stats.find((stat) => stat.stat.name === "speed")?.base_stat || 0
-    }
-
-    // conversor de peso/altura
-    const height = pokemon.height / 10;
-    const weight = pokemon.weight / 10;
-
-    // conversor de habilidades, ser pra melhorar o render
-    const abilities = pokemon.abilities.map((ability) => ({
-        name: ability.ability.name,
-        hidden: ability.is_hidden,
-    }));
 
     // conversão de ids pros links, para chamarmos pelo nome
     let previousPokemon = null;
@@ -225,7 +258,6 @@ export default async function PokemonPage({
     if (nextResponse.ok) {
         nextPokemon = await nextResponse.json();
     }
-
 
     return (
         <div className={styles.center}>
@@ -254,122 +286,16 @@ export default async function PokemonPage({
                     <h1 className={styles.h1_pokemon}>{formatFullPokemonName(pokemon.name)}</h1>
                 </section>
 
-                {/* imagem do pokemon */}
-                <section className={styles.imagem_area}>
-                    <Image src={pokemon.sprites.other["official-artwork"].front_default} width={400} height={400} alt="Pokémon" className={styles.imagem_pokemon}></Image>
-                </section>
-
-                {/* dados pokemon */}
-                <section className={`${styles.section_pokemon} ${styles.section_dados}`}>
-                    <h2 className={styles.h2_descricao}>Dados na Pokédex</h2>
-
-                    <div>
-                        <div className={styles.fundo_dados}>
-                            <p className={styles.item_dados}>Nº Pokédex: <span className={styles.valores_dados}>#{pokemon.id}</span></p>
-
-                            <p className={styles.item_dados}>Altura: <span className={styles.valores_dados}>{height} m</span></p>
-
-                            <p className={styles.item_dados}>Peso: <span className={styles.valores_dados}>{weight} kg</span></p>
-
-                            <p className={styles.item_dados}>Gênero: <span className={styles.valores_dados}>{gender}</span></p>
-
-                            <p className={styles.item_dados}>Categoria: <span className={styles.valores_dados}>{genus?.genus}</span></p>
-
-                            <p className={styles.item_dados}>
-                                Habilidades:
-
-                                {abilities.map((ability, index) => (
-                                    <span
-                                        key={ability.name}
-                                        className={styles.valores_dados}
-                                    >
-                                        <>
-                                            {index > 0 && " / "}
-
-                                            {ability.name}
-
-                                            {ability.hidden && " (Hidden)"}
-                                        </>
-                                    </span>
-                                ))}
-                            </p>
-                        </div>
-
-                        <div className={`${styles.fundo_dados} ${styles.descricao_dados}`}>
-                            <p className={styles.item_dados}>Descrição: <span className={styles.valores_dados}>{cleanFlavorText}</span></p>
-                        </div>
-                    </div>
-                </section>
-
-                {/* tipagem */}
-                <div className={`${styles.section_pokemon} ${styles.section_tipos}`}>
-                    <h2 className={styles.h2_descricao}>Tipo</h2>
-
-                    <div className={styles.container_tipos}>
-                        {pokemon.types.map((type) => (
-                            <span
-                                key={type.type.name}
-                                className={styles.tipo_pokemon}
-                                data-type={type.type.name}
-                            >
-                                {type.type.name}
-                            </span>
-                        ))}
-                    </div>
-
-                    <h2 className={styles.h2_descricao}>Fraquezas</h2>
-
-                    <div className={styles.container_tipos}>
-                        {weakness.map(([typeName, multiplier]) => (
-                            <div
-                                key={typeName}
-                                className={styles.item_tipos}
-                            >
-                                <span
-                                    className={styles.tipo_pokemon}
-                                    data-type={typeName}
-                                >
-                                    {typeName}
-                                </span>
-
-                                <span className={styles.icone_fraqueza} data-multiplier={multiplier}>
-                                    {formatMultiplier(multiplier)}
-                                </span>
-                            </div>
-                        ))}
-                    </div>
-
-                    <h2 className={styles.h2_descricao}>Resistências</h2>
-
-                    <div className={styles.container_tipos}>
-                        {resistances.map(([typeName, multiplier]) => (
-                            <div
-                                key={typeName}
-                                className={styles.item_tipos}
-                            >
-                                <span
-                                    className={styles.tipo_pokemon}
-                                    data-type={typeName}
-                                >
-                                    {typeName}
-                                </span>
-
-                                <span className={styles.icone_resistencia} data-multiplier={multiplier}>
-                                    {formatMultiplier(multiplier)}
-                                </span>
-                            </div>
-                        ))}
-                    </div>
-
-                </div>
-
-                {/* stats */}
-                <section className={`${styles.section_pokemon} ${styles.section_stats}`}>
-                    <h2 className={styles.h2_descricao}>Stats</h2>
-
-
-                    <StatsGroup stats={stats} />
-                </section>
+                <PokemonVisualizacao
+                    pokemon={pokemon}
+                    formsData={currentPokemonForms}
+                    formsDataMap={formsDataMap}
+                    typeDataMap={typeDataMap}
+                    gender={gender}
+                    genus={genus}
+                    flavorText={cleanFlavorText}
+                    abilityDataMap={abilityDataMap}
+                />
 
                 {/* linha evolutiva */}
                 <section className={`${styles.section_pokemon} ${styles.section_evolucao}`}>

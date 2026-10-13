@@ -59,7 +59,7 @@ export function ArvoreEvolucao({ evolutionTree, evolutionPokemonData }: Evolutio
                             </p>
 
                             <p className={styles.poke_num}>
-                                #{pokemonData.id}
+                                #0{pokemonData.id}
                             </p>
                         </div>
 

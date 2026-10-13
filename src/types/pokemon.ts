@@ -23,6 +23,7 @@ export interface PokemonData {
     abilities: {
         ability: {
             name: string;
+            url: string;
         };
 
         is_hidden: boolean;
@@ -118,3 +119,20 @@ export interface EvolutionNode {
     name: string;
     children: EvolutionNode[];
 };
+
+// export interface para habilidades
+export interface AbilityData {
+    names: {
+        name: string;
+        language: {
+            name: string
+        };
+    }[];
+
+    effect_entries: {
+        effect: string;
+        language: {
+            name: string;
+        };
+    }[];
+}
