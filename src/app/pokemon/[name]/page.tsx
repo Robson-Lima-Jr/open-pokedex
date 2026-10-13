@@ -2,7 +2,7 @@ import styles from "./page.module.css";
 import Link from "next/link";
 
 // types
-import { PokemonData, PokemonSpecies, TypeData, EvolutionPokemon, EvolutionChain, EvolutionLink, EvolutionNode } from "@/types/pokemon";
+import { PokemonData, PokemonSpecies, TypeData, EvolutionPokemon, EvolutionChain, EvolutionLink, EvolutionNode, AbilityData } from "@/types/pokemon";
 
 // data
 import { defaultFormBySpecies } from "@/app/data/defaultFomBySpecies";
@@ -88,6 +88,7 @@ export default async function PokemonPage({
         )
         : {};
 
+    // referente aos tipos pokemon
     const typeDataMap: Record<string, TypeData[]> = {};
 
     if (currentPokemonForms) {
@@ -123,6 +124,42 @@ export default async function PokemonPage({
             typeResponses.map((response) => response.json())
         );
     }
+
+    // referente a habilidades
+    const abilityDataMap: Record<string, AbilityData[]> = {};
+
+    if (currentPokemonForms) {
+        await Promise.all(
+            currentPokemonForms.forms.map(async (form, index) => {
+                const formPokemon = formsData[index];
+
+                const abilityResponses = await Promise.all(
+                    formPokemon.abilities.map((ability) =>
+                        fetch(ability.ability.url)
+                    )
+                );
+
+                const abilityData: AbilityData[] = await Promise.all(
+                    abilityResponses.map((response) => response.json())
+                );
+
+                abilityDataMap[form.slug] = abilityData;
+            })
+        );
+    } else {
+        const abilityResponses = await Promise.all(
+            pokemon.abilities.map((ability) =>
+                fetch(ability.ability.url)
+            )
+        );
+
+        abilityDataMap.default = await Promise.all(
+            abilityResponses.map(
+                (response): Promise<AbilityData> => response.json()
+            )
+        );
+    }
+
 
 
     // chamada evolução
@@ -257,6 +294,7 @@ export default async function PokemonPage({
                     gender={gender}
                     genus={genus}
                     flavorText={cleanFlavorText}
+                    abilityDataMap={abilityDataMap}
                 />
 
                 {/* linha evolutiva */}

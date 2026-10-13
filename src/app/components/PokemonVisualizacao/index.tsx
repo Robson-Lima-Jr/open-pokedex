@@ -2,6 +2,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import styles from "@/app/pokemon/[name]/page.module.css"
+import { IconeSeta, IconeBaixo } from "../icons/Icons";
 
 // types
 import { PokemonFormsData } from "@/types/forms";
@@ -12,7 +13,7 @@ import { PokemonMudarFormas } from "../PokemonMudarFormas";
 import { StatsGroup } from "../Stats/StatsGroup";
 
 // data
-import { TypeData } from "@/types/pokemon";
+import { TypeData, AbilityData } from "@/types/pokemon";
 
 interface PokemonVisualizacaoProps {
     pokemon: PokemonData;
@@ -24,6 +25,7 @@ interface PokemonVisualizacaoProps {
     gender: string;
     genus?: string;
     flavorText?: string;
+    abilityDataMap: Record<string, AbilityData[]>;
 };
 
 const formatMultiplier = (multiplier: number) => {
@@ -40,7 +42,7 @@ const formatMultiplier = (multiplier: number) => {
     return `x${multiplier}`;
 };
 
-export function PokemonVisualizacao({ pokemon, formsData, formsDataMap, typeDataMap, gender, genus, flavorText }: PokemonVisualizacaoProps) {
+export function PokemonVisualizacao({ pokemon, formsData, formsDataMap, typeDataMap, gender, genus, flavorText, abilityDataMap }: PokemonVisualizacaoProps) {
     const defaultForm = formsData?.forms.find(
         (form) => form.isDefault
     );
@@ -49,15 +51,22 @@ export function PokemonVisualizacao({ pokemon, formsData, formsDataMap, typeData
         defaultForm?.slug
     );
 
+    const [openAbility, setOpenAbility] = useState<number | null>(null);
+
     const currentFormData =
         selectedForm
             ? formsDataMap[selectedForm]
             : pokemon;
 
-    const currentTypeData = 
+    const currentTypeData =
         selectedForm
             ? typeDataMap[selectedForm]
             : typeDataMap.default;
+
+    const currentAbilityData =
+        selectedForm
+            ? abilityDataMap[selectedForm]
+            : abilityDataMap.default;
 
     // tipagem + fraqueza x resist            
     const typeMatchups: Record<string, number> = {};
@@ -99,11 +108,28 @@ export function PokemonVisualizacao({ pokemon, formsData, formsDataMap, typeData
 
     const weight = currentFormData.weight / 10;
 
-    // abilidades
-    const abilities = currentFormData.abilities.map((ability) => ({
-        name: ability.ability.name,
-        hidden: ability.is_hidden,
-    }));
+    // habilidades
+
+    const abilities = currentFormData.abilities.map((ability, index) => {
+        const abilityInfo = currentAbilityData?.[index];
+
+        const name =
+            abilityInfo?.names.find(
+                (entry) => entry.language.name === "en"
+            )?.name ?? ability.ability.name;
+
+        const effect =
+            abilityInfo?.effect_entries.find(
+                (entry) => entry.language.name === "en"
+            )?.effect;
+
+        return {
+            name,
+            effect,
+            hidden: ability.is_hidden,
+        };
+    });
+
 
     // stats
     const stats = {
@@ -162,29 +188,10 @@ export function PokemonVisualizacao({ pokemon, formsData, formsDataMap, typeData
                         <p className={styles.item_dados}>Altura: <span className={styles.valores_dados}>{height} m</span></p>
 
                         <p className={styles.item_dados}>Peso: <span className={styles.valores_dados}>{weight} kg</span></p>
-                        
+
                         <p className={styles.item_dados}>Gênero: <span className={styles.valores_dados}>{gender}</span></p>
 
                         <p className={styles.item_dados}>Categoria: <span className={styles.valores_dados}>{genus}</span></p>
-
-                        <p className={`${styles.item_dados} ${styles.habilidades}`}>
-                            <span className={styles.item_habilidade}>Habilidades:</span>
-
-                            <span>
-                                {abilities.map((ability, index) => (
-                                    <span
-                                        key={ability.name}
-                                        className={styles.valores_dados}
-                                    >
-                                        <>
-                                            {index > 0}
-                                            {ability.name}
-                                            {ability.hidden && " (Hidden)"}
-                                        </>
-                                    </span>
-                                ))}
-                            </span>
-                        </p>
                     </div>
 
                     <div className={`${styles.fundo_dados} ${styles.descricao_dados}`}>
@@ -260,6 +267,44 @@ export function PokemonVisualizacao({ pokemon, formsData, formsDataMap, typeData
 
 
                 <StatsGroup stats={stats} />
+            </section>
+
+            {/* habilidades */}
+
+            <section className={`${styles.section_pokemon} ${styles.section_habilidades}`}>
+                <h2 className={styles.h2_descricao}>Habilidades</h2>
+
+                <div className={styles.lista_habilidades}>
+                    {abilities.map((ability, index) => (
+                        <div key={ability.name} className={styles.item_habilidade_card}>
+                            <button
+                                type="button"
+                                className={styles.botao_habilidade}
+                                aria-expanded={openAbility === index}
+                                onClick={() =>
+                                    setOpenAbility(
+                                        openAbility === index ? null : index
+                                    )
+                                }
+                            >
+                                <span aria-hidden="true">
+                                    {openAbility === index ? <IconeBaixo className={styles.icone_habilidade}/> : <IconeSeta className={styles.icone_habilidade}/>}
+                                </span>
+
+                                <span className={styles.habilidade_nome}>
+                                    {ability.name}
+                                    {ability.hidden && " (Hidden)"}
+                                </span>
+                            </button>
+
+                            {openAbility === index && (
+                                <p className={styles.descricao_habilidade}>
+                                    {ability.effect ?? "Description unavailable."}
+                                </p>
+                            )}
+                        </div>
+                    ))}
+                </div>
             </section>
         </>
     );
