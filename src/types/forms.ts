@@ -1,4 +1,12 @@
-export type FormCategory = | "base" | "form" | "regional" | "mega";
+export type FormCategory =
+    | "base"
+    | "form"
+    | "regional"
+    | "mega"
+    | "mega-x"
+    | "mega-y"
+    | "mega-z"
+    | "g-max";
 
 export interface PokemonForm {
     slug: string;

@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { PokemonFormsData } from "@/types/forms";
 import { PokemonMudarFormas } from "../PokemonMudarFormas";
-import { getFormPokemonApiName } from "@/app/utils/getFormPokemonApiName";
 import { PokemonData } from "@/types/pokemon";
 
 interface PokemonDetalhesFormasProps {

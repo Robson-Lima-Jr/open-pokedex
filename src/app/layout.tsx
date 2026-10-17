@@ -3,6 +3,7 @@ import Topo from "./components/Topo";
 import { ThemeProvider } from "./context/ThemeContext";
 import { PalleteProvider } from "./context/PalleteContext";
 import { MenuProvider } from "./context/MenuContext";
+// @ts-ignore Next.js loads this global stylesheet at runtime.
 import "./globals.css";
 
 
