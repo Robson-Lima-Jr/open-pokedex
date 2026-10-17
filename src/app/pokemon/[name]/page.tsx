@@ -3,13 +3,12 @@ import Link from "next/link";
 
 // types
 import { PokemonData, PokemonSpecies, TypeData, EvolutionPokemon, EvolutionChain, EvolutionLink, EvolutionNode, AbilityData } from "@/types/pokemon";
+import type { PokemonForm } from "@/types/forms";
 
 // data
 import { defaultFormBySpecies } from "@/app/data/defaultFomBySpecies";
-import { pokemonForms } from "@/app/data/pokemonForms";
 
 // utils
-import { getFormPokemonApiName } from "@/app/utils/getFormPokemonApiName";
 import { normalizeEvolutionPokemonName } from "@/app/utils/normalizeEvolutionPokemonName";
 import { formatFullPokemonName, keepName, paradoxList } from "@/app/utils/formatFullPokemonNames";
 
@@ -58,44 +57,192 @@ export default async function PokemonPage({
     const species: PokemonSpecies = await speciesResponse.json();
 
     // chamada de formas pokemon
-    const currentPokemonForms = pokemonForms[speciesName];
 
-    const formsApiNames = currentPokemonForms?.forms.map((form) =>
-        getFormPokemonApiName(
-            currentPokemonForms.pokemonName,
-            form
+    // Descoberta de formas pela PokéAPI
+    // Descoberta automática de formas pela PokéAPI
+
+    const apiVarieties = species.varieties.map((variety) => ({
+        apiName: variety.pokemon.name,
+    }));
+
+    // Garante que o Pokémon carregado pela página esteja na lista.
+    const allVarieties = apiVarieties.some(
+        (variety) => variety.apiName === pokemon.name
+    )
+        ? apiVarieties
+        : [
+            { apiName: pokemon.name },
+            ...apiVarieties,
+        ];
+
+    // Evita entradas duplicadas.
+    const uniqueVarieties = Array.from(
+        new Map(
+            allVarieties.map((variety) => [
+                variety.apiName,
+                variety,
+            ])
+        ).values()
+    );
+
+    // Descobre o slug, o rótulo e a categoria de cada forma.
+    const discoveredForms: PokemonForm[] = uniqueVarieties.map(
+        ({ apiName }) => {
+            const slug =
+                apiName === speciesName
+                    ? "base"
+                    : apiName.startsWith(`${speciesName}-`)
+                        ? apiName.slice(speciesName.length + 1)
+                        : apiName;
+
+            const isDefault = apiName === pokemon.name;
+
+            let category: PokemonForm["category"] = isDefault
+                ? "base"
+                : "form";
+
+            if (!isDefault) {
+                if (slug.includes("mega-z")) {
+                    category = "mega-z";
+                } else if (slug.includes("mega-x")) {
+                    category = "mega-x";
+                } else if (slug.includes("mega-y")) {
+                    category = "mega-y";
+                } else if (slug.startsWith("mega")) {
+                    category = "mega";
+                } else if (
+                    slug.includes("gmax") ||
+                    slug.includes("gigantamax")
+                ) {
+                    category = "g-max";
+                } else if (
+                    slug.includes("alola") ||
+                    slug.includes("galar") ||
+                    slug.includes("hisui") ||
+                    slug.includes("paldea")
+                ) {
+                    category = "regional";
+                }
+            }
+
+            const shortLabel = isDefault
+                ? slug === "base"
+                    ? "Base"
+                    : slug
+                        .split("-")
+                        .map((part) =>
+                            part.charAt(0).toUpperCase() + part.slice(1)
+                        )
+                        .join(" ")
+                : slug === "gmax" || slug === "gigantamax"
+                    ? "Gigantamax"
+                    : slug
+                        .split("-")
+                        .map((part) =>
+                            part.charAt(0).toUpperCase() + part.slice(1)
+                        )
+                        .join(" ");
+
+            return {
+                slug,
+                shortLabel,
+                fullLabel: apiName,
+                category,
+                isDefault,
+            };
+        }
+    );
+
+    // A forma carregada pela página aparece primeiro.
+    const forms = discoveredForms.sort(
+        (a, b) => Number(b.isDefault) - Number(a.isDefault)
+    );
+
+    // Relaciona cada slug ao nome exato do endpoint da PokéAPI.
+    const formApiNameBySlug = Object.fromEntries(
+        uniqueVarieties.map(({ apiName }) => {
+            const slug =
+                apiName === speciesName
+                    ? "base"
+                    : apiName.startsWith(`${speciesName}-`)
+                        ? apiName.slice(speciesName.length + 1)
+                        : apiName;
+
+            return [slug, apiName];
+        })
+    ) as Record<string, string>;
+
+    // Carrega os dados de cada forma.
+    const formsData = await Promise.all(
+        forms.map(async (form) => {
+            if (form.isDefault) {
+                return {
+                    slug: form.slug,
+                    data: pokemon,
+                };
+            }
+
+            const apiName = formApiNameBySlug[form.slug];
+
+            const response = await fetch(
+                `https://pokeapi.co/api/v2/pokemon/${apiName}`
+            );
+
+            if (!response.ok) {
+                throw new Error(
+                    `Não foi possível carregar a forma: ${apiName}`
+                );
+            }
+
+            return {
+                slug: form.slug,
+                data: await response.json() as PokemonData,
+            };
+        })
+    );
+
+    const formsDataMap = Object.fromEntries(
+        formsData.map(({ slug, data }) => [slug, data])
+    );
+
+    // Exibe o seletor somente quando existe mais de uma forma.
+    const hasAlternateForms = forms.length > 1;
+
+    const formsDataForView = hasAlternateForms
+        ? {
+            pokemonName: speciesName,
+            forms,
+        }
+        : undefined;
+
+
+    // referente aos tipos pokemon
+    // Dados dos tipos de cada forma
+    const typeDataMap: Record<string, TypeData[]> = {};
+
+    // Tipos do Pokémon base
+    const defaultTypeResponses = await Promise.all(
+        pokemon.types.map((type) =>
+            fetch(
+                `https://pokeapi.co/api/v2/type/${type.type.name}`
+            )
         )
     );
 
-    const formsData: PokemonData[] = formsApiNames
-        ? await Promise.all(
-            formsApiNames.map(async (formName) => {
-                const response = await fetch(
-                    `https://pokeapi.co/api/v2/pokemon/${formName}`
-                );
+    typeDataMap.default = await Promise.all(
+        defaultTypeResponses.map(async (response) => {
+            if (!response.ok) {
+                throw new Error("Não foi possível carregar os tipos");
+            }
 
-                return response.json();
-            })
-        )
-        : [];
+            return response.json() as Promise<TypeData>;
+        })
+    );
 
-    const formsDataMap = currentPokemonForms
-        ? Object.fromEntries(
-            currentPokemonForms.forms.map((form, index) => [
-                form.slug,
-                formsData[index]
-            ])
-        )
-        : {};
-
-    // referente aos tipos pokemon
-    const typeDataMap: Record<string, TypeData[]> = {};
-
-    if (currentPokemonForms) {
-        await Promise.all(
-            currentPokemonForms.forms.map(async (form, index) => {
-                const formPokemon = formsData[index];
-
+    // Tipos de todas as formas carregadas
+    await Promise.all(
+        Object.entries(formsDataMap).map(
+            async ([formSlug, formPokemon]) => {
                 const typeResponses = await Promise.all(
                     formPokemon.types.map((type) =>
                         fetch(
@@ -104,63 +251,69 @@ export default async function PokemonPage({
                     )
                 );
 
-                const typeData: TypeData[] = await Promise.all(
-                    typeResponses.map((response) => response.json())
+                typeDataMap[formSlug] = await Promise.all(
+                    typeResponses.map(async (response) => {
+                        if (!response.ok) {
+                            throw new Error(
+                                `Não foi possível carregar os tipos da forma ${formSlug}`
+                            );
+                        }
+
+                        return response.json() as Promise<TypeData>;
+                    })
                 );
+            }
+        )
+    );
 
-                typeDataMap[form.slug] = typeData;
-            })
-        );
-    } else {
-        const typeResponses = await Promise.all(
-            pokemon.types.map((type) =>
-                fetch(
-                    `https://pokeapi.co/api/v2/type/${type.type.name}`
-                )
-            )
-        );
-
-        typeDataMap.default = await Promise.all(
-            typeResponses.map((response) => response.json())
-        );
-    }
 
     // referente a habilidades
+    // Dados das habilidades de cada forma
     const abilityDataMap: Record<string, AbilityData[]> = {};
 
-    if (currentPokemonForms) {
-        await Promise.all(
-            currentPokemonForms.forms.map(async (form, index) => {
-                const formPokemon = formsData[index];
+    // Habilidades do Pokémon base
+    const defaultAbilityResponses = await Promise.all(
+        pokemon.abilities.map((ability) =>
+            fetch(ability.ability.url)
+        )
+    );
 
+    abilityDataMap.default = await Promise.all(
+        defaultAbilityResponses.map(async (response) => {
+            if (!response.ok) {
+                throw new Error(
+                    "Não foi possível carregar as habilidades"
+                );
+            }
+
+            return response.json() as Promise<AbilityData>;
+        })
+    );
+
+    // Habilidades de todas as formas carregadas
+    await Promise.all(
+        Object.entries(formsDataMap).map(
+            async ([formSlug, formPokemon]) => {
                 const abilityResponses = await Promise.all(
                     formPokemon.abilities.map((ability) =>
                         fetch(ability.ability.url)
                     )
                 );
 
-                const abilityData: AbilityData[] = await Promise.all(
-                    abilityResponses.map((response) => response.json())
+                abilityDataMap[formSlug] = await Promise.all(
+                    abilityResponses.map(async (response) => {
+                        if (!response.ok) {
+                            throw new Error(
+                                `Não foi possível carregar as habilidades da forma ${formSlug}`
+                            );
+                        }
+
+                        return response.json() as Promise<AbilityData>;
+                    })
                 );
-
-                abilityDataMap[form.slug] = abilityData;
-            })
-        );
-    } else {
-        const abilityResponses = await Promise.all(
-            pokemon.abilities.map((ability) =>
-                fetch(ability.ability.url)
-            )
-        );
-
-        abilityDataMap.default = await Promise.all(
-            abilityResponses.map(
-                (response): Promise<AbilityData> => response.json()
-            )
-        );
-    }
-
-
+            }
+        )
+    );
 
     // chamada evolução
     const evolutionResponse = await fetch(species.evolution_chain.url);
@@ -288,7 +441,7 @@ export default async function PokemonPage({
 
                 <PokemonVisualizacao
                     pokemon={pokemon}
-                    formsData={currentPokemonForms}
+                    formsData={formsDataForView}
                     formsDataMap={formsDataMap}
                     typeDataMap={typeDataMap}
                     gender={gender}
