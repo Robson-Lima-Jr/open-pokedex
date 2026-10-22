@@ -22,7 +22,9 @@ export function PokemonDetalhesFormas({ formsData, formsDataMap }: PokemonDetalh
             <PokemonMudarFormas
                 forms={formsData.forms}
                 selectedForm={selectedForm}
-                setSelectedForm={setSelectedForm} />
+                setSelectedForm={setSelectedForm}
+                pokemonName={formsData.pokemonName}
+                />
 
             <p>{currentFormData?.name}</p>
 

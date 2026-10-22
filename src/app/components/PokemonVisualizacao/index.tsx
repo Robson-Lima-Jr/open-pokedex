@@ -167,6 +167,7 @@ export function PokemonVisualizacao({ pokemon, formsData, formsDataMap, typeData
                             forms={formsData.forms}
                             selectedForm={selectedForm}
                             setSelectedForm={setSelectedForm}
+                            pokemonName={pokemon.name}
                         />
                     )}
                 </div>
