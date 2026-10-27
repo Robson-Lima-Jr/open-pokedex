@@ -34,14 +34,14 @@ export function PokemonMudarFormas({
                     ? pokemonName
                     : form.shortLabel;
 
-                const megaLetter =
+                const megaImage =
                     form.category === "mega-x"
-                        ? "X"
+                        ? "/mega-x.png"
                         : form.category === "mega-y"
-                            ? "Y"
+                            ? "/mega-y.png"
                             : form.category === "mega-z"
-                                ? "Z"
-                                : "";
+                                ? "/mega-z.png"
+                                : "/mega.png";
 
                 return (
                     <button
@@ -55,17 +55,11 @@ export function PokemonMudarFormas({
                     >
                         {isMega ? (
                             <span className={styles.conteudo_mega}>
-                                <span>Mega</span>
-
                                 <img
-                                    src="/mega_base.png"
+                                    src={megaImage}
                                     alt="mega stone"
                                     className={styles.icone_mega}
                                 />
-                                {megaLetter && (
-                                    <span className={`${styles.letra_mega} ${styles[`letra_${form.category}`]
-                                        }`}>{megaLetter}</span>
-                                )}
                             </span>
                         ) : (
                             label
