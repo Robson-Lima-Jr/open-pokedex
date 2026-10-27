@@ -30,9 +30,10 @@ export function PokemonMudarFormas({
                     "mega-z",
                 ].includes(form.category);
 
-                const label = form.isDefault
-                    ? pokemonName
-                    : form.shortLabel;
+                const label =
+                    form.isDefault && form.slug === "base"
+                        ? pokemonName
+                        : form.shortLabel;
 
                 const megaImage =
                     form.category === "mega-x"

@@ -18,20 +18,22 @@
     border: none;
     font-family: var(--font-pokemon);
     text-transform: uppercase;
+    font-weight: bold;
     cursor: pointer;
 
     border-bottom: 7px solid transparent;
+    border-top: 7px solid transparent;
 }
 
 .botao_ativo {
-    background-color: rgb(124, 120, 120);
-    color: var( --text-1-dark);
-    border-bottom: 7px solid var(--accent);
+    background-color: var(--accent-overlay);
+    color: var(--text);
+    border-color: var(--accent);
 }
 
 .botao_desativado {
-    background-color: rgb(220, 212, 212);
-    color: var(--text-1);
+    background-color: var(--text-secondary);
+    color: var(--bg);
 }
 
 .conteudo_mega {

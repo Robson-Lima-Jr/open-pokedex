@@ -27,8 +27,35 @@ export default async function PokemonPage({
 
     const lowerName = name.toLowerCase();
 
-    const pokemonApiName = defaultFormBySpecies[lowerName] || lowerName;
+    const speciesName =
+        keepName.includes(lowerName) ||
+            paradoxList.includes(lowerName)
+            ? lowerName
+            : lowerName.split("-")[0];
 
+    // Primeiro, busca a espécie.
+    const speciesResponse = await fetch(
+        `https://pokeapi.co/api/v2/pokemon-species/${speciesName}`
+    );
+
+    if (!speciesResponse.ok) {
+        throw new Error("Espécie não encontrada");
+    }
+
+    const species: PokemonSpecies = await speciesResponse.json();
+
+    // Descobre a forma padrão.
+    const defaultVariety = species.varieties.find(
+        (variety) => variety.is_default
+    )?.pokemon.name;
+
+    // Define qual Pokémon será carregado.
+    const pokemonApiName =
+        defaultFormBySpecies[lowerName] ||
+        defaultVariety ||
+        lowerName;
+
+    // Busca os dados do Pokémon.
     const response = await fetch(
         `https://pokeapi.co/api/v2/pokemon/${pokemonApiName}`
     );
@@ -38,23 +65,6 @@ export default async function PokemonPage({
     }
 
     const pokemon: PokemonData = await response.json();
-
-    const speciesName =
-        keepName.includes(lowerName) ||
-            paradoxList.includes(lowerName)
-            ? lowerName
-            : lowerName.split("-")[0];
-
-    // busca em species
-    const speciesResponse = await fetch(
-        `https://pokeapi.co/api/v2/pokemon-species/${speciesName}`
-    );
-
-    if (!speciesResponse.ok) {
-        throw new Error("Especie não Encontrada");
-    }
-
-    const species: PokemonSpecies = await speciesResponse.json();
 
     // chamada de formas pokemon
 
@@ -93,7 +103,9 @@ export default async function PokemonPage({
                     ? "base"
                     : apiName.startsWith(`${speciesName}-`)
                         ? apiName.slice(speciesName.length + 1)
-                        : apiName;
+                        : apiName === pokemon.name && apiName.includes("-")
+                            ? apiName.split("-").slice(1).join("-")
+                            : apiName;
 
             const isDefault = apiName === pokemon.name;
 
@@ -125,23 +137,41 @@ export default async function PokemonPage({
                 }
             }
 
-            const shortLabel = isDefault
-                ? slug === "base"
+            const formatLabel = (value: string) => {
+                const specialLabels: Record<string, string> = {
+                    altered: "Altered",
+                    origin: "Origin",
+                    normal: "Normal",
+                    attack: "Attack",
+                    defense: "Defense",
+                    speed: "Speed",
+                    "green-plumage": "Green Plumage",
+                    "blue-plumage": "Blue Plumage",
+                    "white-plumage": "White Plumage",
+                    "yellow-plumage": "Yellow Plumage",
+                    "50": "50%",
+                    "10": "10%",
+                    complete: "Complete",
+                };
+
+                if (specialLabels[value]) {
+                    return specialLabels[value];
+                }
+
+                return value
+                    .split("-")
+                    .map((part) =>
+                        part.charAt(0).toUpperCase() + part.slice(1)
+                    )
+                    .join(" ");
+            };
+
+            const shortLabel =
+                slug === "base"
                     ? "Base"
-                    : slug
-                        .split("-")
-                        .map((part) =>
-                            part.charAt(0).toUpperCase() + part.slice(1)
-                        )
-                        .join(" ")
-                : slug === "gmax" || slug === "gigantamax"
-                    ? "Gigantamax"
-                    : slug
-                        .split("-")
-                        .map((part) =>
-                            part.charAt(0).toUpperCase() + part.slice(1)
-                        )
-                        .join(" ");
+                    : slug === "gmax" || slug === "gigantamax"
+                        ? "Gigantamax"
+                        : formatLabel(slug);
 
             return {
                 slug,
@@ -166,7 +196,9 @@ export default async function PokemonPage({
                     ? "base"
                     : apiName.startsWith(`${speciesName}-`)
                         ? apiName.slice(speciesName.length + 1)
-                        : apiName;
+                        : apiName === pokemon.name && apiName.includes("-")
+                            ? apiName.split("-").slice(1).join("-")
+                            : apiName;
 
             return [slug, apiName];
         })
