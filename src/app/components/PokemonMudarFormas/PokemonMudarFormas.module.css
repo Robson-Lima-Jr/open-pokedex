@@ -24,8 +24,8 @@
 }
 
 .botao_ativo {
-    background-color: rgb(190, 185, 185);
-    color: var(--text-1);
+    background-color: rgb(124, 120, 120);
+    color: var( --text-1-dark);
     border-bottom: 7px solid var(--accent);
 }
 
@@ -38,32 +38,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: var(--esp-micro);
 }
 
 .icone_mega {
-    width: 25px;
+    width: 100px;
     height: auto;
-    object-fit: contain;
 }
 
-.letra_mega {
-    font-weight: 600;
-    font-size: 20px;
-    text-shadow: 2px 2px 2px var(--text-1);
-}
-
-.letra_mega-x {
-    color: #306ae8;
-}
-
-.letra_mega-y {
-    color: #f22350;
-}
-
-.letra_mega-z {
-    color: #15c068;
-}
 
 @media screen and (min-width: 400px) {
 
