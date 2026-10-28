@@ -22,8 +22,10 @@ export function ArvoreEvolucao({ evolutionTree, evolutionPokemonData }: Evolutio
         node: EvolutionNode
     ): React.ReactNode {
 
-        const pokemonData = evolutionPokemonData.find((pokemon) =>
-            normalizeEvolutionPokemonName(node.name) === pokemon.name
+        const pokemonData = evolutionPokemonData.find(
+            (pokemon) =>
+                (node.pokemonName ??
+                    normalizeEvolutionPokemonName(node.name)) === pokemon.name
         );
 
         if (!pokemonData) return null;
@@ -32,7 +34,7 @@ export function ArvoreEvolucao({ evolutionTree, evolutionPokemonData }: Evolutio
             <div className={styles.branch_evolucao}>
 
                 <Link
-                    href={`/pokemon/${pokemonData.name}`}
+                    href={`/pokemon/${node.name}`}
                     className={styles.link_evolucao}
                 >
                     <div className={styles.divisoria_evo}>

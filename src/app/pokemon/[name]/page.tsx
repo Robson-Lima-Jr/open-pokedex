@@ -16,6 +16,8 @@ import { formatFullPokemonName, keepName, paradoxList } from "@/app/utils/format
 import { IconeSeta, IconeLink } from "../../components/icons/Icons";
 import { ArvoreEvolucao } from "@/app/components/ArvoreEvolucao";
 import { PokemonVisualizacao } from "@/app/components/PokemonVisualizacao";
+import { log } from "console";
+import { normalize } from "path";
 
 export default async function PokemonPage({
     params,
@@ -353,10 +355,20 @@ export default async function PokemonPage({
     const evolutionData: EvolutionChain = await evolutionResponse.json();
 
     // funçao evolução
-    const evolutionNames: string[] = [];
+    const evolutionNames = new Set<string>();
 
     const getEvolutionChain = (chain: EvolutionLink) => {
-        evolutionNames.push(chain.species.name);
+        evolutionNames.add(chain.species.name);
+
+        chain.evolution_details.forEach((detail) => {
+            if (detail.required_pokemon_form) {
+                evolutionNames.add(detail.required_pokemon_form.name);
+            }
+
+            if (detail.evolved_pokemon_form) {
+                evolutionNames.add(detail.evolved_pokemon_form.name);
+            }
+        });
 
         chain.evolves_to.forEach((evolution) => {
             getEvolutionChain(evolution);
@@ -365,19 +377,103 @@ export default async function PokemonPage({
 
     getEvolutionChain(evolutionData.chain);
 
+
     // arvore de evolução pra pokemons como eevee ou slowpoke que tem mais de 1 evo
-    function buildEvolutionTree(chain: any): EvolutionNode {
-        return {
-            name: chain.species.name,
-            children: chain.evolves_to.map(buildEvolutionTree)
-        };
-    };
+
+    function buildEvolutionTree(chain: EvolutionLink): EvolutionNode {
+        function buildNode(
+            current: EvolutionLink,
+            pokemonName?: string,
+            region?: string
+        ): EvolutionNode {
+            return {
+                name: current.species.name,
+                pokemonName:
+                    pokemonName ??
+                    normalizeEvolutionPokemonName(current.species.name),
+                region,
+                children: current.evolves_to.flatMap((child) => {
+                    const details = child.evolution_details;
+
+                    const sourceFormDetails = details.filter(
+                        (detail) => detail.required_pokemon_form
+                    );
+
+                    const targetFormDetails = details.filter(
+                        (detail) => detail.evolved_pokemon_form
+                    );
+
+                    // Evolução que exige uma forma específica como origem.
+                    if (sourceFormDetails.length > 0) {
+                        return sourceFormDetails.map((detail) => {
+                            const sourceFormName =
+                                detail.required_pokemon_form!.name;
+
+                            const sourceRegion =
+                                detail.region?.name ??
+                                sourceFormName.split("-").at(-1);
+
+                            const targetFormName =
+                                detail.evolved_pokemon_form?.name ??
+                                normalizeEvolutionPokemonName(
+                                    child.species.name
+                                );
+
+                            const targetRegion =
+                                detail.region?.name ??
+                                detail.evolved_pokemon_form?.name
+                                    .split("-")
+                                    .at(-1);
+
+                            return {
+                                name: current.species.name,
+                                pokemonName: sourceFormName,
+                                region: sourceRegion,
+                                children: [
+                                    buildNode(
+                                        child,
+                                        targetFormName,
+                                        targetRegion
+                                    )
+                                ]
+                            };
+                        });
+                    }
+
+                    // Evolução padrão.
+                    const defaultNode = buildNode(child);
+
+                    // Formas específicas de destino, como Typhlosion-Hisui.
+                    const regionalNodes = targetFormDetails.map((detail) => {
+                        const formName =
+                            detail.evolved_pokemon_form!.name;
+
+                        return buildNode(
+                            child,
+                            formName,
+                            detail.region?.name ?? formName.split("-").at(-1)
+                        );
+                    });
+
+                    return [
+                        defaultNode,
+                        ...regionalNodes.filter(
+                            (node) =>
+                                node.pokemonName !== defaultNode.pokemonName
+                        )
+                    ];
+                })
+            };
+        }
+
+        return buildNode(chain);
+    }
 
     const evolutionTree = buildEvolutionTree(evolutionData.chain);
 
     const evolutionPokemonData: EvolutionPokemon[] = (
         await Promise.all(
-            evolutionNames.map(async (pokemonName) => {
+            Array.from(evolutionNames).map(async (pokemonName) => {
                 const apiName = normalizeEvolutionPokemonName(pokemonName);
 
                 const response = await fetch(
@@ -385,8 +481,8 @@ export default async function PokemonPage({
                 );
 
                 if (!response.ok) {
-                    console.log(
-                        `Erro ao buscar evolução: ${pokemonName}`
+                    console.warn(
+                        `Não foi possível buscar os dados da evolução: ${apiName}`
                     );
 
                     return null;
@@ -396,6 +492,7 @@ export default async function PokemonPage({
             })
         )
     ).filter(Boolean) as EvolutionPokemon[];
+
 
     // conversao para portugues, mas não funciona entao ficou em ingles mesmo
     const flavorText =
