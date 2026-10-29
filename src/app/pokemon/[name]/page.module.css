@@ -356,7 +356,7 @@
 }
 
 .botao_habilidade:focus .habilidade_nome {
-   color: var(--accent-text);
+    color: var(--accent-text);
 }
 
 .icone_habilidade {
@@ -366,7 +366,7 @@
 }
 
 .botao_habilidade:focus .icone_habilidade {
-   color: var(--accent-text);
+    color: var(--accent-text);
 }
 
 .descricao_habilidade {
@@ -607,12 +607,19 @@
     .children_list {
         display: flex;
         flex-direction: column;
+        align-items: flex-start;
         justify-content: center;
         gap: var(--gap-grande);
+        width: 100%;
+        min-width: 0;
     }
 
     .children_list>.branch_evolucao:first-child {
         margin-bottom: 0;
+    }
+
+    .children_list>.branch_evolucao {
+        flex-shrink: 0;
     }
 
     .icone_evo {

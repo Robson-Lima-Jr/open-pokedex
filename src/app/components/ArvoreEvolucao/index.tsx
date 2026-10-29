@@ -61,7 +61,7 @@ export function ArvoreEvolucao({ evolutionTree, evolutionPokemonData }: Evolutio
                             </p>
 
                             <p className={styles.poke_num}>
-                                #0{pokemonData.id}
+                                #{String(pokemonData.nationalDexNumber).padStart(4, "0")}
                             </p>
                         </div>
 
@@ -88,8 +88,10 @@ export function ArvoreEvolucao({ evolutionTree, evolutionPokemonData }: Evolutio
                         />
 
                         <div className={styles.children_list}>
-                            {node.children.map((child) => (
-                                <React.Fragment key={child.name}>
+                            {node.children.map((child, index) => (
+                                <React.Fragment
+                                    key={child.id ?? `${child.name}-${child.pokemonName ?? "base"}-${index}`}
+                                >
                                     {renderNode(child)}
                                 </React.Fragment>
                             ))}

@@ -16,8 +16,6 @@ import { formatFullPokemonName, keepName, paradoxList } from "@/app/utils/format
 import { IconeSeta, IconeLink } from "../../components/icons/Icons";
 import { ArvoreEvolucao } from "@/app/components/ArvoreEvolucao";
 import { PokemonVisualizacao } from "@/app/components/PokemonVisualizacao";
-import { log } from "console";
-import { normalize } from "path";
 
 export default async function PokemonPage({
     params,
@@ -379,94 +377,193 @@ export default async function PokemonPage({
 
 
     // arvore de evolução pra pokemons como eevee ou slowpoke que tem mais de 1 evo
-
     function buildEvolutionTree(chain: EvolutionLink): EvolutionNode {
         function buildNode(
             current: EvolutionLink,
             pokemonName?: string,
-            region?: string
+            region?: string,
+            id?: string,
+            isRoot = false
         ): EvolutionNode {
-            return {
+            const currentForm =
+                pokemonName ??
+                normalizeEvolutionPokemonName(current.species.name);
+
+            const node: EvolutionNode = {
+                id: id ?? current.species.name,
                 name: current.species.name,
-                pokemonName:
-                    pokemonName ??
-                    normalizeEvolutionPokemonName(current.species.name),
+                pokemonName: currentForm,
                 region,
-                children: current.evolves_to.flatMap((child) => {
-                    const details = child.evolution_details;
+                children: []
+            };
 
-                    const sourceFormDetails = details.filter(
-                        (detail) => detail.required_pokemon_form
+            for (const child of current.evolves_to) {
+                const details = child.evolution_details;
+
+                const hasBasePath = details.some((detail) => {
+                    const sourceForm = detail.required_pokemon_form?.name;
+                    const targetForm = detail.evolved_pokemon_form?.name;
+
+                    return (
+                        (!sourceForm && !targetForm) ||
+                        (sourceForm === currentForm && !targetForm)
                     );
+                });
 
-                    const targetFormDetails = details.filter(
-                        (detail) => detail.evolved_pokemon_form
-                    );
+                const hasFormDetails = details.some(
+                    (detail) =>
+                        detail.required_pokemon_form ||
+                        detail.evolved_pokemon_form
+                );
 
-                    // Evolução que exige uma forma específica como origem.
-                    if (sourceFormDetails.length > 0) {
-                        return sourceFormDetails.map((detail) => {
-                            const sourceFormName =
-                                detail.required_pokemon_form!.name;
+                // Evolução tradicional: adicionada uma única vez.
+                const isRegionalBranch =
+                    currentForm !== current.species.name;
 
-                            const sourceRegion =
-                                detail.region?.name ??
-                                sourceFormName.split("-").at(-1);
+                if (
+                    (hasBasePath || !hasFormDetails) &&
+                    !isRegionalBranch
+                ) {
+                    node.children.push(buildNode(child));
+                }
 
-                            const targetFormName =
-                                detail.evolved_pokemon_form?.name ??
-                                normalizeEvolutionPokemonName(
-                                    child.species.name
-                                );
+                // Agrupa os destinos por forma de origem.
+                const sourceGroups = new Map<
+                    string,
+                    typeof details
+                >();
+
+                for (const detail of details) {
+                    const sourceForm = detail.required_pokemon_form?.name;
+
+                    if (!sourceForm) continue;
+
+                    const group = sourceGroups.get(sourceForm) ?? [];
+                    group.push(detail);
+                    sourceGroups.set(sourceForm, group);
+                }
+
+                for (const [sourceForm, group] of sourceGroups) {
+                    const sourceMatchesCurrent = sourceForm === currentForm;
+
+                    if (sourceMatchesCurrent) {
+                        // A origem já é o Pokémon exibido.
+                        // Só precisamos acrescentar destinos alternativos.
+                        for (const detail of group) {
+                            const targetForm =
+                                detail.evolved_pokemon_form?.name;
+
+                            if (!targetForm) continue;
+
+                            const alreadyExists = node.children.some(
+                                (existing) =>
+                                    existing.pokemonName === targetForm
+                            );
+
+                            if (alreadyExists) continue;
 
                             const targetRegion =
                                 detail.region?.name ??
-                                detail.evolved_pokemon_form?.name
-                                    .split("-")
-                                    .at(-1);
+                                targetForm.split("-").at(-1);
 
-                            return {
-                                name: current.species.name,
-                                pokemonName: sourceFormName,
-                                region: sourceRegion,
-                                children: [
-                                    buildNode(
-                                        child,
-                                        targetFormName,
-                                        targetRegion
-                                    )
-                                ]
-                            };
-                        });
+                            node.children.push(
+                                buildNode(
+                                    child,
+                                    targetForm,
+                                    targetRegion,
+                                    `${sourceForm}-${targetForm}`
+                                )
+                            );
+                        }
+
+                        continue;
                     }
 
-                    // Evolução padrão.
-                    const defaultNode = buildNode(child);
+                    // Uma forma de origem diferente só abre um novo ramo
+                    // na raiz. Nos demais níveis, o ramo regional já deve
+                    // ter sido criado pela forma de destino do nível anterior.
+                    if (!isRoot) continue;
 
-                    // Formas específicas de destino, como Typhlosion-Hisui.
-                    const regionalNodes = targetFormDetails.map((detail) => {
-                        const formName =
-                            detail.evolved_pokemon_form!.name;
+                    const sourceRegion =
+                        group.find((detail) => detail.region)?.region?.name ??
+                        sourceForm.split("-").at(-1);
 
-                        return buildNode(
-                            child,
-                            formName,
-                            detail.region?.name ?? formName.split("-").at(-1)
+                    const sourceNode: EvolutionNode = {
+                        id: sourceForm,
+                        name: sourceForm,
+                        pokemonName: sourceForm,
+                        region: sourceRegion,
+                        children: []
+                    };
+
+                    for (const detail of group) {
+                        const targetForm =
+                            detail.evolved_pokemon_form?.name;
+
+                        const targetName =
+                            targetForm ??
+                            normalizeEvolutionPokemonName(child.species.name);
+
+                        const alreadyExists = sourceNode.children.some(
+                            (existing) => existing.pokemonName === targetName
                         );
-                    });
 
-                    return [
-                        defaultNode,
-                        ...regionalNodes.filter(
-                            (node) =>
-                                node.pokemonName !== defaultNode.pokemonName
+                        if (alreadyExists) continue;
+
+                        const targetRegion =
+                            detail.region?.name ??
+                            (targetForm
+                                ? targetForm.split("-").at(-1)
+                                : undefined);
+
+                        sourceNode.children.push(
+                            buildNode(
+                                child,
+                                targetName,
+                                targetRegion,
+                                `${sourceForm}-${targetName}-target`
+                            )
+                        );
+                    }
+
+                    if (sourceNode.children.length > 0) {
+                        node.children.push(sourceNode);
+                    }
+                }
+
+                // Destinos alternativos sem forma de origem especificada.
+                for (const detail of details) {
+                    if (detail.required_pokemon_form) continue;
+
+                    const targetForm =
+                        detail.evolved_pokemon_form?.name;
+
+                    if (!targetForm) continue;
+
+                    const alreadyExists = node.children.some(
+                        (existing) => existing.pokemonName === targetForm
+                    );
+
+                    if (alreadyExists) continue;
+
+                    const targetRegion =
+                        detail.region?.name ?? targetForm.split("-").at(-1);
+
+                    node.children.push(
+                        buildNode(
+                            child,
+                            targetForm,
+                            targetRegion,
+                            `${child.species.name}-${targetForm}`
                         )
-                    ];
-                })
-            };
+                    );
+                }
+            }
+
+            return node;
         }
 
-        return buildNode(chain);
+        return buildNode(chain, undefined, undefined, undefined, true);
     }
 
     const evolutionTree = buildEvolutionTree(evolutionData.chain);
@@ -488,11 +585,33 @@ export default async function PokemonPage({
                     return null;
                 }
 
-                return response.json();
+                const pokemonData = await response.json();
+
+                // Busca a espécie para obter o número nacional da Pokédex.
+                const speciesResponse = await fetch(pokemonData.species.url);
+
+                if (!speciesResponse.ok) {
+                    console.warn(
+                        `Não foi possível buscar a espécie: ${apiName}`
+                    );
+
+                    return null;
+                }
+
+                const speciesData = await speciesResponse.json();
+
+                return {
+                    ...pokemonData,
+                    nationalDexNumber: speciesData.id,
+                };
             })
         )
     ).filter(Boolean) as EvolutionPokemon[];
 
+    // console.log(
+    //     "Dados da cadeia evolutiva:",
+    //     JSON.stringify(evolutionData.chain, null, 2)
+    // );
 
     // conversao para portugues, mas não funciona entao ficou em ingles mesmo
     const flavorText =

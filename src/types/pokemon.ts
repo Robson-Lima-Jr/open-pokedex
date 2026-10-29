@@ -91,7 +91,7 @@ export interface TypeData {
 // interfaces de linha evolutiva
 export interface EvolutionPokemon {
     id: number;
-
+    nationalDexNumber: number;
     name: string;
 
     sprites: {
@@ -188,11 +188,12 @@ export interface EvolutionLink {
             name: string;
             url: string;
         } | null;
-    } [];
+    }[];
 }
 
 // export interface pra pokemons com multiplas evoluçoes (arrumar o css pra ficar melhor)
 export interface EvolutionNode {
+    id?: string;
     name: string;
     pokemonName?: string;
     region?: string;
