@@ -11,81 +11,86 @@ import { normalizeEvolutionPokemonName } from "@/app/utils/normalizeEvolutionPok
 
 interface EvolutionTreeProps {
     evolutionTree: EvolutionNode;
-
     evolutionPokemonData: EvolutionPokemon[];
 };
 
-export function ArvoreEvolucao({ evolutionTree, evolutionPokemonData }: EvolutionTreeProps) {
+export function ArvoreEvolucao({
+    evolutionTree,
+    evolutionPokemonData
+}: EvolutionTreeProps) {
 
-    // função pra separar pokemons com mais de 1 evolução como slowpoke ou eevee e configurar visualmente melhor
-    function renderNode(
-        node: EvolutionNode
-    ): React.ReactNode {
-
-        const pokemonData = evolutionPokemonData.find(
+    // Localiza os dados do Pokémon correspondente ao nó.
+    function getPokemonData(node: EvolutionNode) {
+        return evolutionPokemonData.find(
             (pokemon) =>
                 (node.pokemonName ??
                     normalizeEvolutionPokemonName(node.name)) === pokemon.name
         );
+    }
+
+    // Renderiza o cartão individual de cada Pokémon.
+    function renderPokemon(node: EvolutionNode): React.ReactNode {
+        const pokemonData = getPokemonData(node);
 
         if (!pokemonData) return null;
 
         return (
-            <div className={styles.branch_evolucao}>
-
-                <Link
-                    href={`/pokemon/${node.name}`}
-                    className={styles.link_evolucao}
-                >
-                    <div className={styles.divisoria_evo}>
-
-                        <div className={styles.borda_evo}>
-                            <Image
-                                src={
-                                    pokemonData.sprites.other[
-                                        "official-artwork"
-                                    ].front_default
-                                }
-                                width={200}
-                                height={200}
-                                alt={pokemonData.name}
-                                className={styles.evo_pokemon}
-                            />
-                        </div>
-
-                        <div>
-                            <p className={styles.poke_nome}>
-                                {formatFullPokemonName(
-                                    pokemonData.name
-                                )}
-                            </p>
-
-                            <p className={styles.poke_num}>
-                                #{String(pokemonData.nationalDexNumber).padStart(4, "0")}
-                            </p>
-                        </div>
-
-                        <div className={styles.tipo_evo}>
-                            {pokemonData.types.map((type) => (
-                                <span
-                                    key={type.type.name}
-                                    className={styles.tipo_pokemon}
-                                    data-type={type.type.name}
-                                >
-                                    {type.type.name}
-                                </span>
-                            ))}
-                        </div>
-
+            <Link
+                href={`/pokemon/${node.name}`}
+                className={styles.link_evolucao}
+            >
+                <div className={styles.divisoria_evo}>
+                    <div className={styles.borda_evo}>
+                        <Image
+                            src={
+                                pokemonData.sprites.other[
+                                    "official-artwork"
+                                ].front_default
+                            }
+                            width={200}
+                            height={200}
+                            alt={pokemonData.name}
+                            className={styles.evo_pokemon}
+                        />
                     </div>
-                </Link>
+
+                    <div>
+                        <p className={styles.poke_nome}>
+                            {formatFullPokemonName(pokemonData.name)}
+                        </p>
+
+                        <p className={styles.poke_num}>
+                            #{String(pokemonData.nationalDexNumber).padStart(4, "0")}
+                        </p>
+                    </div>
+
+                    <div className={styles.tipo_evo}>
+                        {pokemonData.types.map((type) => (
+                            <span
+                                key={type.type.name}
+                                className={styles.tipo_pokemon}
+                                data-type={type.type.name}
+                            >
+                                {type.type.name}
+                            </span>
+                        ))}
+                    </div>
+                </div>
+            </Link>
+        );
+    }
+
+    // Apresentação mobile: mantém a estrutura recursiva original.
+    function renderNode(node: EvolutionNode): React.ReactNode {
+        if (!getPokemonData(node)) return null;
+
+        return (
+            <div className={styles.branch_evolucao} key={node.id ?? node.name}>
+                {renderPokemon(node)}
 
                 {node.children.length > 0 && (
                     <div className={styles.children_container}>
-
-                        <IconeBaixo
-                            className={styles.icone_evo}
-                        />
+                        <IconeBaixo className={styles.icone_evo} />
 
                         <div className={styles.children_list}>
                             {node.children.map((child, index) => (
@@ -96,13 +101,77 @@ export function ArvoreEvolucao({ evolutionTree, evolutionPokemonData }: Evolutio
                                 </React.Fragment>
                             ))}
                         </div>
-
                     </div>
                 )}
-
             </div>
         );
     }
 
-    return renderNode(evolutionTree);
-};
+    // Percorre a árvore e gera um caminho completo para cada folha.
+    function getEvolutionPaths(
+        node: EvolutionNode,
+        currentPath: EvolutionNode[] = []
+    ): EvolutionNode[][] {
+        const rootNode = currentPath[0];
+
+        const isRegionalBase =
+            node.region !== undefined &&
+            rootNode !== undefined &&
+            normalizeEvolutionPokemonName(node.pokemonName ?? node.name)
+                .replace(/-(alola|galar|hisui|paldea)$/, "") ===
+            normalizeEvolutionPokemonName(rootNode.pokemonName ?? rootNode.name);
+
+        const path = isRegionalBase
+            ? [node]
+            : [...currentPath, node];
+
+        if (node.children.length === 0) {
+            return [path];
+        }
+
+        return node.children.flatMap((child) =>
+            getEvolutionPaths(child, path)
+        );
+    }
+
+    const evolutionPaths = getEvolutionPaths(evolutionTree);
+
+    return (
+        <>
+            {/* Apresentação mobile */}
+            <div className={styles.evolucao_mobile}>
+                {renderNode(evolutionTree)}
+            </div>
+
+            {/* Apresentação desktop: um caminho completo por linha */}
+            <div className={styles.evolucao_desktop}>
+                {evolutionPaths.map((path, pathIndex) => (
+                    <div
+                        className={styles.linha_evolucao}
+                        key={`path-${pathIndex}`}
+                    >
+                        {path.map((node, index) => {
+                            const pokemonData = getPokemonData(node);
+
+                            if (!pokemonData) return null;
+
+                            return (
+                                <React.Fragment
+                                    key={node.id ?? `${node.name}-${index}`}
+                                >
+                                    {index > 0 && (
+                                        <IconeBaixo
+                                            className={styles.icone_evo}
+                                        />
+                                    )}
+
+                                    {renderPokemon(node)}
+                                </React.Fragment>
+                            );
+                        })}
+                    </div>
+                ))}
+            </div>
+        </>
+    );
+}

@@ -446,32 +446,31 @@ export default async function PokemonPage({
                 for (const [sourceForm, group] of sourceGroups) {
                     const sourceMatchesCurrent = sourceForm === currentForm;
 
+                    // A forma de origem já é o Pokémon exibido.
                     if (sourceMatchesCurrent) {
-                        // A origem já é o Pokémon exibido.
-                        // Só precisamos acrescentar destinos alternativos.
                         for (const detail of group) {
                             const targetForm =
-                                detail.evolved_pokemon_form?.name;
-
-                            if (!targetForm) continue;
+                                detail.evolved_pokemon_form?.name ??
+                                normalizeEvolutionPokemonName(child.species.name);
 
                             const alreadyExists = node.children.some(
-                                (existing) =>
-                                    existing.pokemonName === targetForm
+                                (existing) => existing.pokemonName === targetForm
                             );
 
                             if (alreadyExists) continue;
 
                             const targetRegion =
                                 detail.region?.name ??
-                                targetForm.split("-").at(-1);
+                                (targetForm.includes("-")
+                                    ? targetForm.split("-").at(-1)
+                                    : undefined);
 
                             node.children.push(
                                 buildNode(
                                     child,
                                     targetForm,
                                     targetRegion,
-                                    `${sourceForm}-${targetForm}`
+                                    `${sourceForm}-${targetForm}-target`
                                 )
                             );
                         }
@@ -479,55 +478,56 @@ export default async function PokemonPage({
                         continue;
                     }
 
-                    // Uma forma de origem diferente só abre um novo ramo
-                    // na raiz. Nos demais níveis, o ramo regional já deve
-                    // ter sido criado pela forma de destino do nível anterior.
+                    // Uma forma de origem diferente só abre um ramo na raiz.
                     if (!isRoot) continue;
 
                     const sourceRegion =
                         group.find((detail) => detail.region)?.region?.name ??
                         sourceForm.split("-").at(-1);
 
-                    const sourceNode: EvolutionNode = {
-                        id: sourceForm,
-                        name: sourceForm,
-                        pokemonName: sourceForm,
-                        region: sourceRegion,
-                        children: []
-                    };
+                    let sourceNode = node.children.find(
+                        (existing) =>
+                            existing.pokemonName === sourceForm &&
+                            existing.name === sourceForm
+                    );
+
+                    if (!sourceNode) {
+                        sourceNode = {
+                            id: sourceForm,
+                            name: sourceForm,
+                            pokemonName: sourceForm,
+                            region: sourceRegion,
+                            children: []
+                        };
+
+                        node.children.push(sourceNode);
+                    }
 
                     for (const detail of group) {
                         const targetForm =
-                            detail.evolved_pokemon_form?.name;
-
-                        const targetName =
-                            targetForm ??
+                            detail.evolved_pokemon_form?.name ??
                             normalizeEvolutionPokemonName(child.species.name);
 
                         const alreadyExists = sourceNode.children.some(
-                            (existing) => existing.pokemonName === targetName
+                            (existing) => existing.pokemonName === targetForm
                         );
 
                         if (alreadyExists) continue;
 
                         const targetRegion =
                             detail.region?.name ??
-                            (targetForm
+                            (targetForm.includes("-")
                                 ? targetForm.split("-").at(-1)
                                 : undefined);
 
                         sourceNode.children.push(
                             buildNode(
                                 child,
-                                targetName,
+                                targetForm,
                                 targetRegion,
-                                `${sourceForm}-${targetName}-target`
+                                `${sourceForm}-${targetForm}-target`
                             )
                         );
-                    }
-
-                    if (sourceNode.children.length > 0) {
-                        node.children.push(sourceNode);
                     }
                 }
 
@@ -567,6 +567,11 @@ export default async function PokemonPage({
     }
 
     const evolutionTree = buildEvolutionTree(evolutionData.chain);
+
+    console.log(
+        "Árvore de evolução:",
+        JSON.stringify(evolutionTree, null, 2)
+    );
 
     const evolutionPokemonData: EvolutionPokemon[] = (
         await Promise.all(
