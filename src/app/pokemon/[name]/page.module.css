@@ -356,7 +356,7 @@
 }
 
 .botao_habilidade:focus .habilidade_nome {
-   color: var(--accent-text);
+    color: var(--accent-text);
 }
 
 .icone_habilidade {
@@ -366,7 +366,7 @@
 }
 
 .botao_habilidade:focus .icone_habilidade {
-   color: var(--accent-text);
+    color: var(--accent-text);
 }
 
 .descricao_habilidade {
@@ -503,6 +503,25 @@
     color: var(--accent);
 }
 
+.evolucao_mobile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.evolucao_desktop {
+    display: none;
+}
+
+.poke_sem_evo {
+    font-family: var(--font-pokemon);
+    font-size: var(--fs-mini);
+    color:var(--text);
+    text-align: center;
+}
+
+
 .obs {
     padding-top: var(--esp-pequeno);
 
@@ -590,34 +609,78 @@
         align-items: center;
     }
 
-    .branch_evolucao {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        gap: var(--gap);
-    }
-
-    .children_container {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        gap: var(--gap);
-    }
-
-    .children_list {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
+    /* Evolução desktop */
+    .evolucao_mobile {
+        display: none;
         gap: var(--gap-grande);
     }
 
-    .children_list>.branch_evolucao:first-child {
-        margin-bottom: 0;
+    .evolucao_desktop {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: var(--gap-grande);
     }
 
-    .icone_evo {
+    /* Cada Pokémon fica ao lado de suas evoluções */
+    .evolucao_desktop .branch_evolucao {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: var(--gap);
+        flex: 0 0 auto;
+    }
+
+    /* Seta e lista de ramificações */
+    .evolucao_desktop .children_container {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: var(--gap);
+    }
+
+    /* Cada ramificação ocupa sua própria linha */
+    .evolucao_desktop .children_list {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        gap: var(--gap-grande);
+        width: max-content;
+    }
+
+    /* Setas apontam para a direita */
+    .evolucao_desktop .icone_evo {
         transform: rotate(-90deg);
-        margin: 0;
+        flex-shrink: 0;
+    }
+
+    .linha_evolucao {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: var(--gap);
+    }
+
+    .linha_evolucao .branch_evolucao {
+        flex: 0 0 auto;
+    }
+
+    .linha_evolucao .icone_evo {
+        transform: rotate(-90deg);
+        flex-shrink: 0;
+    }
+
+    .evolucao_desktop {
+        align-items: center;
+    }
+
+    .evolucao_desktop>.branch_evolucao {
+        align-self: center;
+        width: max-content;
     }
 }
 

@@ -100,10 +100,10 @@
 }
 
 .input_busca {
-    padding: var(--esp-medio) var(--esp-pequeno);
+    padding: var(--esp-pequeno);
 
     font-family: var(--font-pokemon);
-    font-size: 10px;
+    font-size: var(--fs-card-nome);
     text-transform: uppercase;
     border-radius: var(--radius-p);
     background-color: var(--bg);

@@ -2,7 +2,7 @@
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
-    gap: 5px;
+    gap: 0.7rem;
 }
 
 .botao_ativo,
@@ -23,12 +23,13 @@
 
     border-bottom: 7px solid transparent;
     border-top: 7px solid transparent;
+    border-radius: var(--radius-p);
 }
 
 .botao_ativo {
-    background-color: var(--accent-overlay);
-    color: var(--text);
-    border-color: var(--accent);
+    background-color: var(--accent-hover);
+    color: var(--text-1-dark);
+    border-color: var(--text);
 }
 
 .botao_desativado {

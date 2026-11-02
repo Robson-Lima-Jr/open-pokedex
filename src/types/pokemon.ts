@@ -91,7 +91,7 @@ export interface TypeData {
 // interfaces de linha evolutiva
 export interface EvolutionPokemon {
     id: number;
-
+    nationalDexNumber: number;
     name: string;
 
     sprites: {
@@ -120,11 +120,83 @@ export interface EvolutionLink {
     };
 
     evolves_to: EvolutionLink[];
+
+    evolution_details: {
+        trigger: {
+            name: string;
+            url: string;
+        } | null;
+
+        item: {
+            name: string;
+            url: string;
+        } | null;
+
+        held_item: {
+            name: string;
+            url: string;
+        } | null;
+
+        known_moves: {
+            name: string;
+            url: string;
+        } | null;
+
+        min_level: number | null;
+
+        location: {
+            name: string;
+            url: string;
+        } | null;
+
+        party_species: {
+            name: string;
+            url: string;
+        } | null;
+
+        trade_species: {
+            name: string;
+            url: string;
+        } | null;
+
+        gender: number | null;
+
+        turn_upside_down: boolean;
+
+        needs_overworld_rain: boolean;
+
+        // idententificar formas evolução
+        // PokeApi pode fornecer esses campos
+        required_pokemon_form: {
+            name: string;
+            url: string;
+        } | null;
+
+        evolved_pokemon_form: {
+            name: string
+            url: string;
+        } | null;
+
+        is_default: boolean;
+
+        version_group: {
+            name: string;
+            url: string;
+        } | null;
+
+        region: {
+            name: string;
+            url: string;
+        } | null;
+    }[];
 }
 
 // export interface pra pokemons com multiplas evoluçoes (arrumar o css pra ficar melhor)
 export interface EvolutionNode {
+    id?: string;
     name: string;
+    pokemonName?: string;
+    region?: string;
     children: EvolutionNode[];
 };
 
