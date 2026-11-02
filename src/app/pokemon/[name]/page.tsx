@@ -568,11 +568,6 @@ export default async function PokemonPage({
 
     const evolutionTree = buildEvolutionTree(evolutionData.chain);
 
-    console.log(
-        "Árvore de evolução:",
-        JSON.stringify(evolutionTree, null, 2)
-    );
-
     const evolutionPokemonData: EvolutionPokemon[] = (
         await Promise.all(
             Array.from(evolutionNames).map(async (pokemonName) => {
@@ -612,11 +607,6 @@ export default async function PokemonPage({
             })
         )
     ).filter(Boolean) as EvolutionPokemon[];
-
-    // console.log(
-    //     "Dados da cadeia evolutiva:",
-    //     JSON.stringify(evolutionData.chain, null, 2)
-    // );
 
     // conversao para portugues, mas não funciona entao ficou em ingles mesmo
     const flavorText =

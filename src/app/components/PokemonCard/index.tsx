@@ -1,5 +1,6 @@
 import styles from "./PokemonCard.module.css";
 import { formatPokemonName } from "@/app/utils/formatPokemonName";
+import Link from "next/link";
 
 interface PokemonCardProps {
     pokemon: {
@@ -33,7 +34,7 @@ const formatarNome = (name: string) => {
 
 export default function PokemonCard({ pokemon }: PokemonCardProps) {
     return (
-        <article className={styles.card_container}>
+        <Link href={`/pokemon/${pokemon.name}`} className={styles.card_container} aria-label={`Ver detalhes de ${formatPokemonName(pokemon.name)}`}>
             <div className={styles.card_cima}>
                 {/* imagem e nº */}
                 <div className={styles.sprite_area}>
@@ -74,6 +75,6 @@ export default function PokemonCard({ pokemon }: PokemonCardProps) {
                     ))}
                 </ul>
             </div>
-        </article>
+        </Link>
     )
 }

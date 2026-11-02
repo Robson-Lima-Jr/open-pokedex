@@ -107,71 +107,65 @@ export function ArvoreEvolucao({
         );
     }
 
-    // Percorre a árvore e gera um caminho completo para cada folha.
-    function getEvolutionPaths(
+
+    // Identifica formas regionais que correspondem à própria espécie inicial.
+    function isRegionalVariantOfRoot(
         node: EvolutionNode,
-        currentPath: EvolutionNode[] = []
-    ): EvolutionNode[][] {
-        const rootNode = currentPath[0];
+        root: EvolutionNode
+    ): boolean {
+        if (!node.region) return false;
 
-        const isRegionalBase =
-            node.region !== undefined &&
-            rootNode !== undefined &&
-            normalizeEvolutionPokemonName(node.pokemonName ?? node.name)
-                .replace(/-(alola|galar|hisui|paldea)$/, "") ===
-            normalizeEvolutionPokemonName(rootNode.pokemonName ?? rootNode.name);
-
-        const path = isRegionalBase
-            ? [node]
-            : [...currentPath, node];
-
-        if (node.children.length === 0) {
-            return [path];
-        }
-
-        return node.children.flatMap((child) =>
-            getEvolutionPaths(child, path)
+        const rootName = normalizeEvolutionPokemonName(
+            root.pokemonName ?? root.name
         );
+
+        const regionalName = normalizeEvolutionPokemonName(
+            node.pokemonName ?? node.name
+        ).replace(/-(alola|galar|hisui|paldea)$/, "");
+
+        return regionalName === rootName;
     }
 
-    const evolutionPaths = getEvolutionPaths(evolutionTree);
+    // Prepara as linhas independentes para a apresentação desktop.
+    const regionalRoots = evolutionTree.children.filter((child) =>
+        isRegionalVariantOfRoot(child, evolutionTree)
+    );
+
+    const desktopEvolutionRoots = [
+        {
+            ...evolutionTree,
+            children: evolutionTree.children.filter(
+                (child) => !regionalRoots.includes(child)
+            ),
+        },
+        ...regionalRoots,
+    ];
 
     return (
         <>
-            {/* Apresentação mobile */}
-            <div className={styles.evolucao_mobile}>
-                {renderNode(evolutionTree)}
-            </div>
-
-            {/* Apresentação desktop: um caminho completo por linha */}
-            <div className={styles.evolucao_desktop}>
-                {evolutionPaths.map((path, pathIndex) => (
-                    <div
-                        className={styles.linha_evolucao}
-                        key={`path-${pathIndex}`}
-                    >
-                        {path.map((node, index) => {
-                            const pokemonData = getPokemonData(node);
-
-                            if (!pokemonData) return null;
-
-                            return (
-                                <React.Fragment
-                                    key={node.id ?? `${node.name}-${index}`}
-                                >
-                                    {index > 0 && (
-                                        <IconeBaixo
-                                            className={styles.icone_evo}
-                                        />
-                                    )}
-
-                                    {renderPokemon(node)}
-                                </React.Fragment>
-                            );
-                        })}
+            {evolutionTree.children.length === 0 ? (
+                <div className={styles.poke_sem_evo}>
+                    Pokémon sem Evoluções ou Pré-evoluções.
+                </div>
+            ) : (
+                <>
+                    {/* Apresentação mobile */}
+                    <div className={styles.evolucao_mobile}>
+                        {renderNode(evolutionTree)}
                     </div>
-                ))}
-            </div>
+
+                    {/* Apresentação desktop */}
+                    <div className={styles.evolucao_desktop}>
+                        {desktopEvolutionRoots.map((root, index) => (
+                            <React.Fragment
+                                key={root.id ?? `${root.name}-${index}`}
+                            >
+                                {renderNode(root)}
+                            </React.Fragment>
+                        ))}
+                    </div>
+                </>
+            )}
         </>
     );
 }

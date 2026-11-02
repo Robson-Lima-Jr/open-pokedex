@@ -1,6 +1,7 @@
 import { IconePokeball } from "../icons/Icons";
 import styles from "./PokemonLista.module.css";
 import { formatPokemonName } from "@/app/utils/formatPokemonName";
+import Link from "next/link";
 
 interface PokemonCardProps {
     pokemon: {
@@ -20,14 +21,14 @@ interface PokemonCardProps {
 
 export default function PokemonLista({ pokemon }: PokemonCardProps) {
     return (
-        <article className={styles.lista_container}>
+        <Link href={`/pokemon/${pokemon.name}`} className={styles.lista_container} aria-label={`Ver detalhes de ${formatPokemonName(pokemon.name)}`}>
             <IconePokeball className={styles.icone_lista} />
 
             <div className={styles.area_info}>
                 <span className={styles.dex_num}>#{pokemon.id.toString().padStart(4, "0")}</span>
 
                 <div className={styles.sprite_area}>
-                    <img src={pokemon.sprites.front_default} width={96} height={96} alt={pokemon.name} className={styles.image} loading="lazy"/>
+                    <img src={pokemon.sprites.front_default} width={96} height={96} alt={pokemon.name} className={styles.image} loading="lazy" />
                 </div>
 
                 <p className={styles.lista_nome}>{formatPokemonName(pokemon.name)}</p>
@@ -40,6 +41,6 @@ export default function PokemonLista({ pokemon }: PokemonCardProps) {
                     ))}
                 </div>
             </div>
-        </article>
+        </Link>
     )
 }
