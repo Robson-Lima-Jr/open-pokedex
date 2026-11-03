@@ -100,7 +100,7 @@
 }
 
 .input_busca {
-    height: 4rem;
+    height: 5rem;
     padding: 0 var(--esp-pequeno);
 
     font-family: var(--font-pokemon);
