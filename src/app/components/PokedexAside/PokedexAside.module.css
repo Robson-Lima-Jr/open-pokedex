@@ -106,8 +106,7 @@
     box-sizing: border-box;
     padding: 0 var(--esp-pequeno);
 
-    font-family: var(--font-pokemon);
-    font-size: var(--fs-card-nome);
+    font-size: var(--fs-pequeno);
     text-transform: uppercase;
     border-radius: var(--radius-p);
     background-color: var(--bg);
