@@ -101,9 +101,9 @@
 
 .input_busca {
     width: 100%;
+    height: 4rem;
     min-width: 0;
     box-sizing: border-box;
-    height: 4rem;
     padding: 0 var(--esp-pequeno);
 
     font-family: var(--font-pokemon);
