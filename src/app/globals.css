@@ -185,7 +185,8 @@ body.dark_mode {
     --accent-soft: rgba(225, 29, 71, 0.35);
     --accent-text: var(--text-1-dark);
     --accent-list: #c71038a4;
-    --accent-pokemon: url(/public/img-page/charizard_600.webp);
+    --accent-pokemon: url(/img-page/charizard_600.webp);
+    --accent-footer: #841232;
 }
 
 /* tema pokémon blue */
@@ -196,7 +197,8 @@ body.dark_mode {
     --accent-soft: rgba(37, 99, 235, 0.35);
     --accent-text: var(--text-1-dark);
     --accent-list: #306ae8a4;
-    --accent-pokemon: url(/public/img-page/blastoise_600.webp);
+    --accent-pokemon: url(/img-page/blastoise_600.webp);
+    --accent-footer: #0f2c7d;
 }
 
 /* tema pokémon yellow */
@@ -207,7 +209,8 @@ body.dark_mode {
     --accent-soft: rgba(234, 179, 8, 0.35);
     --accent-text: var(--text-1);
     --accent-list: #eab308a4;
-    --accent-pokemon: url(/public/img-page/pikachu_600.webp);
+    --accent-pokemon: url(/img-page/pikachu_600.webp);
+    --accent-footer: #88610e;
 }
 
 /* tema pokémon green */
@@ -218,7 +221,8 @@ body.dark_mode {
     --accent-soft: rgba(26, 205, 112, 0.35);
     --accent-text: var(--text-1-dark);
     --accent-list: #1acd70a4;
-    --accent-pokemon: url(/public/img-page/venusaur_600.webp);
+    --accent-pokemon: url(/img-page/venusaur_600.webp);
+    --accent-footer: #116d3e;
 }
 
 /* ---------> configurações das paginas <--------- */
