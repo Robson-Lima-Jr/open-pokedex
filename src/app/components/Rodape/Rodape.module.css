@@ -1,0 +1,71 @@
+.rodape_fundo {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+
+    padding: var(--esp-padrao);
+    background-color: var(--text);
+}
+
+.rodape_fundo::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+
+    top: 50%;
+    right: 2rem;
+    transform: translateY(-50%);
+
+    width: 300px;
+    height: 300px;
+
+    background-image: var(--accent-pokemon);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+
+    opacity: 0.3;
+}
+
+.container_rodape {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: var(--gap);
+    font-size: var(--fs-normal);
+    text-align: center;
+}
+
+.container_rodape h2 {
+    font-size: var(--fs-h2);
+    color: var(--accent);
+}
+
+.container_rodape p { 
+    color: var(--bg);
+}
+
+.container_rodape a {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+@media screen and (max-width: 400px) {
+    .rodape_fundo::before {
+        width: 120px;
+        height: 120px;
+        right: 0.5rem;
+        opacity: 0.25;
+    }
+}
+
+@media screen and (min-width: 401px) and (max-width: 768px) {
+    .rodape_fundo::before {
+        width: 200px;
+        height: 200px;
+        right: 0.5rem;
+        opacity: 0.25;
+    }
+}

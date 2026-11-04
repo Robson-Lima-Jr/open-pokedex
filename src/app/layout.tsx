@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Topo from "./components/Topo";
+import Rodape from "./components/Rodape";
 import { ThemeProvider } from "./context/ThemeContext";
 import { PalleteProvider } from "./context/PalleteContext";
 import { MenuProvider } from "./context/MenuContext";
@@ -28,6 +29,7 @@ export default function RootLayout({
                 <main className="layout_main">
                   {children}
                 </main>
+                <Rodape />
               </div>
             </MenuProvider>
           </PalleteProvider>
