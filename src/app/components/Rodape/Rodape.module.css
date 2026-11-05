@@ -4,7 +4,7 @@
     overflow: hidden;
 
     padding: var(--esp-padrao);
-    background-color: var(--text);
+    background-color: var(--accent-footer);
 }
 
 .rodape_fundo::before {
@@ -12,19 +12,19 @@
     position: absolute;
     z-index: -1;
 
-    top: 50%;
-    right: 2rem;
+    top: 75%;
     transform: translateY(-50%);
-
-    width: 300px;
-    height: 300px;
 
     background-image: var(--accent-pokemon);
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
 
-    opacity: 0.3;
+    width: 250px;
+    height: 250px;
+    right: 2rem;
+
+    opacity: 0.1;
 }
 
 .container_rodape {
@@ -35,6 +35,7 @@
     gap: var(--gap);
     font-size: var(--fs-normal);
     text-align: center;
+    line-height: var(--lh-texto);
 }
 
 .container_rodape h2 {
@@ -42,8 +43,9 @@
     color: var(--accent);
 }
 
-.container_rodape p { 
-    color: var(--bg);
+.container_rodape p {
+    color: var(--text-1-dark);
+    font-weight: 600;
 }
 
 .container_rodape a {
@@ -52,20 +54,20 @@
     font-weight: bold;
 }
 
-@media screen and (max-width: 400px) {
+@media screen and (min-width: 450px) and (max-width: 768px) {
     .rodape_fundo::before {
-        width: 120px;
-        height: 120px;
         right: 0.5rem;
-        opacity: 0.25;
+        top: 65%;
+        opacity: 0.15;
     }
 }
 
-@media screen and (min-width: 401px) and (max-width: 768px) {
+@media screen and (min-width: 769px) {
     .rodape_fundo::before {
-        width: 200px;
-        height: 200px;
-        right: 0.5rem;
-        opacity: 0.25;
+        width: 250px;
+        height: 250px;
+        top: 60%;
+        right: 1.2rem;
+        opacity: 0.3;
     }
 }
