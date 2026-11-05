@@ -24,7 +24,7 @@
     height: 250px;
     right: 2rem;
 
-    opacity: 0.1;
+    opacity: 0.2;
 }
 
 .container_rodape {
@@ -58,7 +58,7 @@
     .rodape_fundo::before {
         right: 0.5rem;
         top: 65%;
-        opacity: 0.15;
+        opacity: 0.2;
     }
 }
 
