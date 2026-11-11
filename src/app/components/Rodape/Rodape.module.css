@@ -12,7 +12,7 @@
     position: absolute;
     z-index: -1;
 
-    top: 75%;
+    top: 65%;
     transform: translateY(-50%);
 
     background-image: var(--accent-pokemon);
@@ -20,9 +20,9 @@
     background-position: center;
     background-size: contain;
 
-    width: 250px;
-    height: 250px;
-    right: 2rem;
+    width: 300px;
+    height: 300px;
+    right: 10%;
 
     opacity: 0.2;
 }

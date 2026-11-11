@@ -1,7 +1,12 @@
 import Link from "next/link";
 import styles from "./page.module.css";
 import Image from "next/image";
+import type { Metadata } from "next";
 import { IconeSeta, IconePokeball } from "./components/icons/Icons";
+
+export const metadata: Metadata = {
+  title: "Home - Open Pokédex"
+}
 
 export default function Home() {
   return (

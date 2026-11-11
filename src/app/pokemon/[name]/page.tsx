@@ -1,5 +1,6 @@
 import styles from "./page.module.css";
 import Link from "next/link";
+import type { Metadata } from "next";
 
 // types
 import { PokemonData, PokemonSpecies, TypeData, EvolutionPokemon, EvolutionChain, EvolutionLink, EvolutionNode, AbilityData } from "@/types/pokemon";
@@ -16,6 +17,22 @@ import { formatFullPokemonName, keepName, paradoxList } from "@/app/utils/format
 import { IconeSeta, IconeLink } from "../../components/icons/Icons";
 import { ArvoreEvolucao } from "@/app/components/ArvoreEvolucao";
 import { PokemonVisualizacao } from "@/app/components/PokemonVisualizacao";
+
+type Props = {
+    params: Promise<{
+        name: string;
+    }>;
+};
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+    const { name } = await params;
+
+    const pokemonName = name.charAt(0).toUpperCase() + name.slice(1);
+
+    return {
+        title: pokemonName,
+    };
+}
 
 export default async function PokemonPage({
     params,

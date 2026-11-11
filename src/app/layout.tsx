@@ -9,7 +9,7 @@ import "./globals.css";
 
 
 export const metadata: Metadata = {
-  title: "Open Pokédex",
+  title: { default: "Open Pokédex", template: "%s - Open Pokédex",},
   description: "Projeto Pokédex fullstack com Next.js",
 };
 
