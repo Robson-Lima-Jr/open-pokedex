@@ -6,7 +6,7 @@ export default function Rodape() {
             <div className={styles.container_rodape}>
                 <h2>Open Pokédex - Projeto independente de estudo</h2>
 
-                <a href="https://github.com/Robson-Lima-Jr/open-pokedex" target="_blank">Repositório do Projeto.</a>
+                <a href="https://github.com/Robson-Lima-Jr/open-pokedex" target="_blank"><img src="/github_icon.png" alt="github" className={styles.icone_footer}/></a>
 
                 <p>Pokémon e todo o universo da franquia, incluindo personagens, nomes e imagens, pertencem aos seus respectivos criadores e proprietários:{" "} <a href="https://www.nintendo.com/" target="_blank" rel="noopener noreferrer"> Nintendo</a>
                     ,{" "} <a href="https://corporate.pokemon.co.jp/" target="_blank" rel="noopener noreferrer">The Pokémon Company</a>
